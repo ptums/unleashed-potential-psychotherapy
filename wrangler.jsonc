@@ -16,6 +16,11 @@
   ],
   "observability": {
     "enabled": true
-  }
-  // TODO(TWS-117): add the uptherapygroup.com custom domain route once the zone is on Cloudflare.
+  },
+  // Worker custom domains. Cloudflare creates the DNS records and certificates for these.
+  // cms.uptherapygroup.com is a separate DNS-only record (AWS CloudFront) and is not touched.
+  "routes": [
+    { "pattern": "uptherapygroup.com", "custom_domain": true },
+    { "pattern": "www.uptherapygroup.com", "custom_domain": true }
+  ]
 }
