@@ -1,26 +1,18 @@
-import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { CmsLinkTo, CmsPicture, SectionIntro } from "@/components/ui";
 import { getContent, isZoneVisible, type ClinicianProfile, type Home, type SpecialtyTile } from "@/lib/content";
 import { getMediaAppearance } from "@/lib/media";
-
-const sectionPad = "py-[clamp(72px,9vw,128px)]";
+import { seoMetadata } from "@/lib/seo";
+import { sectionPad } from "@/components/zones";
+import type { Metadata } from "next";
 
 async function loadHome() {
   return getContent().getPage("home");
 }
 
 export async function generateMetadata(): Promise<Metadata> {
-  const home = await loadHome();
-  if (!home || !isZoneVisible(home.seo)) {
-    return {};
-  }
-  return {
-    title: { absolute: home.seo.title },
-    description: home.seo.description,
-    robots: home.seo.noindex ? { index: false } : undefined,
-  };
+  return seoMetadata((await loadHome())?.seo);
 }
 
 export default async function HomePage() {
@@ -229,7 +221,7 @@ function ApproachBand({ zone }: { zone: NonNullable<Home["approachBand"]> }) {
   return (
     <section aria-labelledby="approach-heading" className={`dark ${sectionPad}`}>
       <div className="wrap flex max-w-[960px] flex-col items-start gap-8">
-        <h2 id="approach-heading" className="eyebrow font-body font-bold text-linen">
+        <h2 id="approach-heading" className="eyebrow font-body font-bold">
           {zone.eyebrow}
         </h2>
         <p className="font-display text-h2-band leading-[1.3] italic">{zone.statement}</p>
