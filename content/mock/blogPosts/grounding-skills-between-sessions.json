@@ -1,0 +1,64 @@
+{
+  "articleHeader": {
+    "topic": "Trauma",
+    "heading": "Grounding skills you can use between sessions",
+    "dek": "Four simple techniques to steady your body when a memory or a hard day pulls you off balance.",
+    "author": {
+      "collection": "clinicians",
+      "id": "jess-rebelo"
+    },
+    "publishDate": "2026-10-14",
+    "readMinutes": 6,
+    "image": {
+      "assetId": "[asset-id]",
+      "alt": "Hands around a mug by a window in soft light"
+    }
+  },
+  "body": {
+    "hidden": false,
+    "content": "Therapy happens in a session, but most of life happens between them. When a reminder of the past lands hard, your body can react before your mind catches up: a racing heart, shallow breath, a sense of being far away. Grounding brings your attention back to the present, where you are safe enough to think clearly.\n\nThese skills do not erase what happened. They give you a way to steady yourself so you can get through the moment.\n\n## 1. Name what is around you\n\nSlowly notice five things you can see, four you can touch, three you can hear, two you can smell and one you can taste. Say them out loud if you can.\n\n## 2. Lengthen the exhale\n\nBreathe in through your nose for a count of four, then out for a count of six. Five rounds is enough to notice a change.\n\n> The goal is not to feel calm. It is to feel here.\n\n## 3. Orient to the room\n\nTurn your head slowly and let your eyes rest on ordinary objects. Then tell yourself three facts: where you are, today’s date, and how old you are.\n\n## 4. Feel the support under you\n\nPress your feet into the floor. Notice the chair or bed holding your weight. Let your shoulders drop as you exhale.\n\n## When to reach out\n\nPractice these when you feel fine, so they are familiar when you need them. If they stop helping, or you find yourself avoiding more of your life, that is a good time to talk with a clinician."
+  },
+  "crisisCallout": {
+    "hidden": false,
+    "heading": "If you are in crisis",
+    "body": "Call or text 988 to reach the Suicide & Crisis Lifeline, or call 911. This article is educational and not a substitute for care."
+  },
+  "authorBox": {
+    "hidden": false,
+    "bio": "Founder of Unleashed Potential Psychotherapy. Jess specializes in trauma and EMDR.",
+    "linkLabel": "View profile & open times"
+  },
+  "related": {
+    "hidden": false,
+    "heading": "Keep reading",
+    "mode": "auto",
+    "allLink": {
+      "label": "All articles",
+      "target": {
+        "internal": {
+          "collection": "pages",
+          "id": "blog"
+        }
+      }
+    }
+  },
+  "closingCta": {
+    "hidden": false,
+    "heading": "Want help building these skills?",
+    "body": "Start with a free 15-minute consultation.",
+    "cta": {
+      "label": "Book a Consultation",
+      "target": {
+        "internal": {
+          "collection": "pages",
+          "id": "clinicians"
+        }
+      }
+    }
+  },
+  "seo": {
+    "title": "Grounding Skills You Can Use Between Sessions",
+    "description": "Four simple grounding techniques to steady your body when a memory or a hard day pulls you off balance.",
+    "noindex": false
+  }
+}

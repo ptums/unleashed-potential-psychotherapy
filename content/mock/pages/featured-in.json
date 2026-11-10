@@ -1,0 +1,64 @@
+{
+  "hero": {
+    "eyebrow": "Our Mission · Featured In",
+    "heading": "Podcasts & press",
+    "intro": "Conversations with our founder, Jess Rebelo, LCSW, on trauma, self-worth and building a practice."
+  },
+  "featuredEpisode": {
+    "hidden": false,
+    "appearance": {
+      "collection": "mediaAppearances",
+      "id": "womlead-self-worth"
+    },
+    "eyebrow": "Featured episode",
+    "summary": "Jess talks with WomLEAD about why self-worth shapes the relationships we stay in, and how therapy helps people see their patterns clearly.",
+    "image": {
+      "assetId": "[asset-id]",
+      "alt": "Jess Rebelo in conversation during a video interview"
+    },
+    "listenLabel": "Listen or watch"
+  },
+  "appearances": {
+    "hidden": false,
+    "eyebrow": "All appearances",
+    "heading": "Episodes & interviews",
+    "items": [
+      {
+        "collection": "mediaAppearances",
+        "id": "female-founders-ep-77"
+      },
+      {
+        "collection": "mediaAppearances",
+        "id": "womlead-self-worth"
+      },
+      {
+        "collection": "mediaAppearances",
+        "id": "youtube-interview"
+      },
+      {
+        "collection": "mediaAppearances",
+        "id": "pbn-steve-harper-series"
+      }
+    ]
+  },
+  "pressCta": {
+    "hidden": false,
+    "heading": "Press & speaking",
+    "body": "For interviews, panels and podcasts, email",
+    "email": "press@example.com",
+    "cta": {
+      "label": "Meet our founder",
+      "target": {
+        "internal": {
+          "collection": "clinicians",
+          "id": "jess-rebelo"
+        }
+      }
+    }
+  },
+  "seo": {
+    "title": "Podcasts & Press · Jess Rebelo, LCSW",
+    "description": "Podcast episodes, interviews and features with Jess Rebelo, LCSW, on trauma, self-worth and building a therapy practice.",
+    "noindex": false
+  }
+}

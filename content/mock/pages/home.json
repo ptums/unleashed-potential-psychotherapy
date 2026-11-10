@@ -1,0 +1,163 @@
+{
+  "hero": {
+    "eyebrow": "Trauma-informed psychotherapy · Long Island, New York",
+    "heading": "A space to heal. The support to grow. The freedom to thrive.",
+    "body": "At Unleashed Potential Psychotherapy, we believe exceptional mental health care begins with feeling truly seen, heard, and understood. Through personalized evidence-based psychotherapy, we offer a thoughtful and compassionate approach to healing from trauma, rebuilding a sense of safety, and reclaiming the confidence and freedom to move forward in Long Island and online across New York.",
+    "primaryCta": {
+      "label": "Meet our clinicians",
+      "target": {
+        "internal": {
+          "collection": "pages",
+          "id": "clinicians"
+        }
+      }
+    },
+    "secondaryLink": {
+      "label": "What to expect",
+      "target": {
+        "internal": {
+          "collection": "pages",
+          "id": "what-to-expect"
+        }
+      }
+    },
+    "trustLine": [
+      "Free 15-minute consultation",
+      "Licensed clinicians",
+      "[Insurance accepted]"
+    ],
+    "image": {
+      "assetId": "[asset-id]",
+      "alt": "Sunlit consulting room with a linen armchair and a plant"
+    }
+  },
+  "featuredIn": {
+    "hidden": false,
+    "label": "Featured in",
+    "appearances": [
+      {
+        "collection": "mediaAppearances",
+        "id": "womlead-self-worth"
+      },
+      {
+        "collection": "mediaAppearances",
+        "id": "female-founders-ep-77"
+      },
+      {
+        "collection": "mediaAppearances",
+        "id": "youtube-interview"
+      }
+    ],
+    "allLink": {
+      "label": "All podcasts & press",
+      "target": {
+        "internal": {
+          "collection": "pages",
+          "id": "featured-in"
+        }
+      }
+    }
+  },
+  "specialties": {
+    "hidden": false,
+    "eyebrow": "Specialties",
+    "heading": "What we treat",
+    "items": [
+      {
+        "collection": "specialties",
+        "id": "trauma-ptsd"
+      },
+      {
+        "collection": "specialties",
+        "id": "emdr"
+      },
+      {
+        "collection": "specialties",
+        "id": "anxiety"
+      },
+      {
+        "collection": "specialties",
+        "id": "relationships"
+      },
+      {
+        "collection": "specialties",
+        "id": "grief-loss"
+      },
+      {
+        "collection": "specialties",
+        "id": "life-transitions"
+      }
+    ],
+    "tileLinkLabel": "Learn more"
+  },
+  "clinicians": {
+    "hidden": false,
+    "eyebrow": "Our clinicians",
+    "heading": "Choose your clinician, then your time.",
+    "intro": "Every profile lists specialties, fees and open appointments.",
+    "mode": "auto",
+    "limit": 6,
+    "cardCtaLabel": "View profile & times",
+    "recruitingCard": {
+      "hidden": false,
+      "heading": "Our team is growing.",
+      "body": "We are adding licensed clinicians in [Year]. Their profiles will appear here as they join.",
+      "link": {
+        "label": "Careers",
+        "target": {
+          "internal": {
+            "collection": "pages",
+            "id": "careers"
+          }
+        }
+      }
+    }
+  },
+  "howItWorks": {
+    "hidden": false,
+    "eyebrow": "How it works",
+    "heading": "Three steps to begin",
+    "steps": [
+      {
+        "title": "Consultation",
+        "body": "A free 15-minute call to see if we are the right fit."
+      },
+      {
+        "title": "Assessment",
+        "body": "A first session to understand your history and set goals."
+      },
+      {
+        "title": "The work",
+        "body": "Regular sessions, with progress reviewed together."
+      }
+    ],
+    "moreLink": {
+      "label": "What to expect, in detail",
+      "target": {
+        "internal": {
+          "collection": "pages",
+          "id": "what-to-expect"
+        }
+      }
+    }
+  },
+  "approachBand": {
+    "hidden": false,
+    "eyebrow": "Our approach",
+    "statement": "Good therapy is careful work: a clear assessment, a plan you understand, and a clinician who stays steady with you.",
+    "cta": {
+      "label": "Read our approach",
+      "target": {
+        "internal": {
+          "collection": "pages",
+          "id": "our-approach"
+        }
+      }
+    }
+  },
+  "seo": {
+    "title": "Trauma-Informed Psychotherapy · Long Island, NY",
+    "description": "Evidence-based therapy for trauma, anxiety and relationships, in person on Long Island and online across New York. Free 15-minute consultation.",
+    "noindex": false
+  }
+}
