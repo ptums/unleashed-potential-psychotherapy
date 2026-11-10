@@ -1,0 +1,104 @@
+{
+  "hero": {
+    "eyebrow": "Experience",
+    "heading": "What to expect",
+    "intro": "Starting therapy takes three steps. You will know what each one involves before it begins."
+  },
+  "steps": {
+    "hidden": false,
+    "items": [
+      {
+        "title": "Consultation",
+        "body": "A short call with the clinician you chose. You share what brings you in; they explain how they work. If it is not the right fit, they will help you find someone who is.",
+        "facts": [
+          {
+            "label": "Length",
+            "value": "15 minutes"
+          },
+          {
+            "label": "Format",
+            "value": "Phone or video"
+          },
+          {
+            "label": "Cost",
+            "value": "Free"
+          }
+        ]
+      },
+      {
+        "title": "Assessment",
+        "body": "Your first full session. We review your history, what has helped and what has not, and agree on clear goals. You leave with a written plan.",
+        "facts": [
+          {
+            "label": "Length",
+            "value": "60–75 minutes"
+          },
+          {
+            "label": "Format",
+            "value": "In person or online"
+          },
+          {
+            "label": "Before",
+            "value": "Intake forms, sent by email"
+          }
+        ]
+      },
+      {
+        "title": "The work",
+        "body": "Regular sessions at a consistent time. Early on, weekly is best. We review progress together and adjust the plan as you change.",
+        "facts": [
+          {
+            "label": "Length",
+            "value": "45–60 minutes"
+          },
+          {
+            "label": "Frequency",
+            "value": "Weekly or every other week"
+          },
+          {
+            "label": "Reviews",
+            "value": "Every [8] sessions"
+          }
+        ]
+      }
+    ]
+  },
+  "formats": {
+    "hidden": false,
+    "eyebrow": "In person & online",
+    "heading": "Same care, in the room or on screen.",
+    "body": "Meet in our [City] office, or by secure video from anywhere in [State]. You can switch between them.",
+    "image": {
+      "assetId": "[asset-id]",
+      "alt": "Laptop on a quiet desk in morning light"
+    },
+    "link": {
+      "label": "Fees & insurance",
+      "target": {
+        "internal": {
+          "collection": "pages",
+          "id": "fees-insurance"
+        }
+      }
+    }
+  },
+  "closingCta": {
+    "hidden": false,
+    "heading": "Begin with a consultation.",
+    "body": "Choose a clinician, then a time.",
+    "cta": {
+      "label": "Meet our clinicians",
+      "target": {
+        "internal": {
+          "collection": "pages",
+          "id": "clinicians"
+        }
+      }
+    }
+  },
+  "seo": {
+    "title": "What to Expect · Starting Therapy",
+    "description": "Starting therapy takes three steps: a free consultation, an assessment, then regular sessions in person or online.",
+    "noindex": false
+  }
+}

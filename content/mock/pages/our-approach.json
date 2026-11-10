@@ -1,0 +1,106 @@
+{
+  "hero": {
+    "eyebrow": "Our Mission",
+    "heading": "Our approach",
+    "intro": "We provide careful, evidence-based behavioral health care, so more people can live without being governed by what happened to them."
+  },
+  "featureImage": {
+    "hidden": false,
+    "image": {
+      "assetId": "[asset-id]",
+      "alt": "Quiet waiting room in morning light, with wood and linen furnishings"
+    }
+  },
+  "values": {
+    "hidden": false,
+    "eyebrow": "Values",
+    "heading": "What guides our work",
+    "items": [
+      {
+        "title": "Evidence first",
+        "body": "We use methods with research behind them, and we explain why."
+      },
+      {
+        "title": "Dignity",
+        "body": "You are treated as the expert on your own life."
+      },
+      {
+        "title": "Steadiness",
+        "body": "A consistent clinician, a consistent time, and a clear plan."
+      },
+      {
+        "title": "Access",
+        "body": "In person or online, with transparent fees."
+      }
+    ]
+  },
+  "standardOfCare": {
+    "hidden": false,
+    "eyebrow": "Standard of care",
+    "heading": "What every client can count on",
+    "items": [
+      {
+        "title": "Licensed clinicians only.",
+        "body": "Every therapist holds an active state license."
+      },
+      {
+        "title": "Trauma-informed care.",
+        "body": "We move at a pace you can manage."
+      },
+      {
+        "title": "A written treatment plan.",
+        "body": "Built with you and reviewed every [8] sessions."
+      },
+      {
+        "title": "Clinical consultation.",
+        "body": "Clinicians review cases together, with your privacy protected."
+      },
+      {
+        "title": "Private by default.",
+        "body": "HIPAA-compliant records and video."
+      }
+    ]
+  },
+  "founderNote": {
+    "hidden": false,
+    "eyebrow": "A note from our founder",
+    "portrait": {
+      "assetId": "[asset-id]",
+      "alt": "Jess Rebelo seated by a window in natural light"
+    },
+    "quote": "I founded Unleashed Potential Psychotherapy so people could find specialized trauma care without having to search for it. The practice will grow beyond me; the standard will not change.",
+    "founder": {
+      "collection": "clinicians",
+      "id": "jess-rebelo"
+    },
+    "authorName": "Jess Rebelo, LCSW",
+    "authorRole": "Founder",
+    "profileLink": {
+      "label": "Read Jess’s profile",
+      "target": {
+        "internal": {
+          "collection": "clinicians",
+          "id": "jess-rebelo"
+        }
+      }
+    }
+  },
+  "closingCta": {
+    "hidden": false,
+    "heading": "Ready to talk with a clinician?",
+    "cta": {
+      "label": "Book a Consultation",
+      "target": {
+        "internal": {
+          "collection": "clinicians",
+          "id": "jess-rebelo"
+        }
+      }
+    }
+  },
+  "seo": {
+    "title": "Our Approach · Unleashed Potential",
+    "description": "Evidence-based, trauma-informed behavioral health care. Our values, our standard of care and a note from our founder, Jess Rebelo, LCSW.",
+    "noindex": false
+  }
+}

@@ -1,0 +1,83 @@
+{
+  "stepTime": {
+    "progressLabel": "Time",
+    "heading": "Choose a time",
+    "intro": "Times are Eastern. The consultation is free and has no obligation.",
+    "slotsLegend": "Open times with {firstName}",
+    "formatLegend": "How would you like to meet?",
+    "videoLabel": "Video call",
+    "phoneLabel": "Phone call",
+    "continueLabel": "Continue to your details"
+  },
+  "stepDetails": {
+    "hidden": false,
+    "progressLabel": "Your details",
+    "heading": "Your details",
+    "intro": "Used only to confirm your appointment.",
+    "nameLabel": "Full name",
+    "emailLabel": "Email",
+    "emailHint": "We send your confirmation and intake forms here.",
+    "phoneLabel": "Phone",
+    "payLegend": "How do you plan to pay?",
+    "payOptions": {
+      "selfPay": "Self-pay",
+      "insurance": "Insurance",
+      "unsure": "Not sure yet"
+    },
+    "consentText": "I understand this practice is not an emergency service. In a crisis I will call or text 988.",
+    "errors": {
+      "summary": "Please fix {count} to continue.",
+      "name": "Error: enter your full name.",
+      "email": "Error: enter an email address like name@example.com.",
+      "phone": "Error: enter a phone number we can reach you on.",
+      "consent": "Error: please confirm to continue."
+    },
+    "submitLabel": "Confirm booking",
+    "backLabel": "Back"
+  },
+  "stepConfirmed": {
+    "hidden": false,
+    "progressLabel": "Confirmed",
+    "heading": "You’re booked.",
+    "summary": "Your consultation with {firstName} is on {time}, by {format}.",
+    "calendarHeading": "Add to your calendar",
+    "calendarLabels": {
+      "google": "Google Calendar",
+      "apple": "Apple (.ics)",
+      "outlook": "Outlook"
+    },
+    "nextStepsHeading": "What happens next",
+    "nextSteps": [
+      "A confirmation goes to {email} within a few minutes, with your secure video link.",
+      "{firstName} will join the video call at the scheduled time.",
+      "If you both agree it is a good fit, you will book your assessment together."
+    ],
+    "changePolicy": "Need to change or cancel? Use the link in your email, or call [Phone], at least 24 hours ahead.",
+    "homeLink": {
+      "label": "Return to home",
+      "target": {
+        "internal": {
+          "collection": "pages",
+          "id": "home"
+        }
+      }
+    }
+  },
+  "summaryPanel": {
+    "hidden": false,
+    "heading": "Your booking",
+    "rowLabels": {
+      "session": "Session",
+      "time": "Time",
+      "format": "Format",
+      "cost": "Cost"
+    },
+    "changeLabel": "Change time or format",
+    "exitLabel": "Back to {firstName}’s profile"
+  },
+  "seo": {
+    "title": "Book a Consultation",
+    "description": "Choose a time for a free 15-minute consultation.",
+    "noindex": true
+  }
+}

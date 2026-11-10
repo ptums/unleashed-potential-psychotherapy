@@ -1,0 +1,46 @@
+{
+  "hero": {
+    "eyebrow": "Blog",
+    "heading": "Notes on therapy and healing",
+    "intro": "Short, practical writing from our clinicians. Educational only, and not a substitute for care."
+  },
+  "featuredPost": {
+    "hidden": false,
+    "mode": "latest",
+    "eyebrow": "Latest",
+    "ctaLabel": "Read the article"
+  },
+  "articleList": {
+    "hidden": false,
+    "heading": "All articles",
+    "allTopicsLabel": "All",
+    "topics": [
+      "Trauma",
+      "EMDR",
+      "Relationships",
+      "Grief",
+      "Starting therapy"
+    ],
+    "pageSize": 9,
+    "emptyMessage": "No articles in this topic yet."
+  },
+  "closingCta": {
+    "hidden": false,
+    "heading": "Reading is a start. Talking helps.",
+    "body": "Book a free 15-minute consultation with a clinician.",
+    "cta": {
+      "label": "Meet our clinicians",
+      "target": {
+        "internal": {
+          "collection": "pages",
+          "id": "clinicians"
+        }
+      }
+    }
+  },
+  "seo": {
+    "title": "Blog · Notes on Therapy and Healing",
+    "description": "Short, practical articles from our clinicians on trauma, EMDR, relationships, grief and starting therapy.",
+    "noindex": false
+  }
+}
