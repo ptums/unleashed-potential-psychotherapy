@@ -2,6 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { CmsLinkTo, CmsPicture, SectionIntro } from "@/components/ui";
 import { getContent, isZoneVisible, type ClinicianProfile, type Home, type SpecialtyTile } from "@/lib/content";
+import { resolveClinicians, specialtyNames } from "@/lib/content/clinicians";
 import { getMediaAppearance } from "@/lib/media";
 import { seoMetadata } from "@/lib/seo";
 import { sectionPad } from "@/components/zones";
@@ -126,17 +127,11 @@ async function Specialties({ zone }: { zone: NonNullable<Home["specialties"]> })
 }
 
 async function Clinicians({ zone }: { zone: NonNullable<Home["clinicians"]> }) {
-  const content = getContent();
-  const slugs =
-    zone.mode === "manual" ? (zone.clinicians ?? []).map((ref) => ref.id) : await content.listSlugs("clinicians");
-
-  const entries = await Promise.all(
-    slugs.map(async (slug) => ({ slug, profile: await content.getEntry("clinicians", slug) })),
-  );
-  const clinicians = entries
-    .filter((e): e is { slug: string; profile: ClinicianProfile } => e.profile !== null)
-    .filter((e) => zone.mode === "manual" || e.profile.booking.acceptingNewClients)
-    .slice(0, zone.limit);
+  const clinicians = await resolveClinicians(getContent(), {
+    mode: zone.mode,
+    refs: zone.clinicians,
+    limit: zone.limit,
+  });
 
   const recruiting = zone.recruitingCard && !zone.recruitingCard.hidden ? zone.recruitingCard : null;
   if (clinicians.length === 0 && !recruiting) {
@@ -174,10 +169,7 @@ async function ClinicianCard({
   ctaLabel: string;
 }) {
   const header = profile.profileHeader;
-  const content = getContent();
-  const specialtyNames = (await Promise.all(header.specialties.map((ref) => content.getSpecialtyTile(ref.id))))
-    .filter((t): t is SpecialtyTile => t !== null)
-    .map((t) => t.name);
+  const names = await specialtyNames(getContent(), profile);
 
   return (
     <article className="grid grid-cols-[repeat(auto-fit,minmax(min(200px,100%),1fr))] gap-8 bg-linen p-8">
@@ -185,7 +177,7 @@ async function ClinicianCard({
       <div className="flex flex-col gap-3">
         <h3 className="text-[30px]">{header.displayName}</h3>
         <p className="text-small">{header.roleLine}</p>
-        {specialtyNames.length > 0 && <p className="text-small">{specialtyNames.join(" · ")}</p>}
+        {names.length > 0 && <p className="text-small">{names.join(" · ")}</p>}
         <Link href={`/clinicians/${slug}`} className="btn mt-auto self-start px-5 py-2.5 text-label min-h-11">
           {ctaLabel}
           <span className="sr-only">: {header.displayName}</span>
