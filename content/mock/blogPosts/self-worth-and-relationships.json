@@ -1,0 +1,64 @@
+{
+  "articleHeader": {
+    "topic": "Relationships",
+    "heading": "Self-worth and the relationships we stay in",
+    "dek": "How the way we see ourselves shapes the relationships we choose and keep.",
+    "author": {
+      "collection": "clinicians",
+      "id": "jess-rebelo"
+    },
+    "publishDate": "2026-09-16",
+    "readMinutes": 7,
+    "image": {
+      "assetId": "[asset-id]",
+      "alt": "Open notebook resting on linen"
+    }
+  },
+  "body": {
+    "hidden": false,
+    "content": "[Mock article body. Replace with the published article.]\n\n## Patterns\n\n[Mock section.]"
+  },
+  "crisisCallout": {
+    "hidden": false,
+    "heading": "If you are in crisis",
+    "body": "Call or text 988 to reach the Suicide & Crisis Lifeline, or call 911. This article is educational and not a substitute for care."
+  },
+  "authorBox": {
+    "hidden": false,
+    "bio": "Founder of Unleashed Potential Psychotherapy. Jess specializes in trauma and EMDR.",
+    "linkLabel": "View profile & open times"
+  },
+  "related": {
+    "hidden": false,
+    "heading": "Keep reading",
+    "mode": "auto",
+    "allLink": {
+      "label": "All articles",
+      "target": {
+        "internal": {
+          "collection": "pages",
+          "id": "blog"
+        }
+      }
+    }
+  },
+  "closingCta": {
+    "hidden": false,
+    "heading": "Ready to talk with a clinician?",
+    "body": "Start with a free 15-minute consultation.",
+    "cta": {
+      "label": "Book a Consultation",
+      "target": {
+        "internal": {
+          "collection": "pages",
+          "id": "clinicians"
+        }
+      }
+    }
+  },
+  "seo": {
+    "title": "Self-worth and the relationships we stay in",
+    "description": "How the way we see ourselves shapes the relationships we choose and keep.",
+    "noindex": false
+  }
+}

@@ -9,6 +9,9 @@ import booking from "@/content/mock/pages/booking.json";
 import jessRebelo from "@/content/mock/clinicians/jess-rebelo.json";
 import emdr from "@/content/mock/specialties/emdr.json";
 import groundingSkills from "@/content/mock/blogPosts/grounding-skills-between-sessions.json";
+import emdrSession from "@/content/mock/blogPosts/what-happens-in-an-emdr-session.json";
+import selfWorth from "@/content/mock/blogPosts/self-worth-and-relationships.json";
+import grief from "@/content/mock/blogPosts/grief-without-a-timeline.json";
 import specialtyTiles from "@/content/mock/specialty-tiles.json";
 
 // Mock content from the Claude Design handoff. Imported statically so it is bundled into the
@@ -25,7 +28,12 @@ const pages = {
 const collections = {
   clinicians: { "jess-rebelo": jessRebelo },
   specialties: { emdr },
-  blogPosts: { "grounding-skills-between-sessions": groundingSkills },
+  blogPosts: {
+    "grounding-skills-between-sessions": groundingSkills,
+    "what-happens-in-an-emdr-session": emdrSession,
+    "self-worth-and-relationships": selfWorth,
+    "grief-without-a-timeline": grief,
+  },
 } as unknown as { [C in CollectionName]: Record<string, CollectionMap[C]> };
 
 export const mockRepository: ContentRepository = {

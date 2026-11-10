@@ -7,7 +7,8 @@ export default defineConfig({
   fullyParallel: true,
   forbidOnly: !!process.env.CI,
   reporter: process.env.CI ? "github" : "list",
-  use: { baseURL: `http://localhost:${port}` },
+  // Reduced motion turns off color transitions, so axe never samples a half-faded color.
+  use: { baseURL: `http://localhost:${port}`, contextOptions: { reducedMotion: "reduce" } },
   projects: [
     { name: "desktop", use: { ...devices["Desktop Chrome"], viewport: { width: 1440, height: 900 } } },
     { name: "mobile", use: { ...devices["Desktop Chrome"], viewport: { width: 390, height: 844 } } },

@@ -1,0 +1,64 @@
+{
+  "articleHeader": {
+    "topic": "EMDR",
+    "heading": "What happens in an EMDR session",
+    "dek": "A plain walk-through of a typical EMDR session, from check-in to close.",
+    "author": {
+      "collection": "clinicians",
+      "id": "jess-rebelo"
+    },
+    "publishDate": "2026-09-30",
+    "readMinutes": 5,
+    "image": {
+      "assetId": "[asset-id]",
+      "alt": "Two chairs by a window in soft daylight"
+    }
+  },
+  "body": {
+    "hidden": false,
+    "content": "[Mock article body. Replace with the published article.]\n\n## Before processing\n\n[Mock section.]\n\n## During processing\n\n[Mock section.]"
+  },
+  "crisisCallout": {
+    "hidden": false,
+    "heading": "If you are in crisis",
+    "body": "Call or text 988 to reach the Suicide & Crisis Lifeline, or call 911. This article is educational and not a substitute for care."
+  },
+  "authorBox": {
+    "hidden": false,
+    "bio": "Founder of Unleashed Potential Psychotherapy. Jess specializes in trauma and EMDR.",
+    "linkLabel": "View profile & open times"
+  },
+  "related": {
+    "hidden": false,
+    "heading": "Keep reading",
+    "mode": "auto",
+    "allLink": {
+      "label": "All articles",
+      "target": {
+        "internal": {
+          "collection": "pages",
+          "id": "blog"
+        }
+      }
+    }
+  },
+  "closingCta": {
+    "hidden": false,
+    "heading": "Ready to talk with a clinician?",
+    "body": "Start with a free 15-minute consultation.",
+    "cta": {
+      "label": "Book a Consultation",
+      "target": {
+        "internal": {
+          "collection": "pages",
+          "id": "clinicians"
+        }
+      }
+    }
+  },
+  "seo": {
+    "title": "What happens in an EMDR session",
+    "description": "A plain walk-through of a typical EMDR session, from check-in to close.",
+    "noindex": false
+  }
+}
