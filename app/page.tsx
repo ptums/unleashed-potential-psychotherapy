@@ -1,20 +1,239 @@
-import { getContent, isZoneVisible } from "@/lib/content";
+import type { Metadata } from "next";
+import Link from "next/link";
+import { notFound } from "next/navigation";
+import { CmsLinkTo, CmsPicture, SectionIntro } from "@/components/ui";
+import { getContent, isZoneVisible, type ClinicianProfile, type Home, type SpecialtyTile } from "@/lib/content";
+import { getMediaAppearance } from "@/lib/media";
 
-// Placeholder until the Home page PR. It proves the shell and the content layer work end to end.
+const sectionPad = "py-[clamp(72px,9vw,128px)]";
+
+async function loadHome() {
+  return getContent().getPage("home");
+}
+
+export async function generateMetadata(): Promise<Metadata> {
+  const home = await loadHome();
+  if (!home || !isZoneVisible(home.seo)) {
+    return {};
+  }
+  return {
+    title: { absolute: home.seo.title },
+    description: home.seo.description,
+    robots: home.seo.noindex ? { index: false } : undefined,
+  };
+}
+
 export default async function HomePage() {
-  const home = await getContent().getPage("home");
+  const home = await loadHome();
+  if (!home) {
+    notFound();
+  }
 
   return (
+    <>
+      {isZoneVisible(home.hero) && <Hero zone={home.hero} />}
+      {isZoneVisible(home.featuredIn) && <FeaturedIn zone={home.featuredIn} />}
+      {isZoneVisible(home.specialties) && <Specialties zone={home.specialties} />}
+      {isZoneVisible(home.clinicians) && <Clinicians zone={home.clinicians} />}
+      {isZoneVisible(home.howItWorks) && <HowItWorks zone={home.howItWorks} />}
+      {isZoneVisible(home.approachBand) && <ApproachBand zone={home.approachBand} />}
+    </>
+  );
+}
+
+function Hero({ zone }: { zone: Home["hero"] }) {
+  return (
     <section className="py-[clamp(56px,8vw,112px)]">
-      <div className="wrap flex flex-col gap-7">
-        {home && isZoneVisible(home.hero) ? (
-          <>
-            <p className="eyebrow">{home.hero.eyebrow}</p>
-            <h1 className="text-h1">{home.hero.heading}</h1>
-          </>
-        ) : (
-          <h1 className="text-h1">Unleashed Potential Psychotherapy</h1>
-        )}
+      <div className="wrap grid grid-cols-[repeat(auto-fit,minmax(min(440px,100%),1fr))] items-center gap-[clamp(40px,6vw,96px)]">
+        <div className="flex flex-col gap-7">
+          <p className="eyebrow">{zone.eyebrow}</p>
+          <h1 className="text-h1">{zone.heading}</h1>
+          {zone.body && <p className="max-w-[30em] text-lead">{zone.body}</p>}
+          <div className="mt-2 flex flex-wrap items-center gap-6">
+            <CmsLinkTo link={zone.primaryCta} className="btn" />
+            <CmsLinkTo link={zone.secondaryLink} className="font-bold" />
+          </div>
+          {zone.trustLine && zone.trustLine.length > 0 && (
+            <p className="text-small text-forest">{zone.trustLine.join(" · ")}</p>
+          )}
+        </div>
+        <CmsPicture image={zone.image} className="aspect-[4/5] w-full" />
+      </div>
+    </section>
+  );
+}
+
+function FeaturedIn({ zone }: { zone: NonNullable<Home["featuredIn"]> }) {
+  const appearances = zone.appearances
+    .map((ref) => getMediaAppearance(ref.id))
+    .filter((a): a is NonNullable<typeof a> => a !== null && a.url !== "");
+  if (appearances.length === 0) {
+    return null;
+  }
+
+  return (
+    <section aria-labelledby="featured-heading" className="border-y border-forest py-8">
+      <div className="wrap flex flex-wrap items-center justify-between gap-x-10 gap-y-4">
+        <h2 id="featured-heading" className="eyebrow font-body font-bold">
+          {zone.label}
+        </h2>
+        <ul className="m-0 flex list-none flex-wrap gap-x-12 gap-y-3 p-0 font-display text-[21px] italic">
+          {appearances.map((a) => (
+            <li key={a.id}>
+              <a href={a.url}>{a.outlet}</a>
+            </li>
+          ))}
+        </ul>
+        <CmsLinkTo link={zone.allLink} className="font-bold" />
+      </div>
+    </section>
+  );
+}
+
+async function Specialties({ zone }: { zone: NonNullable<Home["specialties"]> }) {
+  const content = getContent();
+  const tiles = (await Promise.all(zone.items.map((ref) => content.getSpecialtyTile(ref.id)))).filter(
+    (t): t is SpecialtyTile => t !== null,
+  );
+  if (tiles.length === 0) {
+    return null;
+  }
+
+  const tileClass = "flex min-h-[200px] flex-col gap-2.5 border border-forest p-8 no-underline";
+
+  return (
+    <section id="specialties" aria-labelledby="specialties-heading" className={sectionPad}>
+      <div className="wrap flex flex-col gap-12">
+        <SectionIntro id="specialties-heading" eyebrow={zone.eyebrow} heading={zone.heading} />
+        <ul className="m-0 grid list-none grid-cols-[repeat(auto-fit,minmax(min(320px,100%),1fr))] gap-6 p-0">
+          {tiles.map((tile) => (
+            <li key={tile.slug} className="flex">
+              {tile.hasPage ? (
+                <Link
+                  href={`/specialties/${tile.slug}`}
+                  className={`${tileClass} w-full transition-colors hover:bg-cream-light`}
+                >
+                  <h3 className="text-h3">{tile.name}</h3>
+                  <p>{tile.summary}</p>
+                  <span className="mt-auto text-[15px] font-bold underline underline-offset-4">
+                    {zone.tileLinkLabel}
+                  </span>
+                </Link>
+              ) : (
+                <div className={`${tileClass} w-full`}>
+                  <h3 className="text-h3">{tile.name}</h3>
+                  <p>{tile.summary}</p>
+                </div>
+              )}
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  );
+}
+
+async function Clinicians({ zone }: { zone: NonNullable<Home["clinicians"]> }) {
+  const content = getContent();
+  const slugs =
+    zone.mode === "manual" ? (zone.clinicians ?? []).map((ref) => ref.id) : await content.listSlugs("clinicians");
+
+  const entries = await Promise.all(
+    slugs.map(async (slug) => ({ slug, profile: await content.getEntry("clinicians", slug) })),
+  );
+  const clinicians = entries
+    .filter((e): e is { slug: string; profile: ClinicianProfile } => e.profile !== null)
+    .filter((e) => zone.mode === "manual" || e.profile.booking.acceptingNewClients)
+    .slice(0, zone.limit);
+
+  const recruiting = zone.recruitingCard && !zone.recruitingCard.hidden ? zone.recruitingCard : null;
+  if (clinicians.length === 0 && !recruiting) {
+    return null;
+  }
+
+  return (
+    <section id="clinicians" aria-labelledby="clinicians-heading" className={`bg-cream-light ${sectionPad}`}>
+      <div className="wrap flex flex-col gap-12">
+        <SectionIntro id="clinicians-heading" eyebrow={zone.eyebrow} heading={zone.heading} intro={zone.intro} />
+        <div className="grid grid-cols-[repeat(auto-fit,minmax(min(480px,100%),1fr))] items-stretch gap-6">
+          {clinicians.map(({ slug, profile }) => (
+            <ClinicianCard key={slug} slug={slug} profile={profile} ctaLabel={zone.cardCtaLabel} />
+          ))}
+          {recruiting && (
+            <div className="flex flex-col justify-center gap-4 border border-forest p-8">
+              <h3 className="text-h3">{recruiting.heading}</h3>
+              {recruiting.body && <p>{recruiting.body}</p>}
+              <CmsLinkTo link={recruiting.link} className="font-bold" />
+            </div>
+          )}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+async function ClinicianCard({
+  slug,
+  profile,
+  ctaLabel,
+}: {
+  slug: string;
+  profile: ClinicianProfile;
+  ctaLabel: string;
+}) {
+  const header = profile.profileHeader;
+  const content = getContent();
+  const specialtyNames = (await Promise.all(header.specialties.map((ref) => content.getSpecialtyTile(ref.id))))
+    .filter((t): t is SpecialtyTile => t !== null)
+    .map((t) => t.name);
+
+  return (
+    <article className="grid grid-cols-[repeat(auto-fit,minmax(min(200px,100%),1fr))] gap-8 bg-linen p-8">
+      <CmsPicture image={header.portrait} className="aspect-[3/4] w-full" />
+      <div className="flex flex-col gap-3">
+        <h3 className="text-[30px]">{header.displayName}</h3>
+        <p className="text-small">{header.roleLine}</p>
+        {specialtyNames.length > 0 && <p className="text-small">{specialtyNames.join(" · ")}</p>}
+        <Link href={`/clinicians/${slug}`} className="btn mt-auto self-start px-5 py-2.5 text-label min-h-11">
+          {ctaLabel}
+          <span className="sr-only">: {header.displayName}</span>
+        </Link>
+      </div>
+    </article>
+  );
+}
+
+function HowItWorks({ zone }: { zone: NonNullable<Home["howItWorks"]> }) {
+  return (
+    <section aria-labelledby="how-heading" className={sectionPad}>
+      <div className="wrap flex flex-col gap-12">
+        <SectionIntro id="how-heading" eyebrow={zone.eyebrow} heading={zone.heading} />
+        <ol className="m-0 grid list-none grid-cols-[repeat(auto-fit,minmax(min(280px,100%),1fr))] gap-10 p-0">
+          {zone.steps.map((step, i) => (
+            <li key={step.title} className="flex flex-col gap-3 border-t border-forest pt-6">
+              <span aria-hidden="true" className="font-display text-[40px]">
+                {String(i + 1).padStart(2, "0")}
+              </span>
+              <h3 className="text-2xl">{step.title}</h3>
+              <p>{step.body}</p>
+            </li>
+          ))}
+        </ol>
+        <CmsLinkTo link={zone.moreLink} className="self-start font-bold" />
+      </div>
+    </section>
+  );
+}
+
+function ApproachBand({ zone }: { zone: NonNullable<Home["approachBand"]> }) {
+  return (
+    <section aria-labelledby="approach-heading" className={`dark ${sectionPad}`}>
+      <div className="wrap flex max-w-[960px] flex-col items-start gap-8">
+        <h2 id="approach-heading" className="eyebrow font-body font-bold text-linen">
+          {zone.eyebrow}
+        </h2>
+        <p className="font-display text-h2-band leading-[1.3] italic">{zone.statement}</p>
+        <CmsLinkTo link={zone.cta} className="btn" />
       </div>
     </section>
   );

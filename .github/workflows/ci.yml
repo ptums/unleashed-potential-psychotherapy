@@ -1,9 +1,11 @@
 name: CI
 
 on:
-  pull_request:
+  # Runs on every branch push. pull_request events did not start runs on this repo (2026-11-10),
+  # and a push run still reports its checks on the PR head commit.
   push:
-    branches: [main]
+    branches: ["**"]
+  workflow_dispatch:
 
 concurrency:
   group: ci-${{ github.ref }}

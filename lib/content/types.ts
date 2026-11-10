@@ -41,4 +41,13 @@ export interface ContentRepository {
   getPage<K extends PageId>(id: K): Promise<PageMap[K] | null>;
   getEntry<C extends CollectionName>(collection: C, slug: string): Promise<CollectionMap[C] | null>;
   listSlugs(collection: CollectionName): Promise<string[]>;
+  /** Name and summary for a specialty tile. `hasPage` is false when the specialty has no published page. */
+  getSpecialtyTile(slug: string): Promise<SpecialtyTile | null>;
+}
+
+export interface SpecialtyTile {
+  slug: string;
+  name: string;
+  summary: string;
+  hasPage: boolean;
 }
