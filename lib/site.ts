@@ -3,6 +3,9 @@
 // Nav items for pages that are not designed yet (Careers, Who We Work With, In Person & Online,
 // Fees & Insurance, FAQs, Contact, Privacy Notice) are left out until those pages exist.
 
+/** Public site origin, used for the sitemap, robots and absolute metadata URLs. */
+export const siteUrl = (process.env.SITE_URL ?? "https://uptherapygroup.com").replace(/\/+$/, "");
+
 export interface NavLink {
   label: string;
   href: string;
