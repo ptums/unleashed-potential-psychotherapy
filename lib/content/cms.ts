@@ -24,5 +24,8 @@ export function createCmsRepository(baseUrl: string): ContentRepository {
     async listSlugs(collection) {
       throw new Error(`CMS has no public route for ${collection} entries yet`);
     },
+    async getSpecialtyTile() {
+      throw new Error("CMS has no public route for specialties entries yet");
+    },
   };
 }

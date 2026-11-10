@@ -1,0 +1,8 @@
+{
+  "trauma-ptsd": { "name": "Trauma & PTSD", "summary": "Single events and long-term experiences that still shape the present." },
+  "anxiety": { "name": "Anxiety", "summary": "Worry, panic and the physical stress that comes with them." },
+  "relationships": { "name": "Relationships", "summary": "Patterns in partnership and family, including leaving harmful relationships." },
+  "grief-loss": { "name": "Grief & loss", "summary": "Support through bereavement, including the loss of a child." },
+  "life-transitions": { "name": "Life transitions", "summary": "Changes in work, family or identity that feel hard to steady." },
+  "domestic-violence-recovery": { "name": "Domestic violence recovery", "summary": "Rebuilding safety and trust after an abusive relationship." }
+}

@@ -9,6 +9,7 @@ import booking from "@/content/mock/pages/booking.json";
 import jessRebelo from "@/content/mock/clinicians/jess-rebelo.json";
 import emdr from "@/content/mock/specialties/emdr.json";
 import groundingSkills from "@/content/mock/blogPosts/grounding-skills-between-sessions.json";
+import specialtyTiles from "@/content/mock/specialty-tiles.json";
 
 // Mock content from the Claude Design handoff. Imported statically so it is bundled into the
 // Worker (there is no filesystem at runtime). The schema test checks every file here.
@@ -36,5 +37,14 @@ export const mockRepository: ContentRepository = {
   },
   async listSlugs(collection) {
     return Object.keys(collections[collection]);
+  },
+  async getSpecialtyTile(slug) {
+    const entry = collections.specialties[slug];
+    if (entry) {
+      return { slug, name: entry.hero.heading, summary: entry.hero.tileSummary, hasPage: true };
+    }
+    // Specialties named in the design that have no page yet.
+    const stub = (specialtyTiles as Record<string, { name: string; summary: string }>)[slug];
+    return stub ? { slug, ...stub, hasPage: false } : null;
   },
 };
