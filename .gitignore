@@ -1,0 +1,15 @@
+.DS_Store
+*.zip
+node_modules/
+.next/
+.open-next/
+.wrangler/
+out/
+.env*
+!.env.example
+*.tsbuildinfo
+next-env.d.ts
+cloudflare-env.d.ts
+.dev.vars
+test-results/
+playwright-report/

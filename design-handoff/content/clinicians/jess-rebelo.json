@@ -1,0 +1,192 @@
+{
+  "profileHeader": {
+    "displayName": "Jess Rebelo, LCSW",
+    "firstName": "Jess",
+    "roleLine": "Founder · Licensed Clinical Social Worker",
+    "portrait": {
+      "assetId": "[asset-id]",
+      "alt": "Jess Rebelo standing outdoors in natural light"
+    },
+    "summary": "Trauma therapist and EMDR clinician. Jess works with adults who are recovering from abusive relationships, childhood harm and loss.",
+    "ages": "Adults 18+",
+    "sessionsLine": "In person in [City] · Online in [State]",
+    "languages": [
+      "English"
+    ],
+    "specialties": [
+      {
+        "collection": "specialties",
+        "id": "emdr"
+      },
+      {
+        "collection": "specialties",
+        "id": "trauma-ptsd"
+      },
+      {
+        "collection": "specialties",
+        "id": "relationships"
+      },
+      {
+        "collection": "specialties",
+        "id": "grief-loss"
+      },
+      {
+        "collection": "specialties",
+        "id": "domestic-violence-recovery"
+      }
+    ]
+  },
+  "booking": {
+    "hidden": false,
+    "acceptingNewClients": true,
+    "heading": "Book with {firstName}",
+    "subhead": "Free 15-minute consultation. Choose a time to begin.",
+    "slotsLabel": "Next open times · ET",
+    "slotsShown": 6,
+    "ctaLabel": "Book a Consultation",
+    "allTimesLabel": "See all open times",
+    "provider": "google_calendar",
+    "timezone": "America/New_York",
+    "weeklyHours": [
+      {
+        "day": "tue",
+        "start": "09:00",
+        "end": "17:00"
+      },
+      {
+        "day": "wed",
+        "start": "12:00",
+        "end": "19:00"
+      },
+      {
+        "day": "thu",
+        "start": "09:00",
+        "end": "17:00"
+      },
+      {
+        "day": "fri",
+        "start": "09:00",
+        "end": "13:00"
+      }
+    ],
+    "bufferMinutes": 15,
+    "minNoticeHours": 24,
+    "maxDaysAhead": 28,
+    "externalCalendarId": "[calendar-id]",
+    "defaultSessionTypeKey": "consultation"
+  },
+  "approach": {
+    "hidden": false,
+    "heading": "Approach",
+    "body": "Jess begins with stabilization: clear tools for sleep, triggers and daily stress. Once you feel ready, she uses EMDR and cognitive approaches to process what still hurts.\n\nSessions are structured but unhurried. You set the pace, and you always know what comes next."
+  },
+  "credentials": {
+    "hidden": false,
+    "heading": "Credentials",
+    "education": [
+      {
+        "degree": "MSW",
+        "institution": "Stony Brook University"
+      }
+    ],
+    "licenses": [
+      {
+        "type": "LCSW",
+        "state": "NY",
+        "number": "[License no.]"
+      }
+    ],
+    "trainings": [
+      {
+        "name": "EMDR",
+        "provider": "[Training body]"
+      }
+    ],
+    "practicingSince": null
+  },
+  "fees": {
+    "hidden": false,
+    "heading": "Fees & insurance",
+    "caption": "Self-pay rates, per session",
+    "sessionTypes": [
+      {
+        "key": "consultation",
+        "label": "Consultation",
+        "minMinutes": 15,
+        "price": "free",
+        "bookableOnline": true,
+        "modes": [
+          "video",
+          "phone"
+        ]
+      },
+      {
+        "key": "assessment",
+        "label": "Assessment",
+        "minMinutes": 60,
+        "maxMinutes": 75,
+        "price": "contact",
+        "bookableOnline": false,
+        "modes": [
+          "in_person",
+          "video"
+        ]
+      },
+      {
+        "key": "ongoing",
+        "label": "Ongoing session",
+        "minMinutes": 45,
+        "maxMinutes": 60,
+        "price": "contact",
+        "bookableOnline": false,
+        "modes": [
+          "in_person",
+          "video"
+        ]
+      }
+    ],
+    "insuranceStatus": "out_of_network",
+    "insuranceNote": "[Insurance details]",
+    "superbills": true,
+    "slidingScale": false,
+    "showGoodFaithEstimateNotice": true
+  },
+  "featuredIn": {
+    "hidden": false,
+    "heading": "Featured in",
+    "appearances": [
+      {
+        "collection": "mediaAppearances",
+        "id": "womlead-self-worth"
+      },
+      {
+        "collection": "mediaAppearances",
+        "id": "female-founders-ep-77"
+      },
+      {
+        "collection": "mediaAppearances",
+        "id": "youtube-interview"
+      }
+    ],
+    "allLink": {
+      "label": "All podcasts & press",
+      "target": {
+        "internal": {
+          "collection": "pages",
+          "id": "featured-in"
+        }
+      }
+    }
+  },
+  "closingCta": {
+    "hidden": false,
+    "heading": null,
+    "body": "Free 15-minute consultation with {firstName}.",
+    "ctaLabel": "Book a Consultation"
+  },
+  "seo": {
+    "title": "Jess Rebelo, LCSW · Trauma & EMDR Therapist",
+    "description": "Jess Rebelo is a licensed clinical social worker specializing in trauma and EMDR. In person in [City] and online. Book a free consultation.",
+    "noindex": false
+  }
+}

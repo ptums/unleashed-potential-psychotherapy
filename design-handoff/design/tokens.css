@@ -1,0 +1,60 @@
+/* Unleashed Potential Psychotherapy — design tokens
+   Source: the approved design canvas. Import once in app/globals.css.
+   Contrast (WCAG 2.2 AA) is pre-checked for the pairs listed in docs/SPEC.md §Accessibility. */
+
+:root {
+  /* Color — text and UI */
+  --color-forest-dark: #31464B;   /* body text, headings, borders of buttons, dark band bg */
+  --color-forest: #506967;        /* secondary text (on linen / light cream only), hairlines */
+  --color-error: #9B2C2C;         /* error text and invalid field border */
+
+  /* Color — backgrounds and decoration only. NEVER text, borders or icons. */
+  --color-linen: #FAF7F2;         /* page background; also text on dark bands */
+  --color-cream-light: #EEE8D4;   /* soft section bg, hover fill, selected option */
+  --color-cream: #D9CEB5;         /* photo placeholders */
+  --color-cream-dark: #C7B79F;    /* decoration only */
+
+  /* Type */
+  --font-display: "Playfair Display", Georgia, serif;   /* 500, 700, italic 500 */
+  --font-body: Lato, "Helvetica Neue", Arial, sans-serif; /* 400, 700, italic 400 */
+  --text-body: 17px;            /* minimum body size is 16px */
+  --text-small: 16px;
+  --text-label: 14px;           /* eyebrows, uppercase, letter-spacing .14em, bold */
+  --text-lead: 19px;
+  --leading-body: 1.65;
+  --leading-heading: 1.15;
+  --text-h1: clamp(40px, 5vw, 68px);
+  --text-h2: clamp(32px, 3.6vw, 48px);
+  --text-h2-band: clamp(28px, 3.2vw, 42px);
+  --text-h3: 26px;
+  --tracking-eyebrow: .14em;
+  --tracking-button: .08em;
+
+  /* Layout */
+  --container-max: 1200px;
+  --gutter: 40px;               /* 20px under 900px */
+  --section-pad: clamp(72px, 9vw, 128px);
+  --section-pad-sm: clamp(56px, 8vw, 112px);
+  --gap-lg: 48px;
+  --gap-md: 24px;
+  --gap-sm: 12px;
+  --breakpoint-nav: 900px;      /* desktop nav ↔ mobile menu */
+
+  /* Controls */
+  --border-hairline: 1px solid var(--color-forest);
+  --border-button: 1.5px solid var(--color-forest-dark);
+  --radius: 0;                  /* square corners throughout */
+  --tap-main: 48px;             /* main buttons (≥44px) */
+  --tap-min: 44px;              /* all other targets (≥24px required, 44 used) */
+  --focus-ring: 3px solid var(--color-forest-dark);
+  --focus-offset: 3px;
+  --transition: background-color .2s, color .2s;
+}
+
+@media (max-width: 900px) {
+  :root { --gutter: 20px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root { --transition: none; }
+}
