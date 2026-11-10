@@ -76,7 +76,6 @@
   .dark :focus-visible {
     outline-color: var(--color-linen);
   }
-
   summary {
     list-style: none;
   }
@@ -112,6 +111,11 @@
   letter-spacing: var(--tracking-eyebrow);
   text-transform: uppercase;
   color: var(--color-forest);
+
+  /* Forest text fails contrast on the dark band, so eyebrows there use linen. */
+  .dark & {
+    color: var(--color-linen);
+  }
 }
 
 @utility btn {
