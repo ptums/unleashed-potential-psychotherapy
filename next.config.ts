@@ -6,6 +6,12 @@ import { initOpenNextCloudflareForDev } from "@opennextjs/cloudflare";
 // return a real 404 (dynamicParams = false on slug routes).
 const nextConfig: NextConfig = {
   cacheComponents: false,
+  // Inline the content source at build time, so a page the Worker renders at request time
+  // reads the same source as the prerendered HTML. No secrets here: both values are public.
+  env: {
+    CONTENT_SOURCE: process.env.CONTENT_SOURCE ?? "mock",
+    CMS_API_URL: process.env.CMS_API_URL ?? "",
+  },
   // www is served by the same Worker; send it to the bare domain so there is one canonical URL.
   async redirects() {
     return [
