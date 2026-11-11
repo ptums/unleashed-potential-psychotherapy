@@ -189,15 +189,16 @@ function sessionLength(s: SessionType) {
   return s.maxMinutes ? `${s.minMinutes}–${s.maxMinutes} min` : `${s.minMinutes} min`;
 }
 
+// The price is shown as the editor typed it ("Free", "$255"). The 2 older keywords read as words.
 function sessionPrice(s: SessionType) {
-  if (s.price === "free") {
+  const price = s.price.trim();
+  if (price.toLowerCase() === "free") {
     return "Free";
   }
-  if (s.price === "contact") {
-    // TODO(handoff open question 7): real fees are not known yet.
+  if (price.toLowerCase() === "contact") {
     return "Contact us";
   }
-  return `$${(s.price.amountCents / 100).toFixed(s.price.amountCents % 100 === 0 ? 0 : 2)}`;
+  return price;
 }
 
 const insuranceText: Record<ClinicianProfile["fees"]["insuranceStatus"], string> = {

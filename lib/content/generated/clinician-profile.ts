@@ -608,7 +608,10 @@ export interface SessionType {
    * Set for a range, e.g. 60–75. Leave empty for a fixed length.
    */
   maxMinutes?: number | null;
-  price: "free" | "contact" | Money;
+  /**
+   * Shown as typed, for example Free or $255.
+   */
+  price: string;
   /**
    * Offered in booking step 1.
    */
@@ -621,10 +624,6 @@ export interface SessionType {
     | ["in_person" | "video" | "phone"]
     | ["in_person" | "video" | "phone", "in_person" | "video" | "phone"]
     | ["in_person" | "video" | "phone", "in_person" | "video" | "phone", "in_person" | "video" | "phone"];
-}
-export interface Money {
-  amountCents: number;
-  currency: "USD";
 }
 export interface FeaturedIn {
   hidden: boolean;
