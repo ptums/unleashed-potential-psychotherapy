@@ -78,15 +78,96 @@ export interface Process {
    * @maxItems 6
    */
   steps:
-    | [TitledText, TitledText]
-    | [TitledText, TitledText, TitledText]
-    | [TitledText, TitledText, TitledText, TitledText]
-    | [TitledText, TitledText, TitledText, TitledText, TitledText]
-    | [TitledText, TitledText, TitledText, TitledText, TitledText, TitledText];
-}
-export interface TitledText {
-  title: string;
-  body: string;
+    | [
+        {
+          title: string;
+          body: string;
+        },
+        {
+          title: string;
+          body: string;
+        }
+      ]
+    | [
+        {
+          title: string;
+          body: string;
+        },
+        {
+          title: string;
+          body: string;
+        },
+        {
+          title: string;
+          body: string;
+        }
+      ]
+    | [
+        {
+          title: string;
+          body: string;
+        },
+        {
+          title: string;
+          body: string;
+        },
+        {
+          title: string;
+          body: string;
+        },
+        {
+          title: string;
+          body: string;
+        }
+      ]
+    | [
+        {
+          title: string;
+          body: string;
+        },
+        {
+          title: string;
+          body: string;
+        },
+        {
+          title: string;
+          body: string;
+        },
+        {
+          title: string;
+          body: string;
+        },
+        {
+          title: string;
+          body: string;
+        }
+      ]
+    | [
+        {
+          title: string;
+          body: string;
+        },
+        {
+          title: string;
+          body: string;
+        },
+        {
+          title: string;
+          body: string;
+        },
+        {
+          title: string;
+          body: string;
+        },
+        {
+          title: string;
+          body: string;
+        },
+        {
+          title: string;
+          body: string;
+        }
+      ];
 }
 export interface CliniciansWhoOfferThis {
   hidden: boolean;
