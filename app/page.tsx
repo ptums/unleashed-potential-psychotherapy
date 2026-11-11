@@ -6,6 +6,7 @@ import { resolveClinicians, specialtyNames } from "@/lib/content/clinicians";
 import { getMediaAppearance } from "@/lib/media";
 import { seoMetadata } from "@/lib/seo";
 import { sectionPad } from "@/components/zones";
+import { CmsHtml } from "@/components/CmsHtml";
 import type { Metadata } from "next";
 
 async function loadHome() {
@@ -41,7 +42,7 @@ function Hero({ zone }: { zone: Home["hero"] }) {
         <div className="flex flex-col gap-7">
           <p className="eyebrow">{zone.eyebrow}</p>
           <h1 className="text-h1">{zone.heading}</h1>
-          {zone.body && <p className="max-w-[30em] text-lead">{zone.body}</p>}
+          {zone.body && <CmsHtml html={zone.body} className="max-w-[30em] text-lead [&_p+p]:mt-4" />}
           <div className="mt-2 flex flex-wrap items-center gap-6">
             <CmsLinkTo link={zone.primaryCta} className="btn" />
             <CmsLinkTo link={zone.secondaryLink} className="font-bold" />
@@ -50,7 +51,7 @@ function Hero({ zone }: { zone: Home["hero"] }) {
             <p className="text-small text-forest">{zone.trustLine.join(" · ")}</p>
           )}
         </div>
-        <CmsPicture image={zone.image} className="aspect-[4/5] w-full" />
+        <CmsPicture image={zone.image} className="aspect-[4/5] w-full" eager />
       </div>
     </section>
   );
