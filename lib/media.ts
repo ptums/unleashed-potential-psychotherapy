@@ -1,3 +1,4 @@
+import { toSlug } from "./content/slug";
 // Media appearances (podcasts, press, video).
 // TODO(TWS-117 open question 2): hardcoded for launch. Move to a CMS mediaAppearances schema later.
 // TODO(handoff open question 7): PBN episode URLs and the Part 1 date are not known yet.
@@ -81,6 +82,12 @@ export const mediaAppearances: Record<string, MediaAppearance> = {
   },
 };
 
+// The CMS reference can hold the outlet name ("Female Founders Podcast"), so match that too.
 export function getMediaAppearance(id: string): MediaAppearance | null {
-  return mediaAppearances[id] ?? null;
+  const direct = mediaAppearances[id];
+  if (direct) {
+    return direct;
+  }
+  const slug = toSlug(id);
+  return Object.values(mediaAppearances).find((a) => a.id === slug || toSlug(a.outlet) === slug) ?? null;
 }
