@@ -50,7 +50,13 @@ function Hero({ zone }: { zone: Specialty["hero"] }) {
         <div className="flex flex-col gap-6">
           <p className="eyebrow">{zone.eyebrow}</p>
           <h1 className="text-h1">{zone.heading}</h1>
-          <p className="text-lead">{zone.intro}</p>
+          <div className="flex flex-col gap-4">
+            {zone.intro.split(/\n{2,}/).map((para) => (
+              <p key={para} className="text-lead">
+                {para}
+              </p>
+            ))}
+          </div>
           {zone.evidenceNote && <p className="text-small text-forest">{zone.evidenceNote}</p>}
           <a href="#clinicians" className="btn self-start">
             {zone.ctaLabel}

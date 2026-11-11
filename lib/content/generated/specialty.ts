@@ -19,7 +19,7 @@ export interface Hero {
    */
   heading: string;
   /**
-   * What it is, in two sentences.
+   * What it is. Leave a blank line between paragraphs.
    */
   intro: string;
   /**
