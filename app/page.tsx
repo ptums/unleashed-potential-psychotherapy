@@ -1,7 +1,8 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { CmsLinkTo, CmsPicture, SectionIntro } from "@/components/ui";
-import { getContent, isZoneVisible, type ClinicianProfile, type Home, type SpecialtyTile } from "@/lib/content";
+import { getContent, isZoneVisible, type ClinicianProfile, type Home, type Reference, type SpecialtyTile } from "@/lib/content";
+import { hrefForReference } from "@/lib/links";
 import { resolveClinicians, specialtyNames } from "@/lib/content/clinicians";
 import { getMediaAppearance } from "@/lib/media";
 import { seoMetadata } from "@/lib/seo";
@@ -85,10 +86,7 @@ function FeaturedIn({ zone }: { zone: NonNullable<Home["featuredIn"]> }) {
 }
 
 async function Specialties({ zone }: { zone: NonNullable<Home["specialties"]> }) {
-  const content = getContent();
-  const tiles = (await Promise.all(zone.items.map((ref) => content.getSpecialtyTile(ref.id)))).filter(
-    (t): t is SpecialtyTile => t !== null,
-  );
+  const tiles = (await Promise.all(zone.items.map(toTile))).filter((t): t is Tile => t !== null);
   if (tiles.length === 0) {
     return null;
   }
@@ -100,23 +98,20 @@ async function Specialties({ zone }: { zone: NonNullable<Home["specialties"]> })
       <div className="wrap flex flex-col gap-12">
         <SectionIntro id="specialties-heading" eyebrow={zone.eyebrow} heading={zone.heading} />
         <ul className="m-0 grid list-none grid-cols-[repeat(auto-fit,minmax(min(320px,100%),1fr))] gap-6 p-0">
-          {tiles.map((tile) => (
-            <li key={tile.slug} className="flex">
-              {tile.hasPage ? (
-                <Link
-                  href={`/specialties/${tile.slug}`}
-                  className={`${tileClass} w-full transition-colors hover:bg-cream-light`}
-                >
-                  <h3 className="text-h3">{tile.name}</h3>
-                  <p>{tile.summary}</p>
+          {tiles.map((tile, i) => (
+            <li key={`${i}-${tile.title}`} className="flex">
+              {tile.href ? (
+                <Link href={tile.href} className={`${tileClass} w-full transition-colors hover:bg-cream-light`}>
+                  <h3 className="text-h3">{tile.title}</h3>
+                  <p>{tile.body}</p>
                   <span className="mt-auto text-[15px] font-bold underline underline-offset-4">
                     {zone.tileLinkLabel}
                   </span>
                 </Link>
               ) : (
                 <div className={`${tileClass} w-full`}>
-                  <h3 className="text-h3">{tile.name}</h3>
-                  <p>{tile.summary}</p>
+                  <h3 className="text-h3">{tile.title}</h3>
+                  <p>{tile.body}</p>
                 </div>
               )}
             </li>
@@ -125,6 +120,30 @@ async function Specialties({ zone }: { zone: NonNullable<Home["specialties"]> })
       </div>
     </section>
   );
+}
+
+interface Tile {
+  title: string;
+  body: string;
+  href: string | null;
+}
+
+type SpecialtyItem = NonNullable<Home["specialties"]>["items"][number];
+
+/**
+ * 1 tile from a specialties item: title, sub text, and the Learn more link when the item has a page.
+ * Home pages published before this schema hold a specialty reference instead ({ collection, id }).
+ * Those still render from the specialty entry until the item is re-entered in the CMS.
+ */
+async function toTile(item: SpecialtyItem | Reference): Promise<Tile | null> {
+  if ("title" in item) {
+    return { title: item.title, body: item.body, href: item.page ? hrefForReference(item.page) : null };
+  }
+  const tile: SpecialtyTile | null = await getContent().getSpecialtyTile(item.id);
+  if (!tile) {
+    return null;
+  }
+  return { title: tile.name, body: tile.summary, href: tile.hasPage ? `/specialties/${tile.slug}` : null };
 }
 
 async function Clinicians({ zone }: { zone: NonNullable<Home["clinicians"]> }) {

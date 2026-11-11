@@ -113,22 +113,533 @@ export interface SpecialtiesGrid {
   eyebrow: string;
   heading: string;
   /**
-   * Tiles use each specialty's name and tile summary. A tile links only if its specialty page is published.
+   * 1 tile per item. The Learn more link shows only when the item has a page.
    *
    * @minItems 1
    * @maxItems 9
    */
   items:
-    | [Reference]
-    | [Reference, Reference]
-    | [Reference, Reference, Reference]
-    | [Reference, Reference, Reference, Reference]
-    | [Reference, Reference, Reference, Reference, Reference]
-    | [Reference, Reference, Reference, Reference, Reference, Reference]
-    | [Reference, Reference, Reference, Reference, Reference, Reference, Reference]
-    | [Reference, Reference, Reference, Reference, Reference, Reference, Reference, Reference]
-    | [Reference, Reference, Reference, Reference, Reference, Reference, Reference, Reference, Reference];
+    | [
+        {
+          /**
+           * Tile heading, for example Trauma & PTSD.
+           */
+          title: string;
+          /**
+           * Sub text under the heading.
+           */
+          body: string;
+          page?: Reference1;
+        }
+      ]
+    | [
+        {
+          /**
+           * Tile heading, for example Trauma & PTSD.
+           */
+          title: string;
+          /**
+           * Sub text under the heading.
+           */
+          body: string;
+          page?: Reference1;
+        },
+        {
+          /**
+           * Tile heading, for example Trauma & PTSD.
+           */
+          title: string;
+          /**
+           * Sub text under the heading.
+           */
+          body: string;
+          page?: Reference1;
+        }
+      ]
+    | [
+        {
+          /**
+           * Tile heading, for example Trauma & PTSD.
+           */
+          title: string;
+          /**
+           * Sub text under the heading.
+           */
+          body: string;
+          page?: Reference1;
+        },
+        {
+          /**
+           * Tile heading, for example Trauma & PTSD.
+           */
+          title: string;
+          /**
+           * Sub text under the heading.
+           */
+          body: string;
+          page?: Reference1;
+        },
+        {
+          /**
+           * Tile heading, for example Trauma & PTSD.
+           */
+          title: string;
+          /**
+           * Sub text under the heading.
+           */
+          body: string;
+          page?: Reference1;
+        }
+      ]
+    | [
+        {
+          /**
+           * Tile heading, for example Trauma & PTSD.
+           */
+          title: string;
+          /**
+           * Sub text under the heading.
+           */
+          body: string;
+          page?: Reference1;
+        },
+        {
+          /**
+           * Tile heading, for example Trauma & PTSD.
+           */
+          title: string;
+          /**
+           * Sub text under the heading.
+           */
+          body: string;
+          page?: Reference1;
+        },
+        {
+          /**
+           * Tile heading, for example Trauma & PTSD.
+           */
+          title: string;
+          /**
+           * Sub text under the heading.
+           */
+          body: string;
+          page?: Reference1;
+        },
+        {
+          /**
+           * Tile heading, for example Trauma & PTSD.
+           */
+          title: string;
+          /**
+           * Sub text under the heading.
+           */
+          body: string;
+          page?: Reference1;
+        }
+      ]
+    | [
+        {
+          /**
+           * Tile heading, for example Trauma & PTSD.
+           */
+          title: string;
+          /**
+           * Sub text under the heading.
+           */
+          body: string;
+          page?: Reference1;
+        },
+        {
+          /**
+           * Tile heading, for example Trauma & PTSD.
+           */
+          title: string;
+          /**
+           * Sub text under the heading.
+           */
+          body: string;
+          page?: Reference1;
+        },
+        {
+          /**
+           * Tile heading, for example Trauma & PTSD.
+           */
+          title: string;
+          /**
+           * Sub text under the heading.
+           */
+          body: string;
+          page?: Reference1;
+        },
+        {
+          /**
+           * Tile heading, for example Trauma & PTSD.
+           */
+          title: string;
+          /**
+           * Sub text under the heading.
+           */
+          body: string;
+          page?: Reference1;
+        },
+        {
+          /**
+           * Tile heading, for example Trauma & PTSD.
+           */
+          title: string;
+          /**
+           * Sub text under the heading.
+           */
+          body: string;
+          page?: Reference1;
+        }
+      ]
+    | [
+        {
+          /**
+           * Tile heading, for example Trauma & PTSD.
+           */
+          title: string;
+          /**
+           * Sub text under the heading.
+           */
+          body: string;
+          page?: Reference1;
+        },
+        {
+          /**
+           * Tile heading, for example Trauma & PTSD.
+           */
+          title: string;
+          /**
+           * Sub text under the heading.
+           */
+          body: string;
+          page?: Reference1;
+        },
+        {
+          /**
+           * Tile heading, for example Trauma & PTSD.
+           */
+          title: string;
+          /**
+           * Sub text under the heading.
+           */
+          body: string;
+          page?: Reference1;
+        },
+        {
+          /**
+           * Tile heading, for example Trauma & PTSD.
+           */
+          title: string;
+          /**
+           * Sub text under the heading.
+           */
+          body: string;
+          page?: Reference1;
+        },
+        {
+          /**
+           * Tile heading, for example Trauma & PTSD.
+           */
+          title: string;
+          /**
+           * Sub text under the heading.
+           */
+          body: string;
+          page?: Reference1;
+        },
+        {
+          /**
+           * Tile heading, for example Trauma & PTSD.
+           */
+          title: string;
+          /**
+           * Sub text under the heading.
+           */
+          body: string;
+          page?: Reference1;
+        }
+      ]
+    | [
+        {
+          /**
+           * Tile heading, for example Trauma & PTSD.
+           */
+          title: string;
+          /**
+           * Sub text under the heading.
+           */
+          body: string;
+          page?: Reference1;
+        },
+        {
+          /**
+           * Tile heading, for example Trauma & PTSD.
+           */
+          title: string;
+          /**
+           * Sub text under the heading.
+           */
+          body: string;
+          page?: Reference1;
+        },
+        {
+          /**
+           * Tile heading, for example Trauma & PTSD.
+           */
+          title: string;
+          /**
+           * Sub text under the heading.
+           */
+          body: string;
+          page?: Reference1;
+        },
+        {
+          /**
+           * Tile heading, for example Trauma & PTSD.
+           */
+          title: string;
+          /**
+           * Sub text under the heading.
+           */
+          body: string;
+          page?: Reference1;
+        },
+        {
+          /**
+           * Tile heading, for example Trauma & PTSD.
+           */
+          title: string;
+          /**
+           * Sub text under the heading.
+           */
+          body: string;
+          page?: Reference1;
+        },
+        {
+          /**
+           * Tile heading, for example Trauma & PTSD.
+           */
+          title: string;
+          /**
+           * Sub text under the heading.
+           */
+          body: string;
+          page?: Reference1;
+        },
+        {
+          /**
+           * Tile heading, for example Trauma & PTSD.
+           */
+          title: string;
+          /**
+           * Sub text under the heading.
+           */
+          body: string;
+          page?: Reference1;
+        }
+      ]
+    | [
+        {
+          /**
+           * Tile heading, for example Trauma & PTSD.
+           */
+          title: string;
+          /**
+           * Sub text under the heading.
+           */
+          body: string;
+          page?: Reference1;
+        },
+        {
+          /**
+           * Tile heading, for example Trauma & PTSD.
+           */
+          title: string;
+          /**
+           * Sub text under the heading.
+           */
+          body: string;
+          page?: Reference1;
+        },
+        {
+          /**
+           * Tile heading, for example Trauma & PTSD.
+           */
+          title: string;
+          /**
+           * Sub text under the heading.
+           */
+          body: string;
+          page?: Reference1;
+        },
+        {
+          /**
+           * Tile heading, for example Trauma & PTSD.
+           */
+          title: string;
+          /**
+           * Sub text under the heading.
+           */
+          body: string;
+          page?: Reference1;
+        },
+        {
+          /**
+           * Tile heading, for example Trauma & PTSD.
+           */
+          title: string;
+          /**
+           * Sub text under the heading.
+           */
+          body: string;
+          page?: Reference1;
+        },
+        {
+          /**
+           * Tile heading, for example Trauma & PTSD.
+           */
+          title: string;
+          /**
+           * Sub text under the heading.
+           */
+          body: string;
+          page?: Reference1;
+        },
+        {
+          /**
+           * Tile heading, for example Trauma & PTSD.
+           */
+          title: string;
+          /**
+           * Sub text under the heading.
+           */
+          body: string;
+          page?: Reference1;
+        },
+        {
+          /**
+           * Tile heading, for example Trauma & PTSD.
+           */
+          title: string;
+          /**
+           * Sub text under the heading.
+           */
+          body: string;
+          page?: Reference1;
+        }
+      ]
+    | [
+        {
+          /**
+           * Tile heading, for example Trauma & PTSD.
+           */
+          title: string;
+          /**
+           * Sub text under the heading.
+           */
+          body: string;
+          page?: Reference1;
+        },
+        {
+          /**
+           * Tile heading, for example Trauma & PTSD.
+           */
+          title: string;
+          /**
+           * Sub text under the heading.
+           */
+          body: string;
+          page?: Reference1;
+        },
+        {
+          /**
+           * Tile heading, for example Trauma & PTSD.
+           */
+          title: string;
+          /**
+           * Sub text under the heading.
+           */
+          body: string;
+          page?: Reference1;
+        },
+        {
+          /**
+           * Tile heading, for example Trauma & PTSD.
+           */
+          title: string;
+          /**
+           * Sub text under the heading.
+           */
+          body: string;
+          page?: Reference1;
+        },
+        {
+          /**
+           * Tile heading, for example Trauma & PTSD.
+           */
+          title: string;
+          /**
+           * Sub text under the heading.
+           */
+          body: string;
+          page?: Reference1;
+        },
+        {
+          /**
+           * Tile heading, for example Trauma & PTSD.
+           */
+          title: string;
+          /**
+           * Sub text under the heading.
+           */
+          body: string;
+          page?: Reference1;
+        },
+        {
+          /**
+           * Tile heading, for example Trauma & PTSD.
+           */
+          title: string;
+          /**
+           * Sub text under the heading.
+           */
+          body: string;
+          page?: Reference1;
+        },
+        {
+          /**
+           * Tile heading, for example Trauma & PTSD.
+           */
+          title: string;
+          /**
+           * Sub text under the heading.
+           */
+          body: string;
+          page?: Reference1;
+        },
+        {
+          /**
+           * Tile heading, for example Trauma & PTSD.
+           */
+          title: string;
+          /**
+           * Sub text under the heading.
+           */
+          body: string;
+          page?: Reference1;
+        }
+      ];
   tileLinkLabel: string;
+}
+/**
+ * The page the Learn more link opens, for example collection pages and id our-approach, or collection specialties and id emdr.
+ */
+export interface Reference1 {
+  collection: "pages" | "clinicians" | "specialties" | "mediaAppearances" | "blogPosts";
+  id: string;
 }
 export interface Clinicians {
   hidden: boolean;

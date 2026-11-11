@@ -64,31 +64,35 @@
     "heading": "What we treat",
     "items": [
       {
-        "collection": "specialties",
-        "id": "trauma-ptsd"
+        "title": "Trauma & PTSD",
+        "body": "Single events and long-term experiences that still shape the present."
       },
       {
-        "collection": "specialties",
-        "id": "emdr"
+        "title": "EMDR therapy",
+        "body": "A structured, research-backed method for processing distressing memories.",
+        "page": {
+          "collection": "specialties",
+          "id": "emdr"
+        }
       },
       {
-        "collection": "specialties",
-        "id": "anxiety"
+        "title": "Anxiety",
+        "body": "Worry, panic and the physical stress that comes with them."
       },
       {
-        "collection": "specialties",
-        "id": "relationships"
+        "title": "Relationships",
+        "body": "Patterns in partnership and family, including leaving harmful relationships."
       },
       {
-        "collection": "specialties",
-        "id": "grief-loss"
+        "title": "Grief & loss",
+        "body": "Support through bereavement, including the loss of a child."
       },
       {
-        "collection": "specialties",
-        "id": "life-transitions"
+        "title": "Life transitions",
+        "body": "Changes in work, family or identity that feel hard to steady."
       }
     ],
-    "tileLinkLabel": "Learn more"
+    "tileLinkLabel": "Learn More"
   },
   "clinicians": {
     "hidden": false,
