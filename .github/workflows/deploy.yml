@@ -5,6 +5,11 @@ on:
     workflows: [CI]
     branches: [main]
     types: [completed]
+  # A rebuild without a code change, for example after content is published in the CMS.
+  # Manual: Actions > Deploy > Run workflow. From the CMS: a repository_dispatch of type cms-publish.
+  workflow_dispatch:
+  repository_dispatch:
+    types: [cms-publish]
 
 concurrency:
   group: deploy
@@ -12,7 +17,9 @@ concurrency:
 
 jobs:
   deploy:
-    if: github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.event == 'push'
+    if: >-
+      github.event_name != 'workflow_run' ||
+      (github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.event == 'push')
     runs-on: ubuntu-latest
     environment: production
     env:
@@ -24,7 +31,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          ref: ${{ github.event.workflow_run.head_sha }}
+          ref: ${{ github.event.workflow_run.head_sha || github.sha }}
       - uses: pnpm/action-setup@v4
       - uses: actions/setup-node@v4
         with:
