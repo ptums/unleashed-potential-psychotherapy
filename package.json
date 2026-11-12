@@ -19,10 +19,12 @@
   },
   "dependencies": {
     "@opennextjs/cloudflare": "^1.20.16",
+    "aws4fetch": "1.0.20",
     "next": "16.4.6",
     "react": "19.3.0",
     "react-dom": "19.3.0",
-    "sanitize-html": "^2.18.1"
+    "sanitize-html": "^2.18.1",
+    "yup": "^1.7.1"
   },
   "devDependencies": {
     "@axe-core/playwright": "^4.14.0",
