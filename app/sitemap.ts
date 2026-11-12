@@ -10,6 +10,7 @@ const pages: { id: PageId; path: string }[] = [
   { id: "what-to-expect", path: "/what-to-expect" },
   { id: "featured-in", path: "/featured-in" },
   { id: "blog", path: "/blog" },
+  { id: "reviews", path: "/reviews" },
 ];
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
