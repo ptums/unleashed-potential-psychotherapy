@@ -43,7 +43,7 @@ export const site = {
   ] satisfies NavGroup[],
   navLinks: [{ label: "Blog", href: "/blog" }] satisfies NavLink[],
   footerLinks: [{ label: "Our Clinicians", href: "/clinicians/jessica-rebelo" }] satisfies NavLink[],
-  // TODO(handoff open question 7): real address and social links.
-  address: ["[Street address]", "[City, State ZIP]"],
+  // TODO(handoff open question 7): social links.
+  address: ["169 Commack Road #1015", "Commack, NY 11725"],
   social: [] as NavLink[],
 };
