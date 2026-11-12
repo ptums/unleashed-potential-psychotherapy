@@ -2,7 +2,7 @@ import AxeBuilder from "@axe-core/playwright";
 import { expect, test } from "@playwright/test";
 
 test("specialty page renders every zone and passes axe", async ({ page }) => {
-  await page.goto("/specialties/emdr");
+  await page.goto("/specialties/emdr-therapy");
   await expect(page).toHaveTitle("EMDR Therapy · Long Island & Online, NY");
   await expect(page.getByRole("heading", { level: 1 })).toHaveText("EMDR therapy");
   for (const name of ["EMDR may help if you live with", "What EMDR looks like", "Clinicians who offer EMDR", "About EMDR", "Talk with an EMDR clinician."]) {

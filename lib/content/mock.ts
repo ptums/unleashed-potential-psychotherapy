@@ -7,7 +7,7 @@ import featuredIn from "@/content/mock/pages/featured-in.json";
 import blog from "@/content/mock/pages/blog.json";
 import booking from "@/content/mock/pages/booking.json";
 import jessRebelo from "@/content/mock/clinicians/jessica-rebelo.json";
-import emdr from "@/content/mock/specialties/emdr.json";
+import emdr from "@/content/mock/specialties/emdr-therapy.json";
 import groundingSkills from "@/content/mock/blogPosts/grounding-skills-between-sessions.json";
 import emdrSession from "@/content/mock/blogPosts/what-happens-in-an-emdr-session.json";
 import selfWorth from "@/content/mock/blogPosts/self-worth-and-relationships.json";
@@ -27,7 +27,7 @@ const pages = {
 
 const collections = {
   clinicians: { "jessica-rebelo": jessRebelo },
-  specialties: { emdr },
+  specialties: { "emdr-therapy": emdr },
   blogPosts: {
     "grounding-skills-between-sessions": groundingSkills,
     "what-happens-in-an-emdr-session": emdrSession,

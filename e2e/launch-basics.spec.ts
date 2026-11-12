@@ -12,7 +12,7 @@ test("sitemap lists every built page", async ({ request }) => {
   const res = await request.get("/sitemap.xml");
   expect(res.status()).toBe(200);
   const body = await res.text();
-  for (const path of ["/our-approach", "/what-to-expect", "/featured-in", "/blog", "/specialties/emdr", "/clinicians/jessica-rebelo", "/blog/grounding-skills-between-sessions"]) {
+  for (const path of ["/our-approach", "/what-to-expect", "/featured-in", "/blog", "/specialties/emdr-therapy", "/clinicians/jessica-rebelo", "/blog/grounding-skills-between-sessions"]) {
     expect(body).toContain(`<loc>https://uptherapygroup.com${path}</loc>`);
   }
   expect(body).not.toContain("/book");

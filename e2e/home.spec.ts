@@ -9,7 +9,7 @@ test("home renders every zone from content", async ({ page }) => {
     await expect(page.getByRole("heading", { level: 2, name })).toBeVisible();
   }
   await expect(page.locator("#specialties li")).toHaveCount(6);
-  await expect(page.locator('#specialties a[href="/specialties/emdr"]')).toContainText("EMDR therapy");
+  await expect(page.locator('#specialties a[href="/specialties/emdr-therapy"]')).toContainText("EMDR therapy");
   await expect(page.getByRole("link", { name: /View profile & times/ })).toHaveAttribute("href", "/clinicians/jessica-rebelo");
 });
 
