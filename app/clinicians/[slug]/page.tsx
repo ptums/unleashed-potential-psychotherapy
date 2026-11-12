@@ -226,7 +226,9 @@ function Fees({ zone }: { zone: ClinicianProfile["fees"] }) {
 function FeaturedIn({ zone }: { zone: ClinicianProfile["featuredIn"] }) {
   const appearances = zone.appearances
     .map((ref) => getMediaAppearance(ref.id))
-    .filter((a): a is NonNullable<typeof a> => a !== null && a.links.length > 0);
+    .filter((a): a is NonNullable<typeof a> => a !== null)
+    // A series has parts and no links, so it links to its main URL.
+    .map((a) => (a.links.length > 0 ? a : { ...a, links: [{ label: a.outlet, url: a.url }] }));
 
   return (
     <Row heading={zone.heading}>
