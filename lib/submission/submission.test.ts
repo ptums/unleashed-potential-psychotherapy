@@ -43,10 +43,10 @@ describe("review schema", () => {
     expect(value).toMatchObject({ name: "Kim C", phone: "", rating: "", publishConsent: false });
   });
 
-  it("knows only the review form for now", () => {
+  it("knows the review and booking forms", () => {
     expect(isFormType("review")).toBe(true);
     expect(isFormType("feedback")).toBe(false);
-    expect(isFormType("booking")).toBe(false);
+    expect(isFormType("booking")).toBe(true);
   });
 });
 

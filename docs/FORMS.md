@@ -48,3 +48,11 @@ Worker secrets: `npx wrangler secret put <NAME>` from the repo root (Worker `unl
 `GET /api/availability?clinician={slug}` returns the open consultation times (UTC). It takes the clinician's weekly hours from the CMS (`lib/scheduling/rules.ts`), asks the Apps Script `doGet` for busy times (`lib/scheduling/busy.ts`), and subtracts them (`lib/scheduling/slots.ts`). If the calendar can't be read, it returns 503 and no times. It never guesses.
 
 Apps Script contract: `GET {APPS_SCRIPT_URL}?token=…&from=ISO&to=ISO` → `{ ok: true, busy: [{ start, end }] }`. Only start and end leave the script.
+
+## Booking requests (formType `booking`)
+
+`/book` step 2 posts to `/api/submit`. After validation, the route checks the time against a fresh calendar read: a time no longer open answers `409 { code: "SLOT_TAKEN" }` and nothing is sent. An open time goes to the Apps Script with:
+
+`fields`: `clinician`, `start`, `end` (ISO, UTC), `when` ("Tue, Nov 3 at 12:00 PM ET"), `clinicianName`, `format` (`video` | `phone`), `name`, `email`, `phone`, `pay` (`selfPay` | `insurance` | `unsure` | empty), `consent` (true).
+
+The script adds a `Booking` row (status `requested`) and emails Jess with Approve and Decline links (TWS-109).

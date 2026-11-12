@@ -36,6 +36,56 @@ test("book step 1: pick a time and a format, then continue", async ({ page }) =>
   await expect(page.getByText("Step 2 of 3")).toBeVisible();
 });
 
+async function toDetails(page: import("@playwright/test").Page) {
+  await page.route("**/api/availability**", (route) =>
+    route.fulfill({ json: { ok: true, timezone: "America/New_York", slots } }),
+  );
+  await page.goto("/book?clinician=jessica-rebelo");
+  await page.getByRole("radio", { name: "9:15 AM" }).check();
+  await page.getByRole("button", { name: "Continue to your details" }).click();
+}
+
+test("book step 2: errors, then the request is sent", async ({ page }) => {
+  let sent: { formType?: string; fields?: Record<string, unknown> } = {};
+  await page.route("**/api/submit", async (route) => {
+    sent = route.request().postDataJSON();
+    await route.fulfill({ json: { ok: true, id: "test-id" } });
+  });
+  await toDetails(page);
+
+  await page.getByRole("button", { name: "Send request" }).click();
+  await expect(page.getByRole("alert").filter({ hasText: "Please fix 4 errors to continue." })).toBeFocused();
+  await expect(page.getByLabel("Full name")).toHaveAttribute("aria-invalid", "true");
+
+  await page.getByLabel("Full name").fill("Kim C");
+  await page.getByLabel("Email").fill("kim@example.com");
+  await page.getByLabel("Phone").fill("555 010 0000");
+  await page.getByRole("radio", { name: "Not sure yet" }).check();
+  await page.getByRole("checkbox").check();
+  const results = await new AxeBuilder({ page }).withTags(["wcag2a", "wcag2aa", "wcag21aa", "wcag22aa"]).analyze();
+  expect(results.violations).toEqual([]);
+  await page.getByRole("button", { name: "Send request" }).click();
+
+  await expect(page.getByRole("heading", { level: 1, name: "Request sent." })).toBeFocused();
+  await expect(page.getByText("Step 3 of 3")).toBeVisible();
+  await expect(page.getByText("replies to kim@example.com")).toBeVisible();
+  expect(sent.formType).toBe("booking");
+  expect(sent.fields).toMatchObject({ clinician: "jessica-rebelo", start: slots[1].start, format: "video", consent: true });
+});
+
+test("book: a time taken meanwhile goes back to step 1 with fresh times", async ({ page }) => {
+  await page.route("**/api/submit", (route) => route.fulfill({ status: 409, json: { ok: false, code: "SLOT_TAKEN" } }));
+  await toDetails(page);
+  await page.getByLabel("Full name").fill("Kim C");
+  await page.getByLabel("Email").fill("kim@example.com");
+  await page.getByLabel("Phone").fill("555 010 0000");
+  await page.getByRole("checkbox").check();
+  await page.getByRole("button", { name: "Send request" }).click();
+  await expect(page.getByRole("heading", { level: 1, name: "Choose a time" })).toBeFocused();
+  await expect(page.getByText("That time was just booked. Please choose another.")).toBeVisible();
+  await expect(page.getByRole("radio", { name: "9:15 AM" })).not.toBeChecked();
+});
+
 test("book shows a message when the calendar can't be read", async ({ page }) => {
   await page.route("**/api/availability**", (route) => route.fulfill({ status: 503, json: { ok: false } }));
   await page.goto("/book?clinician=jessica-rebelo");

@@ -32,14 +32,14 @@
       "phone": "Error: enter a phone number we can reach you on.",
       "consent": "Error: please confirm to continue."
     },
-    "submitLabel": "Confirm booking",
+    "submitLabel": "Send request",
     "backLabel": "Back"
   },
   "stepConfirmed": {
     "hidden": false,
-    "progressLabel": "Confirmed",
-    "heading": "You’re booked.",
-    "summary": "Your consultation with {firstName} is on {time}, by {format}.",
+    "progressLabel": "Requested",
+    "heading": "Request sent.",
+    "summary": "Your request for a consultation with {firstName} on {time}, by {format}, is on its way.",
     "calendarHeading": "Add to your calendar",
     "calendarLabels": {
       "google": "Google Calendar",
@@ -48,9 +48,9 @@
     },
     "nextStepsHeading": "What happens next",
     "nextSteps": [
-      "A confirmation goes to {email} within a few minutes, with your secure video link.",
-      "{firstName} will join the video call at the scheduled time.",
-      "If you both agree it is a good fit, you will book your assessment together."
+      "{firstName} reviews your request and replies to {email}, usually within 1 business day.",
+      "Once it is approved, you get a calendar invite with the details for your call.",
+      "If the time no longer works, you get an email with how to choose another."
     ],
     "changePolicy": "Need to change or cancel? Use the link in your email, or call [Phone], at least 24 hours ahead.",
     "homeLink": {
