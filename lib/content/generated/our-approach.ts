@@ -22,7 +22,7 @@ export interface Hero {
    */
   heading: string;
   /**
-   * One or two sentences stating the mission.
+   * The mission. Leave a blank line between paragraphs.
    */
   intro: string;
 }
