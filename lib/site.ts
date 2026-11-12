@@ -34,7 +34,6 @@ export const site = {
       label: "Specialties",
       links: [
         { label: "What We Treat", href: "/#specialties" },
-        { label: "How We Help", href: "/specialties/emdr" },
       ],
     },
     {

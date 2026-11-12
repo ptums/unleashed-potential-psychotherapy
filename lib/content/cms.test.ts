@@ -56,6 +56,13 @@ describe("withFallback", () => {
     expect(await repo.getEntry("blogPosts", "grief-without-a-timeline")).toBeNull();
   });
 
+  it("never uses mock specialty pages, but keeps their names", async () => {
+    const repo = withFallback(empty, mockRepository);
+    expect(await repo.listSlugs("specialties")).toEqual([]);
+    expect(await repo.getEntry("specialties", "emdr")).toBeNull();
+    expect(await repo.getSpecialtyTile("emdr")).toMatchObject({ slug: "emdr", hasPage: false });
+  });
+
   it("prefers the CMS when it has the content", async () => {
     const cms: ContentRepository = { ...empty, getPage: async () => ({ title: "From CMS" }) as never };
     const page = (await withFallback(cms, mockRepository).getPage("home")) as unknown as { title: string };
