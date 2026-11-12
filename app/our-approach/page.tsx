@@ -37,7 +37,13 @@ function Hero({ zone }: { zone: OurApproach["hero"] }) {
       <div className="wrap mx-auto flex max-w-[920px] flex-col items-center gap-6 text-center">
         <p className="eyebrow">{zone.eyebrow}</p>
         <h1 className="text-h1">{zone.heading}</h1>
-        {zone.intro && <p className="max-w-[34em] text-[20px]">{zone.intro}</p>}
+        {zone.intro && (
+          <div className="flex max-w-[34em] flex-col gap-4 text-[20px]">
+            {zone.intro.split(/\n{2,}/).map((para) => (
+              <p key={para}>{para}</p>
+            ))}
+          </div>
+        )}
       </div>
     </section>
   );
