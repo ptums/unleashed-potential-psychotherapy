@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import { CmsHtml } from "@/components/CmsHtml";
 import { CmsLinkTo, CmsPicture } from "@/components/ui";
 import { ClosingCta } from "@/components/zones";
 import { getContent, isZoneVisible, type WhatToExpect } from "@/lib/content";
@@ -85,7 +86,7 @@ function Formats({ zone }: { zone: WhatToExpect["formats"] }) {
           <h2 id="formats-heading" className="text-h2-band">
             {zone.heading}
           </h2>
-          {zone.body && <p>{zone.body}</p>}
+          {zone.body && <CmsHtml html={zone.body} className="[&_p+p]:mt-4" />}
           <CmsLinkTo link={zone.link} className="self-start font-bold" />
         </div>
       </div>

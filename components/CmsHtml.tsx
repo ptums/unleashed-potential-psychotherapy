@@ -16,10 +16,15 @@ const options: sanitizeHtml.IOptions = {
   },
 };
 
-/** Cleans CMS HTML. Plain text with no tags comes back as 1 paragraph. */
+/** Cleans CMS HTML. Plain text with no tags becomes paragraphs, split at blank lines. */
 export function cleanCmsHtml(html: string): string {
   const trimmed = html.trim();
-  const source = /<[a-z][\s\S]*>/i.test(trimmed) ? trimmed : `<p>${escapeText(trimmed)}</p>`;
+  const source = /<[a-z][\s\S]*>/i.test(trimmed)
+    ? trimmed
+    : trimmed
+        .split(/\n\s*\n/)
+        .map((para) => `<p>${escapeText(para.trim())}</p>`)
+        .join("");
   return sanitizeHtml(source, options);
 }
 
