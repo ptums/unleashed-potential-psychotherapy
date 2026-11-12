@@ -1,7 +1,8 @@
 import { toSlug } from "./content/slug";
 // Media appearances (podcasts, press, video).
 // TODO(TWS-117 open question 2): hardcoded for launch. Move to a CMS mediaAppearances schema later.
-// TODO(handoff open question 7): PBN episode URLs and the Part 1 date are not known yet.
+// Source: the old site's Contentful export (podcasts and interviews), the YouTube and Spotify
+// listings for Female Founders #077, and the WomELLE article (2026-11-11).
 
 export interface MediaLink {
   label: string;
@@ -12,9 +13,11 @@ export interface MediaAppearance {
   id: string;
   /** Outlet shown in the Home "Featured in" strip. */
   outlet: string;
-  /** The outlet's main URL, used by the Home strip. */
+  /** The outlet's main URL. */
   url: string;
   kind: string;
+  /** When it came out, as shown on the page ("January 2023"). */
+  date?: string;
   title: string;
   summary: string;
   links: MediaLink[];
@@ -22,72 +25,116 @@ export interface MediaAppearance {
   parts?: { label: string; url?: string }[];
 }
 
-const spotify = "https://open.spotify.com/episode/5nWVZ64dgqsg7F4DT5iJiv";
-const apple =
-  "https://podcasts.apple.com/us/podcast/jessica-rebelo-self-worth-is-key-in-relationship-dynamics/id1617927566?i=1000596320700";
-const youtube = "https://youtu.be/AOTdkjDBdzM";
-const womlead = "https://www.womleadmag.com/jessica-rebelo/";
+const youtube = (id: string) => `https://www.youtube.com/watch?v=${id}`;
+
+const femaleFoundersVideo = youtube("AOTdkjDBdzM");
 
 export const mediaAppearances: Record<string, MediaAppearance> = {
   "female-founders-ep-77": {
     id: "female-founders-ep-77",
     outlet: "Female Founders Podcast",
-    url: "https://traffic.libsyn.com/3d217128-111a-4aac-a1a5-dce8b932b1ac/Female_Founders_Podcast_-_Episode_77_-_Jessica_Rebelo.mp3",
-    kind: "Podcast",
-    title: "Episode 77: Jessica Rebelo",
-    summary: "On founding a trauma-focused practice and what it takes to build care that lasts.",
+    url: femaleFoundersVideo,
+    kind: "Podcast & video · WomELLE",
+    date: "January 2023",
+    title: "Self-worth is key in relationship dynamics",
+    summary:
+      "Episode 77. Jessica talks about her own path through abuse and domestic violence, why she founded her practice, how she uses EMDR, and how clients turn pain into power.",
+    links: [
+      { label: "Watch on YouTube", url: femaleFoundersVideo },
+      { label: "Spotify", url: "https://open.spotify.com/episode/5nWVZ64dgqsg7F4DT5iJiv" },
+      {
+        label: "Apple Podcasts",
+        url: "https://podcasts.apple.com/us/podcast/jessica-rebelo-self-worth-is-key-in-relationship-dynamics/id1617927566?i=1000596320700",
+      },
+      { label: "Read on WomELLE", url: "https://www.womelle.com/blog/Jessica-Rebelo" },
+    ],
+  },
+  "chief-navigators-2023": {
+    id: "chief-navigators-2023",
+    outlet: "The Chief Navigators",
+    url: "https://thechiefnavigators.com/jessica-rebelo-a-renowned-licensed-clinical-social-worker-and-trauma-informed-life-coach/",
+    kind: "Magazine feature",
+    date: "September 2023",
+    title: "Jessica Rebelo: A renowned licensed clinical social worker and trauma-informed life coach",
+    summary: "Featured in The 10 Most Influential Women Leading the Business in 2023.",
     links: [
       {
-        label: "Listen (MP3)",
-        url: "https://traffic.libsyn.com/3d217128-111a-4aac-a1a5-dce8b932b1ac/Female_Founders_Podcast_-_Episode_77_-_Jessica_Rebelo.mp3",
+        label: "Read the feature",
+        url: "https://thechiefnavigators.com/jessica-rebelo-a-renowned-licensed-clinical-social-worker-and-trauma-informed-life-coach/",
       },
     ],
   },
-  "womlead-self-worth": {
-    id: "womlead-self-worth",
-    outlet: "WomLEAD Magazine",
-    url: womlead,
-    kind: "Magazine & podcast",
-    title: "Self-worth is key in relationship dynamics",
-    summary: "The full feature and episode page on WomLEAD.",
+  "journey-with-jess": {
+    id: "journey-with-jess",
+    outlet: "Journey With Jess",
+    url: "https://podcasters.spotify.com/pod/show/jessica-monge6",
+    kind: "Podcast & video",
+    title: "Trauma-informed life coach and therapist, Jessica Rebelo",
+    summary:
+      "A conversation about Jessica's work as a licensed clinical social worker and trauma-informed life coach, and the founding of her practice.",
     links: [
-      { label: "Read on WomLEAD", url: womlead },
-      { label: "Spotify", url: spotify },
-      { label: "Apple Podcasts", url: apple },
+      { label: "Watch on YouTube", url: youtube("hsw23sN8aUc") },
+      { label: "The show on Spotify", url: "https://podcasters.spotify.com/pod/show/jessica-monge6" },
     ],
-  },
-  "youtube-interview": {
-    id: "youtube-interview",
-    outlet: "YouTube",
-    url: youtube,
-    kind: "Video",
-    title: "In conversation with Jess Rebelo",
-    summary: "The interview on video, for those who prefer to watch.",
-    links: [{ label: "Watch on YouTube", url: youtube }],
   },
   "pbn-steve-harper-series": {
     id: "pbn-steve-harper-series",
     outlet: "PBN Podcasts",
-    url: "",
+    url: youtube("WYJPPvPD5_Y"),
     kind: "Interview series",
+    date: "Spring 2024",
     title: "Steve Harper interviews Jessica Rebelo",
-    summary: "A four-part series, recorded in spring 2024.",
+    summary: "A four-part video series on Jessica's work and her practice.",
     links: [],
     parts: [
-      { label: "Part 4 · April 1, 2024" },
-      { label: "Part 3 · March 25, 2024" },
-      { label: "Part 2 · March 18, 2024" },
-      { label: "Part 1 · [Date]" },
+      { label: "Part 4 · April 1, 2024", url: youtube("WYJPPvPD5_Y") },
+      { label: "Part 3 · March 25, 2024", url: youtube("Ht-UiaUcPf0") },
+      { label: "Part 2 · March 18, 2024", url: youtube("zEhCKMOe8Cc") },
+      { label: "Part 1", url: youtube("1MLmoBL2CHs") },
+    ],
+  },
+  "can-you-dig-it": {
+    id: "can-you-dig-it",
+    outlet: "Can You Dig It? Podcast",
+    url: youtube("HtAxoCFKiIo"),
+    kind: "Video podcast · co-host",
+    title: "Can You Dig It? with Jessica and Jordan",
+    summary:
+      "Jessica co-hosts this video podcast on personal growth. Episodes cover coaching and counseling, pain, self-worth, showing up for yourself, and a four-part series on anxiety.",
+    links: [],
+    parts: [
+      { label: "Anxiety series, episode 4: Q&A", url: youtube("HtAxoCFKiIo") },
+      { label: "Anxiety series, episode 3", url: youtube("2m0PpZcrB3k") },
+      { label: "Anxiety series, episode 2", url: youtube("IaAmRAtooTE") },
+      { label: "Anxiety series, episode 1", url: youtube("htYVFgc7p4E") },
+      { label: "Episode 10: Happy but not healthy", url: youtube("SaFO5yIbn7M") },
+      { label: "Marching into April", url: youtube("MoOmcIuJKFw") },
+      { label: "Listener Q&A", url: youtube("R6D-d4VFM0g") },
+      { label: "Episode 7: Chainbreakers", url: youtube("WShXumvLlXw") },
+      { label: "Episode 6: The toughness of enoughness", url: youtube("eF0VmkzFUQI") },
+      { label: "Episode 5: Showing up", url: youtube("wHGj0bKjzYY") },
+      { label: "Episode 4: Turning pain into power", url: youtube("9ZAbVvvM6rg") },
+      { label: "Episode 3: The personal narrative", url: youtube("_CSa1d-zb0k") },
+      { label: "Episode 2: Just because we can dig it, should we?", url: youtube("5YmupiYxok8") },
+      { label: "Episode 1: Coaching vs. counseling", url: youtube("-OwyKO_KbSY") },
     ],
   },
 };
 
+// Older ids and outlet names from earlier content, so references made before 2026-11-11 still resolve.
+const aliases: Record<string, string> = {
+  "womlead-self-worth": "female-founders-ep-77",
+  "youtube-interview": "female-founders-ep-77",
+  womelle: "female-founders-ep-77",
+};
+
 // The CMS reference can hold the outlet name ("Female Founders Podcast"), so match that too.
 export function getMediaAppearance(id: string): MediaAppearance | null {
-  const direct = mediaAppearances[id];
+  const slug = toSlug(id);
+  const key = aliases[slug] ?? slug;
+  const direct = mediaAppearances[id] ?? mediaAppearances[key];
   if (direct) {
     return direct;
   }
-  const slug = toSlug(id);
-  return Object.values(mediaAppearances).find((a) => a.id === slug || toSlug(a.outlet) === slug) ?? null;
+  return Object.values(mediaAppearances).find((a) => toSlug(a.outlet) === key) ?? null;
 }

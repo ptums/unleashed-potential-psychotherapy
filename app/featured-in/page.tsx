@@ -13,8 +13,11 @@ export async function generateMetadata(): Promise<Metadata> {
   return seoMetadata((await loadPage())?.seo);
 }
 
-const resolve = (refs: { id: string }[]) =>
-  refs.map((ref) => getMediaAppearance(ref.id)).filter((a): a is MediaAppearance => a !== null);
+// 2 names can point to the same appearance, so each one is listed once.
+const resolve = (refs: { id: string }[]) => {
+  const found = refs.map((ref) => getMediaAppearance(ref.id)).filter((a): a is MediaAppearance => a !== null);
+  return [...new Map(found.map((a) => [a.id, a])).values()];
+};
 
 export default async function FeaturedInPage() {
   const page = await loadPage();
@@ -113,6 +116,7 @@ function Appearances({ zone, appearances }: { zone: FeaturedIn["appearances"]; a
             <div className="flex flex-[0_1_260px] flex-col gap-1.5">
               <p className="eyebrow">{a.kind}</p>
               <p className="font-display text-2xl">{a.outlet}</p>
+              {a.date && <p className="text-small">{a.date}</p>}
             </div>
             <div className="flex flex-[1_1_420px] flex-col gap-3.5">
               <h3 className="text-[26px]">{a.title}</h3>

@@ -8,10 +8,10 @@
     "hidden": false,
     "appearance": {
       "collection": "mediaAppearances",
-      "id": "womlead-self-worth"
+      "id": "female-founders-ep-77"
     },
     "eyebrow": "Featured episode",
-    "summary": "Jess talks with WomLEAD about why self-worth shapes the relationships we stay in, and how therapy helps people see their patterns clearly.",
+    "summary": "Jessica talks with the Female Founders Podcast about why self-worth shapes the relationships we stay in, and how she helps clients turn pain into power.",
     "image": {
       "assetId": "[asset-id]",
       "alt": "Jess Rebelo in conversation during a video interview"
@@ -29,15 +29,19 @@
       },
       {
         "collection": "mediaAppearances",
-        "id": "womlead-self-worth"
+        "id": "chief-navigators-2023"
       },
       {
         "collection": "mediaAppearances",
-        "id": "youtube-interview"
+        "id": "journey-with-jess"
       },
       {
         "collection": "mediaAppearances",
         "id": "pbn-steve-harper-series"
+      },
+      {
+        "collection": "mediaAppearances",
+        "id": "can-you-dig-it"
       }
     ]
   },
