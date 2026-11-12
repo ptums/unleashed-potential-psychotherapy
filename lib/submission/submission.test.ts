@@ -70,6 +70,15 @@ describe("debug log record", () => {
   });
 });
 
+describe("debug log not set up yet", () => {
+  it("skips the write without calling AWS", async () => {
+    const fetchMock = fakeFetch(500);
+    vi.stubEnv("SUBMISSIONS_TABLE", "");
+    await expect(putSubmission(record)).resolves.toBeNull();
+    expect(fetchMock).not.toHaveBeenCalled();
+  });
+});
+
 describe("Apps Script handoff", () => {
   const payload = { formType: "feedback" as const, id: "abc", createdAt: record.createdAt, isTest: false, fields: {} as never };
 
@@ -78,6 +87,18 @@ describe("Apps Script handoff", () => {
     expect(await sendToAppsScript(payload)).toEqual({ ok: true });
     const init = fetchMock.mock.calls[0][1] as RequestInit;
     expect(JSON.parse(init.body as string)).toMatchObject({ token: "secret-token", id: "abc", formType: "feedback" });
+  });
+
+  it("follows the web app redirect with a GET, not a second POST", async () => {
+    const echo = "https://script.googleusercontent.com/macros/echo?user_content_key=x";
+    const fetchMock = vi.fn<typeof fetch>(async (_input, init) =>
+      init?.method === "POST"
+        ? new Response(null, { status: 302, headers: { location: echo } })
+        : Response.json({ ok: true }),
+    );
+    vi.stubGlobal("fetch", fetchMock);
+    expect(await sendToAppsScript(payload)).toEqual({ ok: true });
+    expect(fetchMock.mock.calls[1]).toEqual([echo, { method: "GET" }]);
   });
 
   it("fails when the script says no, or when it is not set up", async () => {

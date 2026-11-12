@@ -39,5 +39,6 @@ Worker secrets: `npx wrangler secret put <NAME>` from the repo root (Worker `unl
 
 - Never log a submission body. Logs carry the ID only.
 - The debug log holds metadata only: ID, form type, time, spam result, test flag, delivery status.
-- Fail open: a failed DynamoDB write never stops a submission.
+- Fail open: a failed DynamoDB write never stops a submission. Until the table and keys are set, the write is skipped.
+- The Apps Script web app answers with a 302 that only accepts GET. `lib/submission/apps-script.ts` follows it by hand; a re-sent POST gets a 405 HTML page.
 - Type `TEST` in any field to mark a test submission.
