@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { CmsHtml } from "@/components/CmsHtml";
 import { CmsPicture, SectionIntro } from "@/components/ui";
 import { ClosingCta, FaqList, sectionPad } from "@/components/zones";
@@ -34,6 +35,7 @@ export default async function SpecialtyPage({ params }: PageProps<"/specialties/
 
   return (
     <>
+      <Breadcrumbs items={[{ label: "Specialties", href: "/#specialties" }, { label: specialty.hero.heading }]} />
       {isZoneVisible(specialty.hero) && <Hero zone={specialty.hero} />}
       {isZoneVisible(specialty.whoItHelps) && <WhoItHelps zone={specialty.whoItHelps} />}
       {isZoneVisible(specialty.process) && <Process zone={specialty.process} />}
@@ -46,7 +48,7 @@ export default async function SpecialtyPage({ params }: PageProps<"/specialties/
 
 function Hero({ zone }: { zone: Specialty["hero"] }) {
   return (
-    <section className="py-[clamp(56px,8vw,112px)]">
+    <section className="pt-[clamp(32px,5vw,64px)] pb-[clamp(56px,8vw,112px)]">
       <div className="wrap grid grid-cols-[repeat(auto-fit,minmax(min(440px,100%),1fr))] items-center gap-[clamp(40px,6vw,96px)]">
         <div className="flex flex-col gap-6">
           <p className="eyebrow">{zone.eyebrow}</p>
