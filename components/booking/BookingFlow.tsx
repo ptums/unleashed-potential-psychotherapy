@@ -40,6 +40,15 @@ export function BookingFlow({ page, clinician }: { page: Booking; clinician: Boo
   const [showAll, setShowAll] = useState(false);
   const [slotError, setSlotError] = useState(false);
   const headingRef = useRef<HTMLHeadingElement>(null);
+  // Focus moves to the step's heading after each step change, once React has drawn it
+  // (not on first load). A requestAnimationFrame could fire before the new step existed.
+  const focusOnRender = useRef(false);
+  useEffect(() => {
+    if (focusOnRender.current) {
+      focusOnRender.current = false;
+      headingRef.current?.focus();
+    }
+  }, [step, taken]);
 
   useEffect(() => {
     let live = true;
@@ -63,8 +72,8 @@ export function BookingFlow({ page, clinician }: { page: Booking; clinician: Boo
   const formatText = format === "video" ? t.videoLabel : t.phoneLabel;
 
   function goTo(next: 1 | 2 | 3) {
+    focusOnRender.current = true;
     setStep(next);
-    requestAnimationFrame(() => headingRef.current?.focus());
   }
 
   function onContinue() {
