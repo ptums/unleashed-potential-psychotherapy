@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { CmsHtml } from "@/components/CmsHtml";
 import { CmsPicture, SectionIntro } from "@/components/ui";
 import { ClosingCta, FaqList, sectionPad } from "@/components/zones";
 import { getContent, isZoneVisible, type Specialty } from "@/lib/content";
@@ -50,13 +51,7 @@ function Hero({ zone }: { zone: Specialty["hero"] }) {
         <div className="flex flex-col gap-6">
           <p className="eyebrow">{zone.eyebrow}</p>
           <h1 className="text-h1">{zone.heading}</h1>
-          <div className="flex flex-col gap-4">
-            {zone.intro.split(/\n{2,}/).map((para) => (
-              <p key={para} className="text-lead">
-                {para}
-              </p>
-            ))}
-          </div>
+          <CmsHtml html={zone.intro} className="flex flex-col gap-4 text-lead" />
           {zone.evidenceNote && <p className="text-small text-forest">{zone.evidenceNote}</p>}
           <a href="#clinicians" className="btn self-start">
             {zone.ctaLabel}
@@ -97,7 +92,7 @@ function Process({ zone }: { zone: Specialty["process"] }) {
                 {String(i + 1).padStart(2, "0")}
               </span>
               <h3 className="text-2xl">{step.title}</h3>
-              <p>{step.body}</p>
+              <CmsHtml html={step.body} className="[&_p+p]:mt-3" />
             </li>
           ))}
         </ol>

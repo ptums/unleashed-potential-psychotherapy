@@ -1,3 +1,4 @@
+import { CmsHtml } from "./CmsHtml";
 import { CmsLinkTo } from "./ui";
 import type { CmsLink } from "@/lib/links";
 
@@ -22,7 +23,7 @@ export function FaqList({ items }: { items: { question: string; answer: string }
             </svg>
           </summary>
           <div className="max-w-[46em] pb-6">
-            <p>{item.answer}</p>
+            <CmsHtml html={item.answer} className="[&_p+p]:mt-3" />
           </div>
         </details>
       ))}
@@ -39,7 +40,7 @@ export function ClosingCta({ zone }: { zone: { heading: string; body?: string; c
           <h2 id="closing-heading" className="text-h2-band">
             {zone.heading}
           </h2>
-          {zone.body && <p>{zone.body}</p>}
+          {zone.body && <CmsHtml html={zone.body} className="[&_p+p]:mt-3" />}
         </div>
         <CmsLinkTo link={zone.cta} className="btn" />
       </div>

@@ -36,7 +36,7 @@ function Hero({ zone }: { zone: WhatToExpect["hero"] }) {
       <div className="wrap mx-auto flex max-w-[920px] flex-col items-center gap-6 text-center">
         <p className="eyebrow">{zone.eyebrow}</p>
         <h1 className="text-h1">{zone.heading}</h1>
-        {zone.intro && <p className="max-w-[32em] text-[20px]">{zone.intro}</p>}
+        {zone.intro && <CmsHtml html={zone.intro} className="flex max-w-[32em] flex-col gap-4 text-[20px]" />}
       </div>
     </section>
   );
@@ -57,7 +57,7 @@ function Steps({ zone }: { zone: WhatToExpect["steps"] }) {
                 Step {i + 1} of {total}
               </p>
               <h2 className="text-[clamp(28px,3vw,40px)]">{step.title}</h2>
-              <p>{step.body}</p>
+              <CmsHtml html={step.body} className="[&_p+p]:mt-3" />
               {step.facts && step.facts.length > 0 && (
                 <dl className="mt-2 mb-0 flex flex-wrap gap-x-10 gap-y-3 text-small">
                   {step.facts.map((fact) => (

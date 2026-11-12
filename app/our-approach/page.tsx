@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import { CmsHtml } from "@/components/CmsHtml";
 import { CmsLinkTo, CmsPicture, SectionIntro } from "@/components/ui";
 import { ClosingCta, sectionPad } from "@/components/zones";
 import { getContent, isZoneVisible, type OurApproach } from "@/lib/content";
@@ -38,11 +39,7 @@ function Hero({ zone }: { zone: OurApproach["hero"] }) {
         <p className="eyebrow">{zone.eyebrow}</p>
         <h1 className="text-h1">{zone.heading}</h1>
         {zone.intro && (
-          <div className="flex max-w-[34em] flex-col gap-4 text-[20px]">
-            {zone.intro.split(/\n{2,}/).map((para) => (
-              <p key={para}>{para}</p>
-            ))}
-          </div>
+          <CmsHtml html={zone.intro} className="flex max-w-[34em] flex-col gap-4 text-[20px]" />
         )}
       </div>
     </section>
@@ -104,7 +101,10 @@ function FounderNote({ zone }: { zone: OurApproach["founderNote"] }) {
             {zone.eyebrow}
           </h2>
           <blockquote className="m-0 font-display text-[clamp(24px,2.6vw,34px)] leading-[1.35] italic">
-            “{zone.quote}”
+            <CmsHtml
+              html={zone.quote}
+              className="[&_p+p]:mt-4 [&>:first-child]:before:content-['“'] [&>:last-child]:after:content-['”']"
+            />
           </blockquote>
           <figcaption>
             <strong>{zone.authorName}</strong>

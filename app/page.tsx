@@ -215,7 +215,7 @@ function HowItWorks({ zone }: { zone: NonNullable<Home["howItWorks"]> }) {
                 {String(i + 1).padStart(2, "0")}
               </span>
               <h3 className="text-2xl">{step.title}</h3>
-              <p>{step.body}</p>
+              <CmsHtml html={step.body} className="[&_p+p]:mt-3" />
             </li>
           ))}
         </ol>

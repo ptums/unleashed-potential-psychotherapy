@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { CmsHtml } from "@/components/CmsHtml";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArticleList } from "@/components/ArticleList";
@@ -61,7 +62,7 @@ function Hero({ zone }: { zone: Blog["hero"] }) {
       <div className="wrap mx-auto flex max-w-[920px] flex-col items-center gap-5 text-center">
         <p className="eyebrow">{zone.eyebrow}</p>
         <h1 className="text-h1">{zone.heading}</h1>
-        {zone.intro && <p className="max-w-[32em] text-[20px]">{zone.intro}</p>}
+        {zone.intro && <CmsHtml html={zone.intro} className="flex max-w-[32em] flex-col gap-4 text-[20px]" />}
       </div>
     </section>
   );

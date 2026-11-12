@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { CmsHtml } from "@/components/CmsHtml";
 import { notFound } from "next/navigation";
 import { CmsLinkTo, CmsPicture, SectionIntro } from "@/components/ui";
 import { getContent, isZoneVisible, type FeaturedIn } from "@/lib/content";
@@ -44,7 +45,7 @@ function Hero({ zone, outlets }: { zone: FeaturedIn["hero"]; outlets: string[] }
       <div className="wrap mx-auto flex max-w-[920px] flex-col items-center gap-6 text-center">
         <p className="eyebrow">{zone.eyebrow}</p>
         <h1 className="text-h1">{zone.heading}</h1>
-        {zone.intro && <p className="max-w-[32em] text-[20px]">{zone.intro}</p>}
+        {zone.intro && <CmsHtml html={zone.intro} className="flex max-w-[32em] flex-col gap-4 text-[20px]" />}
         {outlets.length > 0 && (
           <ul
             aria-label="Featured in"
@@ -91,7 +92,7 @@ function FeaturedEpisode({ zone }: { zone: FeaturedIn["featuredEpisode"] }) {
           <h2 id="featured-heading" className="text-[clamp(30px,3.4vw,46px)]">
             {appearance.title}
           </h2>
-          {zone.summary && <p>{zone.summary}</p>}
+          {zone.summary && <CmsHtml html={zone.summary} className="[&_p+p]:mt-3" />}
           {appearance.links.length > 0 && (
             <div className="flex flex-col gap-2.5">
               <p className="text-small font-bold">{zone.listenLabel}</p>

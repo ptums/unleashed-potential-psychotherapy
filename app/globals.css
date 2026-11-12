@@ -57,6 +57,20 @@
     text-wrap: pretty;
   }
 
+  /* Lists in CMS rich text (see components/CmsHtml.tsx). The reset removes their markers. */
+  .cms-html ul,
+  .cms-html ol {
+    padding-left: 1.25em;
+  }
+
+  .cms-html ul {
+    list-style: disc;
+  }
+
+  .cms-html ol {
+    list-style: decimal;
+  }
+
   a {
     color: inherit;
     text-decoration: underline;
