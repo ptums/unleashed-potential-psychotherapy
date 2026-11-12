@@ -1,0 +1,73 @@
+{
+  "form": {
+    "eyebrow": "For current and past clients",
+    "heading": "Share your experience",
+    "intro": "We read every response and use it to improve our care. It takes about three minutes.",
+    "labels": {
+      "name": "Full name",
+      "email": "Email",
+      "phone": "Phone",
+      "requiredMark": "(required)",
+      "ratingLegend": "Rate our services",
+      "ratingOptions": {
+        "excellent": "Excellent",
+        "good": "Good",
+        "disappointing": "Disappointing"
+      },
+      "likedBest": "What did you like best?",
+      "improve": "How can we improve?",
+      "recommendLegend": "Would you recommend us to your friends?",
+      "recommendOptions": {
+        "yes": "Yes",
+        "no": "No"
+      },
+      "anythingElse": "Anything else you would like to add?",
+      "publishConsent": "You may share my feedback on your website, using my first name and last initial."
+    },
+    "errors": {
+      "summary": "Please fix {count} to continue.",
+      "name": "Error: enter your full name.",
+      "email": "Error: enter an email address like name@example.com."
+    },
+    "submitLabel": "Send feedback",
+    "cancelLabel": "Cancel"
+  },
+  "notePanel": {
+    "hidden": false,
+    "heading": "Before you write",
+    "items": [
+      "Your feedback goes to our team. It is not posted unless you say we may share it.",
+      "Please don’t include details about your health, diagnosis or treatment.",
+      "To reach Jess about your care, contact her directly instead."
+    ],
+    "crisisText": "In crisis? Call or text 988, or call 911."
+  },
+  "thankYou": {
+    "hidden": false,
+    "heading": "Thank you for sharing.",
+    "body": "Your feedback has been sent to our team. We read every response.",
+    "primaryLink": {
+      "label": "Back to reviews",
+      "target": {
+        "internal": {
+          "collection": "pages",
+          "id": "reviews"
+        }
+      }
+    },
+    "secondaryLink": {
+      "label": "Return to home",
+      "target": {
+        "internal": {
+          "collection": "pages",
+          "id": "home"
+        }
+      }
+    }
+  },
+  "seo": {
+    "title": "Share Your Experience · Unleashed Potential",
+    "description": "Private feedback form for current and past clients.",
+    "noindex": true
+  }
+}

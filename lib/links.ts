@@ -13,6 +13,7 @@ const pageRoutes: Record<string, string> = {
   "featured-in": "/featured-in",
   blog: "/blog",
   reviews: "/reviews",
+  "share-experience": "/reviews/share",
   // There is no clinicians list page; the list lives on Home.
   clinicians: "/#clinicians",
 };

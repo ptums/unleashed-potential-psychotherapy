@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { CmsHtml } from "@/components/CmsHtml";
+import { FloatingAction, PenIcon } from "@/components/FloatingAction";
 import { ReviewText } from "@/components/ReviewText";
 import { CmsLinkTo, CmsPicture } from "@/components/ui";
 import { ClosingCta } from "@/components/zones";
@@ -24,6 +25,8 @@ export default async function ReviewsPage() {
   return (
     <>
       <Hero zone={page.hero} />
+      {/* Static, not CMS content. It is first in the tab order after the hero. */}
+      <FloatingAction href="/reviews/share" label="Share your experience" icon={<PenIcon />} />
       {isZoneVisible(page.featureImage) && <FeatureImage zone={page.featureImage} />}
       {isZoneVisible(page.reviewList) && <ReviewList zone={page.reviewList} />}
       {isZoneVisible(page.closingCta) && <ClosingCta zone={page.closingCta} />}

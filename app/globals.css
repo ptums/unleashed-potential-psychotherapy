@@ -34,6 +34,16 @@
     background: var(--color-linen);
   }
 
+  /* A floating button must never cover the focused element (WCAG 2.4.11):
+     its top offset + its height + 16px. */
+  html:has([data-floating-action]) {
+    scroll-padding-top: 164px;
+
+    @media (width >= 900px) {
+      scroll-padding-top: 176px;
+    }
+  }
+
   body {
     margin: 0;
     background: var(--color-linen);
