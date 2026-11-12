@@ -19,15 +19,19 @@ test("links to pages that do not exist yet are hidden", async ({ page }) => {
 });
 
 test("home review carousel steps through the reviews", async ({ page }) => {
+  // Playwright runs with reduced motion, so the carousel does not move on its own here.
   await page.goto("/");
   const band = page.locator("section", { has: page.getByRole("heading", { name: "Client reviews", exact: true }) });
-  await expect(band.getByText("Kevin D", { exact: true })).toBeVisible();
-  await expect(band.getByText("1 / 18")).toBeVisible();
+  await expect(band.getByText("– Kevin D", { exact: true })).toBeVisible();
+  // Each review is cut to 400 characters (the quote marks add 2).
+  const quote = await band.locator("figure:not([aria-hidden=true]) blockquote p").textContent();
+  expect(quote?.length).toBeLessThanOrEqual(402);
+  expect(quote).toMatch(/\.\.\.”$/);
   await band.getByRole("button", { name: "Next review" }).click();
-  await expect(band.getByText("Sky G", { exact: true })).toBeVisible();
-  await expect(band.getByText("Kevin D", { exact: true })).toBeHidden();
+  await expect(band.getByText("– Sky G", { exact: true })).toBeVisible();
+  await expect(band.getByText("– Kevin D", { exact: true })).toBeHidden();
   await band.getByRole("button", { name: "Previous review" }).click();
   await band.getByRole("button", { name: "Previous review" }).click();
-  await expect(band.getByText("18 / 18")).toBeVisible();
-  await expect(band.getByRole("link", { name: "Read all reviews" })).toHaveAttribute("href", "/reviews");
+  await expect(band.getByText("– Isabella H", { exact: true })).toBeVisible();
+  await expect(band.getByRole("link")).toHaveCount(0);
 });

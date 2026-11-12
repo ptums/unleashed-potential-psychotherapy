@@ -9,7 +9,7 @@ import { sectionPad } from "@/components/zones";
 import { CmsHtml } from "@/components/CmsHtml";
 import type { Metadata } from "next";
 import { ReviewCarousel } from "@/components/ReviewCarousel";
-import { truncateWords } from "@/lib/text";
+import { truncateChars } from "@/lib/text";
 
 async function loadHome() {
   return getContent().getPage("home");
@@ -228,25 +228,22 @@ function HowItWorks({ zone }: { zone: NonNullable<Home["howItWorks"]> }) {
   );
 }
 
-/** Client reviews from the Reviews page, 1 at a time, each cut to 200 words. */
+/** Client reviews from the Reviews page, 1 at a time, each cut to 400 characters. */
 async function ReviewsBand() {
   const reviews = await getContent().getPage("reviews");
   const items = (reviews?.reviewList.items ?? [])
     .filter((item) => !item.hidden)
-    .map((item) => ({ displayName: item.displayName, text: truncateWords(item.text, 200) }));
+    .map((item) => ({ displayName: item.displayName, text: truncateChars(item.text, 400) }));
   if (items.length === 0) {
     return null;
   }
   return (
     <section aria-labelledby="reviews-band-heading" className={`dark ${sectionPad}`}>
-      <div className="wrap flex max-w-[960px] flex-col items-center gap-10">
+      <div className="wrap flex flex-col items-center gap-10">
         <h2 id="reviews-band-heading" className="eyebrow font-body font-bold">
           Client reviews
         </h2>
         <ReviewCarousel reviews={items} />
-        <Link href="/reviews" className="btn">
-          Read all reviews
-        </Link>
       </div>
     </section>
   );
