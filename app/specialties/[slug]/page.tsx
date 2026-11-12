@@ -126,7 +126,7 @@ async function ClinicianRow({ item, ctaLabel }: { item: ClinicianListItem; ctaLa
 
   return (
     <article className="flex max-w-[820px] flex-wrap gap-8 bg-linen p-8">
-      <CmsPicture image={header.portrait} className="aspect-square w-[220px] min-w-0 shrink-0" />
+      <CmsPicture image={header.portrait} className="aspect-[3/4] w-[min(300px,100%)] min-w-0 shrink-0" />
       <div className="flex flex-[2_1_300px] flex-col gap-2.5">
         <h3 className="text-[30px]">{header.displayName}</h3>
         {names.length > 0 && <p className="text-small">{names.join(" · ")}</p>}
