@@ -59,8 +59,8 @@ describe("withFallback", () => {
   it("never uses mock specialty pages, but keeps their names", async () => {
     const repo = withFallback(empty, mockRepository);
     expect(await repo.listSlugs("specialties")).toEqual([]);
-    expect(await repo.getEntry("specialties", "emdr")).toBeNull();
-    expect(await repo.getSpecialtyTile("emdr")).toMatchObject({ slug: "emdr", hasPage: false });
+    expect(await repo.getEntry("specialties", "emdr-therapy")).toBeNull();
+    expect(await repo.getSpecialtyTile("emdr-therapy")).toMatchObject({ slug: "emdr-therapy", hasPage: false });
   });
 
   it("prefers the CMS when it has the content", async () => {
