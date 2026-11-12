@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { FeedbackForm } from "@/components/FeedbackForm";
 import { isZoneVisible, getContent, type ShareYourExperience } from "@/lib/content";
 import { seoMetadata } from "@/lib/seo";
@@ -22,12 +23,15 @@ export default async function ShareExperiencePage() {
   }
 
   return (
-    <div className="wrap pt-[clamp(32px,5vw,64px)] pb-[clamp(48px,6vw,96px)]">
-      <div className="grid items-start gap-8 nav:grid-cols-[minmax(0,1fr)_380px] nav:gap-16">
-        {isZoneVisible(page.notePanel) && <NotePanel zone={page.notePanel} />}
-        <FeedbackForm form={page.form} thankYou={page.thankYou} />
+    <>
+      <Breadcrumbs items={[{ label: "Reviews", href: "/reviews" }, { label: page.form.heading }]} />
+      <div className="wrap pt-[clamp(32px,5vw,64px)] pb-[clamp(48px,6vw,96px)]">
+        <div className="grid items-start gap-8 nav:grid-cols-[minmax(0,1fr)_380px] nav:gap-16">
+          {isZoneVisible(page.notePanel) && <NotePanel zone={page.notePanel} />}
+          <FeedbackForm form={page.form} thankYou={page.thankYou} />
+        </div>
       </div>
-    </div>
+    </>
   );
 }
 

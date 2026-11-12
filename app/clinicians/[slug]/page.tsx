@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { ReactNode } from "react";
+import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { CmsHtml } from "@/components/CmsHtml";
 import { CalendarCheckIcon, FloatingAction } from "@/components/FloatingAction";
 import { CmsLinkTo, CmsPicture } from "@/components/ui";
@@ -41,21 +42,7 @@ export default async function ClinicianProfilePage({ params }: PageProps<"/clini
 
   return (
     <>
-      <div className="wrap pt-6">
-        <nav aria-label="Breadcrumb">
-          <ol className="m-0 flex list-none flex-wrap gap-2 p-0 text-small">
-            <li>
-              <Link href="/">Home</Link>
-            </li>
-            <li aria-hidden="true">/</li>
-            <li>
-              <Link href="/#clinicians">Our Clinicians</Link>
-            </li>
-            <li aria-hidden="true">/</li>
-            <li aria-current="page">{header.displayName}</li>
-          </ol>
-        </nav>
-      </div>
+      <Breadcrumbs items={[{ label: "Our Clinicians", href: "/#clinicians" }, { label: header.displayName }]} />
 
       {/* TODO(TWS-117 API phase): booking needs the Google Calendar integration, so this button
           does nothing yet. It is first in the tab order after the breadcrumb. */}

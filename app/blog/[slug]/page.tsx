@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { notFound } from "next/navigation";
 import { CmsHtml, looksLikeHtml } from "@/components/CmsHtml";
 import { Markdown } from "@/components/Markdown";
@@ -52,17 +53,9 @@ export default async function BlogPostPage({ params }: PageProps<"/blog/[slug]">
 
   return (
     <>
+      <Breadcrumbs items={[{ label: "Blog", href: "/blog" }, { label: h.heading }]} />
       <article>
-        <header className="wrap flex flex-col gap-10 pt-6 pb-[clamp(40px,5vw,64px)]">
-          <nav aria-label="Breadcrumb">
-            <ol className="m-0 flex list-none flex-wrap gap-2 p-0 text-small">
-              <li>
-                <Link href="/blog">Blog</Link>
-              </li>
-              <li aria-hidden="true">/</li>
-              <li aria-current="page">{h.topic}</li>
-            </ol>
-          </nav>
+        <header className="wrap flex flex-col gap-10 pt-10 pb-[clamp(40px,5vw,64px)]">
           <div className="mx-auto flex max-w-[860px] flex-col items-center gap-5 text-center">
             <p className="eyebrow">
               {h.topic} · {h.readMinutes} min read
