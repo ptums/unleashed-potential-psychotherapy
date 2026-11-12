@@ -8,6 +8,8 @@ import { seoMetadata } from "@/lib/seo";
 import { sectionPad } from "@/components/zones";
 import { CmsHtml } from "@/components/CmsHtml";
 import type { Metadata } from "next";
+import { ReviewCarousel } from "@/components/ReviewCarousel";
+import { truncateWords } from "@/lib/text";
 
 async function loadHome() {
   return getContent().getPage("home");
@@ -30,7 +32,8 @@ export default async function HomePage() {
       {isZoneVisible(home.specialties) && <Specialties zone={home.specialties} />}
       {isZoneVisible(home.clinicians) && <Clinicians zone={home.clinicians} />}
       {isZoneVisible(home.howItWorks) && <HowItWorks zone={home.howItWorks} />}
-      {isZoneVisible(home.approachBand) && <ApproachBand zone={home.approachBand} />}
+      {/* The review carousel replaces the Our approach band (Peter, 2026-11-12). */}
+      <ReviewsBand />
     </>
   );
 }
@@ -225,15 +228,25 @@ function HowItWorks({ zone }: { zone: NonNullable<Home["howItWorks"]> }) {
   );
 }
 
-function ApproachBand({ zone }: { zone: NonNullable<Home["approachBand"]> }) {
+/** Client reviews from the Reviews page, 1 at a time, each cut to 200 words. */
+async function ReviewsBand() {
+  const reviews = await getContent().getPage("reviews");
+  const items = (reviews?.reviewList.items ?? [])
+    .filter((item) => !item.hidden)
+    .map((item) => ({ displayName: item.displayName, text: truncateWords(item.text, 200) }));
+  if (items.length === 0) {
+    return null;
+  }
   return (
-    <section aria-labelledby="approach-heading" className={`dark ${sectionPad}`}>
-      <div className="wrap flex max-w-[960px] flex-col items-start gap-8">
-        <h2 id="approach-heading" className="eyebrow font-body font-bold">
-          {zone.eyebrow}
+    <section aria-labelledby="reviews-band-heading" className={`dark ${sectionPad}`}>
+      <div className="wrap flex max-w-[960px] flex-col items-center gap-10">
+        <h2 id="reviews-band-heading" className="eyebrow font-body font-bold">
+          Client reviews
         </h2>
-        <p className="font-display text-h2-band leading-[1.3] italic">{zone.statement}</p>
-        <CmsLinkTo link={zone.cta} className="btn" />
+        <ReviewCarousel reviews={items} />
+        <Link href="/reviews" className="btn">
+          Read all reviews
+        </Link>
       </div>
     </section>
   );
