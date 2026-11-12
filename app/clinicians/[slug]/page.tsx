@@ -231,7 +231,7 @@ function FeaturedIn({ zone }: { zone: ClinicianProfile["featuredIn"] }) {
   // Plain text: the only link is "All podcasts & press" (Peter, 2026-11-12).
   return (
     <Row heading={zone.heading}>
-      <ul className="m-0 flex flex-col gap-2 pl-5">
+      <ul className="m-0 flex flex-col gap-5 pl-5">
         {appearances.map((a) => (
           <li key={a.id}>
             {a.outlet}: {a.title}
