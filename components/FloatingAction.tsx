@@ -31,7 +31,7 @@ export function FloatingAction({ href, label, icon }: { href?: string; label: st
 }
 
 const floatingClass =
-  "fixed top-24 right-4 z-20 inline-flex min-h-13 items-center gap-2.5 bg-cream px-[18px] py-3 text-[14px] leading-[1.2] font-bold tracking-[0.08em] text-forest-dark uppercase no-underline shadow-[0_10px_28px_rgba(49,70,75,.28),0_2px_6px_rgba(49,70,75,.18)] transition-[background-color,box-shadow] hover:bg-cream-dark hover:shadow-[0_14px_32px_rgba(49,70,75,.32),0_3px_8px_rgba(49,70,75,.2)] focus-visible:outline-3 focus-visible:outline-offset-3 focus-visible:outline-forest-dark motion-reduce:transition-none nav:top-27 nav:right-6 nav:px-6 nav:py-3.5 nav:text-[15px]";
+  "fixed top-24 right-4 z-20 inline-flex min-h-13 items-center gap-2.5 bg-cream px-[18px] py-3 text-[14px] leading-[1.2] font-bold tracking-[0.08em] text-forest-dark uppercase no-underline shadow-[0_10px_28px_rgba(49,70,75,.28),0_2px_6px_rgba(49,70,75,.18)] transition-[background-color,box-shadow,translate] hover:-translate-y-px hover:bg-cream-dark hover:shadow-[0_14px_32px_rgba(49,70,75,.32),0_3px_8px_rgba(49,70,75,.2)] focus-visible:outline-3 focus-visible:outline-offset-3 focus-visible:outline-forest-dark motion-reduce:transition-none nav:top-27 nav:right-6 nav:px-6 nav:py-3.5 nav:text-[15px]";
 
 /** The calendar-check icon for the booking button. */
 export function CalendarCheckIcon() {

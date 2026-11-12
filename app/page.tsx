@@ -100,7 +100,7 @@ async function Specialties({ zone }: { zone: NonNullable<Home["specialties"]> })
           {tiles.map((tile, i) => (
             <li key={`${i}-${tile.title}`} className="flex">
               {tile.href ? (
-                <Link href={tile.href} className={`${tileClass} w-full transition-colors hover:bg-cream-light`}>
+                <Link href={tile.href} className={`${tileClass} w-full transition-[background-color,translate,box-shadow] duration-200 hover:-translate-y-0.5 hover:bg-cream-light hover:shadow-[0_8px_24px_rgba(49,70,75,.12)]`}>
                   <h3 className="text-h3">{tile.title}</h3>
                   <p>{tile.body}</p>
                   <span className="mt-auto text-[15px] font-bold underline underline-offset-4">
