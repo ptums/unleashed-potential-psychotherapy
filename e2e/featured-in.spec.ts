@@ -8,7 +8,7 @@ test("featured in renders every zone and passes axe", async ({ page }) => {
   for (const name of ["Self-worth is key in relationship dynamics", "Episodes & interviews", "Press & speaking"]) {
     await expect(page.getByRole("heading", { level: 2, name, exact: true })).toBeVisible();
   }
-  await expect(page.locator("article")).toHaveCount(4);
+  await expect(page.locator("article")).toHaveCount(5);
   await expect(page.getByText("Part 4 · April 1, 2024")).toBeVisible();
   await expect(page.getByRole("link", { name: "Meet our founder" })).toHaveAttribute("href", "/clinicians/jessica-rebelo");
 
