@@ -46,8 +46,8 @@ describe("withFallback", () => {
   it("uses the mock for content the CMS has not published", async () => {
     const repo = withFallback(empty, mockRepository);
     expect(await repo.getPage("our-approach")).not.toBeNull();
-    expect(await repo.getEntry("clinicians", "jess-rebelo")).not.toBeNull();
-    expect(await repo.listSlugs("clinicians")).toEqual(["jess-rebelo"]);
+    expect(await repo.getEntry("clinicians", "jessica-rebelo")).not.toBeNull();
+    expect(await repo.listSlugs("clinicians")).toEqual(["jessica-rebelo"]);
   });
 
   it("prefers the CMS when it has the content", async () => {

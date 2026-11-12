@@ -20,13 +20,13 @@ export const site = {
   name: "Unleashed Potential Psychotherapy",
   // TODO(handoff open question 4): tagline wording is not final.
   tagline: "turning pain into power",
-  bookHref: "/clinicians/jess-rebelo",
+  bookHref: "/clinicians/jessica-rebelo",
   nav: [
     {
       label: "Our Mission",
       links: [
         { label: "Our Approach", href: "/our-approach" },
-        { label: "Our Clinicians", href: "/clinicians/jess-rebelo" },
+        { label: "Our Clinicians", href: "/clinicians/jessica-rebelo" },
         { label: "Featured In", href: "/featured-in" },
       ],
     },
@@ -43,7 +43,7 @@ export const site = {
     },
   ] satisfies NavGroup[],
   navLinks: [{ label: "Blog", href: "/blog" }] satisfies NavLink[],
-  footerLinks: [{ label: "Our Clinicians", href: "/clinicians/jess-rebelo" }] satisfies NavLink[],
+  footerLinks: [{ label: "Our Clinicians", href: "/clinicians/jessica-rebelo" }] satisfies NavLink[],
   // TODO(handoff open question 7): real address and social links.
   address: ["[Street address]", "[City, State ZIP]"],
   social: [] as NavLink[],

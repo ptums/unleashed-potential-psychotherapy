@@ -29,7 +29,7 @@ test("blog post: article, crisis callout, related, axe", async ({ page }) => {
   await expect(page.locator("blockquote")).toHaveText("The goal is not to feel calm. It is to feel here.");
   const crisis = page.getByRole("complementary", { name: "Crisis support" });
   await expect(crisis.getByRole("link", { name: "988" })).toHaveAttribute("href", "tel:988");
-  await expect(page.getByRole("link", { name: "Jess Rebelo, LCSW" })).toHaveAttribute("href", "/clinicians/jess-rebelo");
+  await expect(page.getByRole("link", { name: "Jess Rebelo, LCSW" })).toHaveAttribute("href", "/clinicians/jessica-rebelo");
   await expect(page.locator("#related-heading ~ div article, section[aria-labelledby=related-heading] article")).toHaveCount(3);
 
   expect((await axe(page)).violations).toEqual([]);

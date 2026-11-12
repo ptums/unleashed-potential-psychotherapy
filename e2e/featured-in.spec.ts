@@ -10,7 +10,7 @@ test("featured in renders every zone and passes axe", async ({ page }) => {
   }
   await expect(page.locator("article")).toHaveCount(4);
   await expect(page.getByText("Part 4 · April 1, 2024")).toBeVisible();
-  await expect(page.getByRole("link", { name: "Meet our founder" })).toHaveAttribute("href", "/clinicians/jess-rebelo");
+  await expect(page.getByRole("link", { name: "Meet our founder" })).toHaveAttribute("href", "/clinicians/jessica-rebelo");
 
   const results = await new AxeBuilder({ page }).withTags(["wcag2a", "wcag2aa", "wcag21aa", "wcag22aa"]).analyze();
   expect(results.violations).toEqual([]);

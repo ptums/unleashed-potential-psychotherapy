@@ -21,6 +21,12 @@ const nextConfig: NextConfig = {
         destination: "https://uptherapygroup.com/:path*",
         permanent: true,
       },
+      // Jess's profile moved to her CMS slug. Old links keep working.
+      {
+        source: "/clinicians/jess-rebelo",
+        destination: "/clinicians/jessica-rebelo",
+        permanent: true,
+      },
     ];
   },
   turbopack: {
