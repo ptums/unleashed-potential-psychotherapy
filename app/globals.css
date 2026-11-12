@@ -250,3 +250,22 @@
     animation: none !important;
   }
 }
+
+/* Toasts (react-toastify, components/Toasts.tsx) in the site's colors and fonts.
+   :root:root wins over the variables react-toastify injects on :root. */
+:root:root {
+  --toastify-color-light: var(--color-linen);
+  --toastify-text-color-light: var(--color-forest-dark);
+  --toastify-font-family: var(--font-body);
+  --toastify-color-success: var(--color-forest);
+  --toastify-color-error: var(--color-error);
+  --toastify-color-progress-light: var(--color-forest);
+  --toastify-color-progress-success: var(--color-forest);
+  --toastify-color-progress-error: var(--color-error);
+}
+
+.Toastify__toast {
+  border: 1px solid var(--color-forest);
+  border-radius: 0;
+  box-shadow: 0 10px 28px rgba(49, 70, 75, 0.18);
+}
