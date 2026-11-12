@@ -89,7 +89,7 @@ export interface FounderNote {
   eyebrow: string;
   portrait: Image1;
   /**
-   * Short note in the founder's voice. Quotation marks are added by the template.
+   * Note in the founder's voice. Quotation marks are added by the template.
    */
   quote: string;
   founder: Reference;
