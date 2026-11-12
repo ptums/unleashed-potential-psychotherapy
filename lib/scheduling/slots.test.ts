@@ -78,3 +78,19 @@ describe("openSlots", () => {
     ]); // Tuesday Nov 17 is day 15, past maxDaysAhead
   });
 });
+
+describe("slotRulesFor", () => {
+  it("fills the schema defaults, and no hours means no times", async () => {
+    const { slotRulesFor } = await import("./rules");
+    const profile = { booking: {} } as unknown as Parameters<typeof slotRulesFor>[0];
+    expect(slotRulesFor(profile)).toEqual({
+      timezone: "America/New_York",
+      weeklyHours: [],
+      bufferMinutes: 15,
+      minNoticeHours: 24,
+      maxDaysAhead: 28,
+      durationMinutes: 15,
+    });
+    expect(openSlots(slotRulesFor(profile), [], mondayAfterDst)).toEqual([]);
+  });
+});

@@ -47,7 +47,33 @@
     "allTimesLabel": "See all open times",
     "provider": "custom",
     "externalCalendarId": "[calendar-id]",
-    "defaultSessionTypeKey": "consultation"
+    "defaultSessionTypeKey": "consultation",
+    "timezone": "America/New_York",
+    "weeklyHours": [
+      {
+        "day": "tue",
+        "start": "09:00",
+        "end": "17:00"
+      },
+      {
+        "day": "wed",
+        "start": "12:00",
+        "end": "19:00"
+      },
+      {
+        "day": "thu",
+        "start": "09:00",
+        "end": "17:00"
+      },
+      {
+        "day": "fri",
+        "start": "09:00",
+        "end": "13:00"
+      }
+    ],
+    "bufferMinutes": 15,
+    "minNoticeHours": 24,
+    "maxDaysAhead": 28
   },
   "approach": {
     "hidden": false,
