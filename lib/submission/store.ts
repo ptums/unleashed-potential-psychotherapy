@@ -25,8 +25,15 @@ export const toItem = (r: SubmissionRecord) => ({
   expiresAt: { N: String(expiresAt(r.createdAt)) },
 });
 
+/** False until the debug table and its keys are set (docs/FORMS.md). Then writes are skipped, not failed. */
+export const isLogConfigured = () =>
+  Boolean(process.env.SUBMISSIONS_TABLE && process.env.AWS_ACCESS_KEY_ID && process.env.AWS_SECRET_ACCESS_KEY && process.env.AWS_REGION);
+
 // Build the client per call: on Workers, env values are read at request time.
 async function dynamo(action: "PutItem" | "UpdateItem", body: object) {
+  if (!isLogConfigured()) {
+    return null;
+  }
   const region = process.env.AWS_REGION as string;
   const aws = new AwsClient({
     accessKeyId: process.env.AWS_ACCESS_KEY_ID as string,

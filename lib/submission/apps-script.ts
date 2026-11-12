@@ -13,6 +13,25 @@ export interface AppsScriptPayload<T extends FormType = FormType> {
   fields: FormValues[T];
 }
 
+/**
+ * An Apps Script web app runs doPost, then answers with a 302 to a googleusercontent.com URL
+ * that serves the result. That URL accepts GET only: a client that re-sends the POST there
+ * (as the Worker's fetch did) gets a Drive error page. So the redirect is followed by hand, with GET.
+ */
+async function postToWebApp(url: string, body: string): Promise<Response> {
+  const first = await fetch(url, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body,
+    redirect: "manual",
+  });
+  const location = first.headers.get("location");
+  if (first.status >= 300 && first.status < 400 && location) {
+    return fetch(location, { method: "GET" });
+  }
+  return first;
+}
+
 export async function sendToAppsScript(payload: Omit<AppsScriptPayload, "token">): Promise<{ ok: boolean }> {
   const url = process.env.APPS_SCRIPT_URL;
   const token = process.env.APPS_SCRIPT_TOKEN;
@@ -21,16 +40,13 @@ export async function sendToAppsScript(payload: Omit<AppsScriptPayload, "token">
     return { ok: false };
   }
   try {
-    // An Apps Script web app answers a POST with a redirect to its output, so fetch follows it.
-    const res = await fetch(url, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ ...payload, token }),
-      redirect: "follow",
-    });
-    const data = (await res.json().catch(() => null)) as { ok?: boolean } | null;
+    const res = await postToWebApp(url, JSON.stringify({ ...payload, token }));
+    const data = (await res.json().catch(() => null)) as { ok?: boolean; error?: string } | null;
     if (!res.ok || !data?.ok) {
-      console.error("sendToAppsScript failed", payload.id, res.status);
+      // The script's own error text ("bad token", "unknown form") or the content type when the
+      // answer is not JSON. Never the form fields.
+      const reason = data?.error ?? `not JSON (${res.headers.get("content-type") ?? "no content type"})`;
+      console.error("sendToAppsScript failed", payload.id, res.status, reason);
       return { ok: false };
     }
     return { ok: true };
