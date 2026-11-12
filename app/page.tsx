@@ -4,7 +4,6 @@ import { CmsLinkTo, CmsPicture, SectionIntro } from "@/components/ui";
 import { getContent, isZoneVisible, type ClinicianProfile, type Home, type Reference, type SpecialtyTile } from "@/lib/content";
 import { hrefForReference } from "@/lib/links";
 import { resolveClinicians, specialtyNames } from "@/lib/content/clinicians";
-import { getMediaAppearance } from "@/lib/media";
 import { seoMetadata } from "@/lib/seo";
 import { sectionPad } from "@/components/zones";
 import { CmsHtml } from "@/components/CmsHtml";
@@ -59,10 +58,9 @@ function Hero({ zone }: { zone: Home["hero"] }) {
 }
 
 function FeaturedIn({ zone }: { zone: NonNullable<Home["featuredIn"]> }) {
-  const appearances = zone.appearances
-    .map((ref) => getMediaAppearance(ref.id))
-    .filter((a): a is NonNullable<typeof a> => a !== null && a.url !== "");
-  if (appearances.length === 0) {
+  // Each outlet shows as plain text, as the editor typed it. The strip has no links.
+  const outlets = [...new Set(zone.appearances.map((ref) => ref.id.trim()).filter((name) => name !== ""))];
+  if (outlets.length === 0) {
     return null;
   }
 
@@ -73,10 +71,8 @@ function FeaturedIn({ zone }: { zone: NonNullable<Home["featuredIn"]> }) {
           {zone.label}
         </h2>
         <ul className="m-0 flex list-none flex-wrap gap-x-12 gap-y-3 p-0 font-display text-[21px] italic">
-          {appearances.map((a) => (
-            <li key={a.id}>
-              <a href={a.url}>{a.outlet}</a>
-            </li>
+          {outlets.map((name) => (
+            <li key={name}>{name}</li>
           ))}
         </ul>
         <CmsLinkTo link={zone.allLink} className="font-bold" />
