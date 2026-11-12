@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { getNav } from "@/lib/nav";
 import { site } from "@/lib/site";
 import { CalendarIcon, ChevronIcon, MenuIcon } from "./icons";
 import { NavCloser } from "./NavCloser";
@@ -19,7 +20,8 @@ function BookIcon() {
   );
 }
 
-export function SiteHeader() {
+export async function SiteHeader() {
+  const nav = await getNav();
   return (
     <header className="relative z-30 border-b border-forest bg-linen">
       <NavCloser />
@@ -30,7 +32,7 @@ export function SiteHeader() {
         </Link>
 
         <nav aria-label="Main" className="hidden items-center gap-1 nav:flex">
-          {site.nav.map((group) => (
+          {nav.map((group) => (
             <details key={group.label} data-nav className="group relative">
               <summary className={navItem}>
                 {group.label} <ChevronIcon />
@@ -67,7 +69,7 @@ export function SiteHeader() {
               aria-label="Main mobile"
               className="absolute inset-x-0 top-full z-40 flex flex-col gap-4 border-b border-forest bg-linen px-5 pt-2 pb-6"
             >
-              {site.nav.map((group) => (
+              {nav.map((group) => (
                 <div key={group.label}>
                   <p className="eyebrow mt-3">{group.label}</p>
                   {group.links.map((link) => (
