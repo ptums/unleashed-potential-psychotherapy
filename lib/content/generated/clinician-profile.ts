@@ -112,6 +112,266 @@ export interface BookingCard {
    * Must match a key in the fees zone. Usually the free consultation.
    */
   defaultSessionTypeKey: string;
+  /**
+   * IANA time zone the clinician's hours are set in.
+   */
+  timezone?: string;
+  /**
+   * Bookable windows for free consultations, in the time zone above. Busy times on the calendar are removed from these. Leave empty to show no open times.
+   *
+   * @minItems 1
+   * @maxItems 21
+   */
+  weeklyHours?:
+    | [HoursWindow]
+    | [HoursWindow, HoursWindow]
+    | [HoursWindow, HoursWindow, HoursWindow]
+    | [HoursWindow, HoursWindow, HoursWindow, HoursWindow]
+    | [HoursWindow, HoursWindow, HoursWindow, HoursWindow, HoursWindow]
+    | [HoursWindow, HoursWindow, HoursWindow, HoursWindow, HoursWindow, HoursWindow]
+    | [HoursWindow, HoursWindow, HoursWindow, HoursWindow, HoursWindow, HoursWindow, HoursWindow]
+    | [HoursWindow, HoursWindow, HoursWindow, HoursWindow, HoursWindow, HoursWindow, HoursWindow, HoursWindow]
+    | [
+        HoursWindow,
+        HoursWindow,
+        HoursWindow,
+        HoursWindow,
+        HoursWindow,
+        HoursWindow,
+        HoursWindow,
+        HoursWindow,
+        HoursWindow
+      ]
+    | [
+        HoursWindow,
+        HoursWindow,
+        HoursWindow,
+        HoursWindow,
+        HoursWindow,
+        HoursWindow,
+        HoursWindow,
+        HoursWindow,
+        HoursWindow,
+        HoursWindow
+      ]
+    | [
+        HoursWindow,
+        HoursWindow,
+        HoursWindow,
+        HoursWindow,
+        HoursWindow,
+        HoursWindow,
+        HoursWindow,
+        HoursWindow,
+        HoursWindow,
+        HoursWindow,
+        HoursWindow
+      ]
+    | [
+        HoursWindow,
+        HoursWindow,
+        HoursWindow,
+        HoursWindow,
+        HoursWindow,
+        HoursWindow,
+        HoursWindow,
+        HoursWindow,
+        HoursWindow,
+        HoursWindow,
+        HoursWindow,
+        HoursWindow
+      ]
+    | [
+        HoursWindow,
+        HoursWindow,
+        HoursWindow,
+        HoursWindow,
+        HoursWindow,
+        HoursWindow,
+        HoursWindow,
+        HoursWindow,
+        HoursWindow,
+        HoursWindow,
+        HoursWindow,
+        HoursWindow,
+        HoursWindow
+      ]
+    | [
+        HoursWindow,
+        HoursWindow,
+        HoursWindow,
+        HoursWindow,
+        HoursWindow,
+        HoursWindow,
+        HoursWindow,
+        HoursWindow,
+        HoursWindow,
+        HoursWindow,
+        HoursWindow,
+        HoursWindow,
+        HoursWindow,
+        HoursWindow
+      ]
+    | [
+        HoursWindow,
+        HoursWindow,
+        HoursWindow,
+        HoursWindow,
+        HoursWindow,
+        HoursWindow,
+        HoursWindow,
+        HoursWindow,
+        HoursWindow,
+        HoursWindow,
+        HoursWindow,
+        HoursWindow,
+        HoursWindow,
+        HoursWindow,
+        HoursWindow
+      ]
+    | [
+        HoursWindow,
+        HoursWindow,
+        HoursWindow,
+        HoursWindow,
+        HoursWindow,
+        HoursWindow,
+        HoursWindow,
+        HoursWindow,
+        HoursWindow,
+        HoursWindow,
+        HoursWindow,
+        HoursWindow,
+        HoursWindow,
+        HoursWindow,
+        HoursWindow,
+        HoursWindow
+      ]
+    | [
+        HoursWindow,
+        HoursWindow,
+        HoursWindow,
+        HoursWindow,
+        HoursWindow,
+        HoursWindow,
+        HoursWindow,
+        HoursWindow,
+        HoursWindow,
+        HoursWindow,
+        HoursWindow,
+        HoursWindow,
+        HoursWindow,
+        HoursWindow,
+        HoursWindow,
+        HoursWindow,
+        HoursWindow
+      ]
+    | [
+        HoursWindow,
+        HoursWindow,
+        HoursWindow,
+        HoursWindow,
+        HoursWindow,
+        HoursWindow,
+        HoursWindow,
+        HoursWindow,
+        HoursWindow,
+        HoursWindow,
+        HoursWindow,
+        HoursWindow,
+        HoursWindow,
+        HoursWindow,
+        HoursWindow,
+        HoursWindow,
+        HoursWindow,
+        HoursWindow
+      ]
+    | [
+        HoursWindow,
+        HoursWindow,
+        HoursWindow,
+        HoursWindow,
+        HoursWindow,
+        HoursWindow,
+        HoursWindow,
+        HoursWindow,
+        HoursWindow,
+        HoursWindow,
+        HoursWindow,
+        HoursWindow,
+        HoursWindow,
+        HoursWindow,
+        HoursWindow,
+        HoursWindow,
+        HoursWindow,
+        HoursWindow,
+        HoursWindow
+      ]
+    | [
+        HoursWindow,
+        HoursWindow,
+        HoursWindow,
+        HoursWindow,
+        HoursWindow,
+        HoursWindow,
+        HoursWindow,
+        HoursWindow,
+        HoursWindow,
+        HoursWindow,
+        HoursWindow,
+        HoursWindow,
+        HoursWindow,
+        HoursWindow,
+        HoursWindow,
+        HoursWindow,
+        HoursWindow,
+        HoursWindow,
+        HoursWindow,
+        HoursWindow
+      ]
+    | [
+        HoursWindow,
+        HoursWindow,
+        HoursWindow,
+        HoursWindow,
+        HoursWindow,
+        HoursWindow,
+        HoursWindow,
+        HoursWindow,
+        HoursWindow,
+        HoursWindow,
+        HoursWindow,
+        HoursWindow,
+        HoursWindow,
+        HoursWindow,
+        HoursWindow,
+        HoursWindow,
+        HoursWindow,
+        HoursWindow,
+        HoursWindow,
+        HoursWindow,
+        HoursWindow
+      ];
+  /**
+   * Gap kept free before and after each booked consultation.
+   */
+  bufferMinutes?: number;
+  /**
+   * Earliest bookable time, counted from now.
+   */
+  minNoticeHours?: number;
+  maxDaysAhead?: number;
+}
+export interface HoursWindow {
+  day: "mon" | "tue" | "wed" | "thu" | "fri" | "sat" | "sun";
+  /**
+   * 24-hour HH:MM.
+   */
+  start: string;
+  /**
+   * 24-hour HH:MM, after start.
+   */
+  end: string;
 }
 export interface Approach {
   hidden: boolean;
