@@ -50,6 +50,12 @@ describe("withFallback", () => {
     expect(await repo.listSlugs("clinicians")).toEqual(["jessica-rebelo"]);
   });
 
+  it("never uses mock blog posts", async () => {
+    const repo = withFallback(empty, mockRepository);
+    expect(await repo.listSlugs("blogPosts")).toEqual([]);
+    expect(await repo.getEntry("blogPosts", "grief-without-a-timeline")).toBeNull();
+  });
+
   it("prefers the CMS when it has the content", async () => {
     const cms: ContentRepository = { ...empty, getPage: async () => ({ title: "From CMS" }) as never };
     const page = (await withFallback(cms, mockRepository).getPage("home")) as unknown as { title: string };
