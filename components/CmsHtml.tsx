@@ -45,5 +45,5 @@ function escapeText(text: string): string {
 
 /** Renders CMS rich text. The HTML is sanitized first (see cleanCmsHtml). */
 export function CmsHtml({ html, className = "", article = false }: { html: string; className?: string; article?: boolean }) {
-  return <div className={className} dangerouslySetInnerHTML={{ __html: cleanCmsHtml(html, article) }} />;
+  return <div className={`cms-html ${className}`.trim()} dangerouslySetInnerHTML={{ __html: cleanCmsHtml(html, article) }} />;
 }
