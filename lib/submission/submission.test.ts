@@ -1,11 +1,11 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import { feedbackSchema, isFormType } from "../forms/schemas";
+import { reviewSchema, isFormType } from "../forms/schemas";
 import { sendToAppsScript } from "./apps-script";
 import { markDelivered, putSubmission, toItem } from "./store";
 
 const record = {
   id: "abc",
-  formType: "feedback" as const,
+  formType: "review" as const,
   createdAt: "2026-11-12T12:00:00.000Z",
   spamResult: "passed" as const,
   isTest: true,
@@ -32,19 +32,20 @@ afterEach(() => {
   vi.unstubAllEnvs();
 });
 
-describe("feedback schema", () => {
+describe("review schema", () => {
   it("needs a name and a valid email", async () => {
-    const err = await feedbackSchema.validate({ name: "", email: "nope" }, { abortEarly: false }).catch((e) => e);
+    const err = await reviewSchema.validate({ name: "", email: "nope" }, { abortEarly: false }).catch((e) => e);
     expect(err.inner.map((e: { path: string }) => e.path).sort()).toEqual(["email", "name"]);
   });
 
   it("accepts the minimum and fills the defaults", async () => {
-    const value = await feedbackSchema.validate({ name: " Kim C ", email: "kim@example.com" });
+    const value = await reviewSchema.validate({ name: " Kim C ", email: "kim@example.com" });
     expect(value).toMatchObject({ name: "Kim C", phone: "", rating: "", publishConsent: false });
   });
 
-  it("knows only the feedback form for now", () => {
-    expect(isFormType("feedback")).toBe(true);
+  it("knows only the review form for now", () => {
+    expect(isFormType("review")).toBe(true);
+    expect(isFormType("feedback")).toBe(false);
     expect(isFormType("booking")).toBe(false);
   });
 });
@@ -80,13 +81,13 @@ describe("debug log not set up yet", () => {
 });
 
 describe("Apps Script handoff", () => {
-  const payload = { formType: "feedback" as const, id: "abc", createdAt: record.createdAt, isTest: false, fields: {} as never };
+  const payload = { formType: "review" as const, id: "abc", createdAt: record.createdAt, isTest: false, fields: {} as never };
 
   it("sends the shared token with the submission", async () => {
     const fetchMock = fakeFetch(200, { ok: true });
     expect(await sendToAppsScript(payload)).toEqual({ ok: true });
     const init = fetchMock.mock.calls[0][1] as RequestInit;
-    expect(JSON.parse(init.body as string)).toMatchObject({ token: "secret-token", id: "abc", formType: "feedback" });
+    expect(JSON.parse(init.body as string)).toMatchObject({ token: "secret-token", id: "abc", formType: "review" });
   });
 
   it("follows the web app redirect with a GET, not a second POST", async () => {

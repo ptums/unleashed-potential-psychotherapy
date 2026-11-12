@@ -22,21 +22,21 @@
         "no": "No"
       },
       "anythingElse": "Anything else you would like to add?",
-      "publishConsent": "You may share my feedback on your website, using my first name and last initial."
+      "publishConsent": "You may share my review on your website, using my first name and last initial."
     },
     "errors": {
       "summary": "Please fix {count} to continue.",
       "name": "Error: enter your full name.",
       "email": "Error: enter an email address like name@example.com."
     },
-    "submitLabel": "Send feedback",
+    "submitLabel": "Send review",
     "cancelLabel": "Cancel"
   },
   "notePanel": {
     "hidden": false,
     "heading": "Before you write",
     "items": [
-      "Your feedback goes to our team. It is not posted unless you say we may share it.",
+      "Your review goes to our team. It is not posted unless you say we may share it.",
       "Please don’t include details about your health, diagnosis or treatment.",
       "To reach Jess about your care, contact her directly instead."
     ],
@@ -45,7 +45,7 @@
   "thankYou": {
     "hidden": false,
     "heading": "Thank you for sharing.",
-    "body": "Your feedback has been sent to our team. We read every response.",
+    "body": "Your review has been sent to our team. We read every response.",
     "primaryLink": {
       "label": "Back to reviews",
       "target": {
@@ -67,7 +67,7 @@
   },
   "seo": {
     "title": "Share Your Experience · Unleashed Potential",
-    "description": "Private feedback form for current and past clients.",
+    "description": "Private review form for current and past clients.",
     "noindex": true
   }
 }

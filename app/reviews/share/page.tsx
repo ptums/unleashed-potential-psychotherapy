@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
-import { FeedbackForm } from "@/components/FeedbackForm";
+import { ReviewForm } from "@/components/ReviewForm";
 import { isZoneVisible, getContent, type ShareYourExperience } from "@/lib/content";
 import { seoMetadata } from "@/lib/seo";
 
-// The form (components/FeedbackForm.tsx) posts to /api/submit. It stays inert until the
+// The form (components/ReviewForm.tsx) posts to /api/submit. It stays inert until the
 // Turnstile site key is set at build time.
 
 async function loadPage() {
@@ -28,7 +28,7 @@ export default async function ShareExperiencePage() {
       <div className="wrap pt-[clamp(32px,5vw,64px)] pb-[clamp(48px,6vw,96px)]">
         <div className="grid items-start gap-8 nav:grid-cols-[minmax(0,1fr)_380px] nav:gap-16">
           {isZoneVisible(page.notePanel) && <NotePanel zone={page.notePanel} />}
-          <FeedbackForm form={page.form} thankYou={page.thankYou} />
+          <ReviewForm form={page.form} thankYou={page.thankYou} />
         </div>
       </div>
     </>
