@@ -37,7 +37,12 @@ export async function SiteHeader() {
               <summary className={navItem}>
                 {group.label} <ChevronIcon />
               </summary>
-              <div className="absolute top-[calc(100%+8px)] left-0 z-40 flex min-w-60 flex-col border border-forest bg-linen py-2">
+              {/* The Specialties list is long, so its panel is wider and its links are 2px smaller (15px). */}
+              <div
+                className={`absolute top-[calc(100%+8px)] left-0 z-40 flex flex-col border border-forest bg-linen py-2 ${
+                  group.label === "Specialties" ? "min-w-80 text-[15px]" : "min-w-60"
+                }`}
+              >
                 {group.links.map((link) => (
                   <Link key={link.href} href={link.href} className="flex min-h-11 items-center px-5 no-underline hover:underline">
                     {link.label}
