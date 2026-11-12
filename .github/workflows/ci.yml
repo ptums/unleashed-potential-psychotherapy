@@ -16,6 +16,9 @@ jobs:
     runs-on: ubuntu-latest
     env:
       CONTENT_SOURCE: mock
+      # Cloudflare's public Turnstile test key (always passes), so e2e can run the forms.
+      # /api/submit is mocked in the tests. Production uses the TURNSTILE_SITE_KEY repo variable.
+      NEXT_PUBLIC_TURNSTILE_SITE_KEY: 1x00000000000000000000AA
     steps:
       - uses: actions/checkout@v4
       - uses: pnpm/action-setup@v4

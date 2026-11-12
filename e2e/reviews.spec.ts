@@ -44,13 +44,37 @@ test("share page renders the form and passes axe", async ({ page }) => {
   await expect(page.getByRole("radio", { name: "Excellent" })).toBeVisible();
   await expect(page.getByRole("complementary").getByRole("link", { name: "988" })).toHaveAttribute("href", "tel:988");
 
-  // The form sends nothing yet: the button stays on the page.
-  await page.getByRole("button", { name: "Send feedback" }).click();
-  await expect(page).toHaveURL(/\/reviews\/share$/);
-
   const results = await new AxeBuilder({ page }).withTags(["wcag2a", "wcag2aa", "wcag21aa", "wcag22aa"]).analyze();
   expect(results.violations).toEqual([]);
 
   const overflow = await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth);
   expect(overflow).toBeLessThanOrEqual(0);
+});
+
+test("share form shows errors, then the thank-you state", async ({ page }) => {
+  // /api/submit is mocked: the Apps Script and AWS are not called from tests.
+  let sent: { formType?: string; fields?: Record<string, unknown> } = {};
+  await page.route("**/api/submit", async (route) => {
+    sent = route.request().postDataJSON();
+    await route.fulfill({ json: { ok: true, id: "test-id" } });
+  });
+  await page.goto("/reviews/share");
+
+  await page.getByRole("button", { name: "Send feedback" }).click();
+  const summary = page.getByRole("alert").filter({ hasText: "Please fix 2 errors to continue." });
+  await expect(summary).toBeFocused();
+  await expect(page.getByLabel("Full name")).toHaveAttribute("aria-invalid", "true");
+  await expect(page.getByLabel("Email")).toHaveAccessibleDescription("Error: enter an email address like name@example.com.");
+
+  await page.getByLabel("Full name").fill("Kim C");
+  await page.getByLabel("Email").fill("kim@example.com");
+  await page.getByRole("radio", { name: "Excellent" }).check();
+  await page.getByRole("button", { name: "Send feedback" }).click();
+
+  await expect(page.getByRole("heading", { level: 1, name: "Thank you for sharing." })).toBeFocused();
+  expect(sent.formType).toBe("feedback");
+  expect(sent.fields).toMatchObject({ name: "Kim C", email: "kim@example.com", rating: "excellent", website: "" });
+
+  const results = await new AxeBuilder({ page }).withTags(["wcag2a", "wcag2aa", "wcag21aa", "wcag22aa"]).analyze();
+  expect(results.violations).toEqual([]);
 });

@@ -14,6 +14,14 @@
       "service": "unleashed-potential-psychotherapy"
     }
   ],
+  // /api/submit: 3 submissions per IP per minute (ported from jessrebelo.com, which uses 1001).
+  "ratelimits": [
+    {
+      "name": "SUBMIT_LIMITER",
+      "namespace_id": "1002",
+      "simple": { "limit": 3, "period": 60 }
+    }
+  ],
   "observability": {
     "enabled": true
   },
