@@ -226,34 +226,17 @@ function Fees({ zone }: { zone: ClinicianProfile["fees"] }) {
 function FeaturedIn({ zone }: { zone: ClinicianProfile["featuredIn"] }) {
   const appearances = zone.appearances
     .map((ref) => getMediaAppearance(ref.id))
-    .filter((a): a is NonNullable<typeof a> => a !== null && a.links.length > 0);
+    .filter((a): a is NonNullable<typeof a> => a !== null);
 
+  // Plain text: the only link is "All podcasts & press" (Peter, 2026-11-12).
   return (
     <Row heading={zone.heading}>
       <ul className="m-0 flex flex-col gap-2 pl-5">
-        {appearances.map((a) => {
-          const [main, ...more] = a.links;
-          return (
-            <li key={a.id}>
-              <a href={main.url}>
-                {a.outlet}: {a.title}
-              </a>
-              {more.length > 0 && (
-                <>
-                  {" "}
-                  (also on{" "}
-                  {more.map((link, i) => (
-                    <span key={link.url}>
-                      {i > 0 && " and "}
-                      <a href={link.url}>{link.label}</a>
-                    </span>
-                  ))}
-                  )
-                </>
-              )}
-            </li>
-          );
-        })}
+        {appearances.map((a) => (
+          <li key={a.id}>
+            {a.outlet}: {a.title}
+          </li>
+        ))}
         <li className="list-none">
           <CmsLinkTo link={zone.allLink} className="font-bold" />
         </li>

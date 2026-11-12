@@ -11,6 +11,12 @@ test("clinician profile renders every zone and passes axe", async ({ page }) => 
   await expect(page.getByRole("navigation", { name: "Breadcrumb" })).toBeVisible();
   await expect(page.getByRole("link", { name: "EMDR therapy" })).toHaveAttribute("href", "/specialties/emdr-therapy");
   await expect(page.getByRole("row", { name: /Consultation · 15 min/ })).toContainText("Free");
+  // Every Featured In reference resolves to an appearance (plus the "All podcasts & press" link).
+  const featured = page.locator("section").filter({ has: page.getByRole("heading", { level: 2, name: "Featured in", exact: true }) });
+  await expect(featured.locator("li")).toHaveCount(7);
+  await expect(featured.getByText(/^WomELLE:/)).toBeVisible();
+  await expect(featured.getByRole("link")).toHaveText(["All podcasts & press"]);
+
   // The booking card is gone. The floating Book button does nothing until the Google Calendar phase.
   await expect(page.locator("#book")).toHaveCount(0);
   const book = page.getByRole("button", { name: "Book with Jess" });

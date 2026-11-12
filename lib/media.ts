@@ -49,6 +49,17 @@ export const mediaAppearances: Record<string, MediaAppearance> = {
       { label: "Read on WomELLE", url: "https://www.womelle.com/blog/Jessica-Rebelo" },
     ],
   },
+  // The WomELLE write-up of the episode above, listed on its own (Peter, 2026-11-12).
+  "womelle-article": {
+    id: "womelle-article",
+    outlet: "WomELLE",
+    url: "https://www.womelle.com/blog/Jessica-Rebelo",
+    kind: "Article",
+    date: "January 2023",
+    title: "Self-worth is key in relationship dynamics",
+    summary: "Jessica's feature on WomELLE.",
+    links: [{ label: "Read on WomELLE", url: "https://www.womelle.com/blog/Jessica-Rebelo" }],
+  },
   "chief-navigators-2023": {
     id: "chief-navigators-2023",
     outlet: "The Chief Navigators",

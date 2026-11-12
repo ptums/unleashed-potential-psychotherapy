@@ -131,15 +131,27 @@
     "appearances": [
       {
         "collection": "mediaAppearances",
-        "id": "womlead-self-worth"
-      },
-      {
-        "collection": "mediaAppearances",
         "id": "female-founders-ep-77"
       },
       {
         "collection": "mediaAppearances",
-        "id": "youtube-interview"
+        "id": "womelle-article"
+      },
+      {
+        "collection": "mediaAppearances",
+        "id": "chief-navigators-2023"
+      },
+      {
+        "collection": "mediaAppearances",
+        "id": "journey-with-jess"
+      },
+      {
+        "collection": "mediaAppearances",
+        "id": "pbn-steve-harper-series"
+      },
+      {
+        "collection": "mediaAppearances",
+        "id": "can-you-dig-it"
       }
     ],
     "allLink": {
