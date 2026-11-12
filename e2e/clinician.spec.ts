@@ -5,14 +5,18 @@ test("clinician profile renders every zone and passes axe", async ({ page }) => 
   await page.goto("/clinicians/jessica-rebelo");
   await expect(page).toHaveTitle("Jess Rebelo, LCSW · Trauma & EMDR Therapist");
   await expect(page.getByRole("heading", { level: 1 })).toHaveText("Jess Rebelo, LCSW");
-  for (const name of ["Book with Jess", "Approach", "Credentials", "Fees & insurance", "Featured in"]) {
+  for (const name of ["Approach", "Credentials", "Fees & insurance", "Featured in"]) {
     await expect(page.getByRole("heading", { level: 2, name, exact: true })).toBeVisible();
   }
   await expect(page.getByRole("navigation", { name: "Breadcrumb" })).toBeVisible();
   await expect(page.getByRole("link", { name: "EMDR therapy" })).toHaveAttribute("href", "/specialties/emdr-therapy");
   await expect(page.getByRole("row", { name: /Consultation · 15 min/ })).toContainText("Free");
-  // Booking is left empty until the Google Calendar phase.
-  await expect(page.locator("#book a")).toHaveCount(0);
+  // The booking card is gone. The floating Book button does nothing until the Google Calendar phase.
+  await expect(page.locator("#book")).toHaveCount(0);
+  const book = page.getByRole("button", { name: "Book with Jess" });
+  await expect(book).toHaveCSS("position", "fixed");
+  await book.click();
+  await expect(page).toHaveURL(/\/clinicians\/jessica-rebelo$/);
 
   const results = await new AxeBuilder({ page }).withTags(["wcag2a", "wcag2aa", "wcag21aa", "wcag22aa"]).analyze();
   expect(results.violations).toEqual([]);
