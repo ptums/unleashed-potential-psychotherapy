@@ -2,19 +2,20 @@
 
 import Link from "next/link";
 import { useCallback, useRef, useState, type FormEvent, type ReactNode } from "react";
+import { toast } from "react-toastify";
 import { ValidationError } from "yup";
-import { CmsLinkTo } from "@/components/ui";
 import { Turnstile } from "@/components/Turnstile";
 import type { ShareYourExperience } from "@/lib/content";
 import { feedbackSchema } from "@/lib/forms/schemas";
 import { fillTokens } from "@/lib/tokens";
 
 // The Share your experience form (/reviews/share). It posts to /api/submit, which checks it
-// and hands it to the Apps Script (Sheet row + email to Jess). Until the Turnstile site key is
+// and hands it to the Apps Script (Sheet row + email to Jess). The result shows as a toast, as on
+// jessrebelo.com: on success the form clears and stays; on failure the input is kept. Until the Turnstile site key is
 // set at build time (NEXT_PUBLIC_TURNSTILE_SITE_KEY), the form stays as before: the button does nothing.
 const SITE_KEY = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY ?? "";
 
-type Status = "idle" | "sending" | "sent" | "failed";
+type Status = "idle" | "sending";
 type ErrorKey = "name" | "email";
 
 const SEND_FAILED = "We couldn't send your feedback. Please try again.";
@@ -41,7 +42,6 @@ export function FeedbackForm({
   const [token, setToken] = useState("");
   const [resetKey, setResetKey] = useState(0);
   const summaryRef = useRef<HTMLDivElement>(null);
-  const doneRef = useRef<HTMLHeadingElement>(null);
   const onToken = useCallback((t: string) => setToken(t), []);
 
   async function onSubmit(event: FormEvent<HTMLFormElement>) {
@@ -49,7 +49,8 @@ export function FeedbackForm({
     if (!SITE_KEY || status === "sending") {
       return;
     }
-    const data = new FormData(event.currentTarget);
+    const formEl = event.currentTarget;
+    const data = new FormData(formEl);
     const values = {
       name: data.get("name"),
       email: data.get("email"),
@@ -89,11 +90,17 @@ export function FeedbackForm({
       if (!res.ok || !body?.ok) {
         throw new Error(`submit ${res.status}`);
       }
-      setStatus("sent");
-      requestAnimationFrame(() => doneRef.current?.focus());
+      formEl.reset();
+      toast.success(
+        <div>
+          <p className="font-bold">{thankYou.heading}</p>
+          {thankYou.body && <p>{thankYou.body}</p>}
+        </div>,
+      );
     } catch {
-      setStatus("failed");
+      toast.error(SEND_FAILED);
     } finally {
+      setStatus("idle");
       // A Turnstile token works once, so render a fresh widget for a retry.
       setToken("");
       setResetKey((k) => k + 1);
@@ -104,21 +111,6 @@ export function FeedbackForm({
     const keys = (["name", "email"] as const).filter((k) => paths.includes(k));
     setErrors(keys);
     requestAnimationFrame(() => summaryRef.current?.focus());
-  }
-
-  if (status === "sent" && !thankYou.hidden) {
-    return (
-      <section aria-live="polite" className="flex max-w-[640px] flex-col gap-6 nav:col-start-1 nav:row-start-1">
-        <h1 ref={doneRef} tabIndex={-1} className="text-h2 focus:outline-none">
-          {thankYou.heading}
-        </h1>
-        {thankYou.body && <p className="text-[19px]">{thankYou.body}</p>}
-        <div className="flex flex-wrap items-center gap-6">
-          <CmsLinkTo link={thankYou.primaryLink} className="btn" />
-          <CmsLinkTo link={thankYou.secondaryLink} className="font-bold" />
-        </div>
-      </section>
-    );
   }
 
   const required = <span className="font-normal text-forest">{labels.requiredMark}</span>;
@@ -217,11 +209,6 @@ export function FeedbackForm({
           <span>{labels.publishConsent}</span>
         </label>
         {SITE_KEY && <Turnstile siteKey={SITE_KEY} onToken={onToken} resetKey={resetKey} />}
-        {status === "failed" && (
-          <p role="alert" className="font-bold text-error">
-            {SEND_FAILED}
-          </p>
-        )}
         <div className="flex flex-wrap items-center gap-6">
           <button type="submit" disabled={status === "sending"} className="btn min-h-13 px-8 disabled:cursor-wait disabled:opacity-60">
             {form.submitLabel}
