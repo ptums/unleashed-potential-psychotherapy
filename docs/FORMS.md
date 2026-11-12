@@ -42,3 +42,9 @@ Worker secrets: `npx wrangler secret put <NAME>` from the repo root (Worker `unl
 - Fail open: a failed DynamoDB write never stops a submission. Until the table and keys are set, the write is skipped.
 - The Apps Script web app answers with a 302 that only accepts GET. `lib/submission/apps-script.ts` follows it by hand; a re-sent POST gets a 405 HTML page.
 - Type `TEST` in any field to mark a test submission.
+
+## Booking availability
+
+`GET /api/availability?clinician={slug}` returns the open consultation times (UTC). It takes the clinician's weekly hours from the CMS (`lib/scheduling/rules.ts`), asks the Apps Script `doGet` for busy times (`lib/scheduling/busy.ts`), and subtracts them (`lib/scheduling/slots.ts`). If the calendar can't be read, it returns 503 and no times. It never guesses.
+
+Apps Script contract: `GET {APPS_SCRIPT_URL}?token=…&from=ISO&to=ISO` → `{ ok: true, busy: [{ start, end }] }`. Only start and end leave the script.
