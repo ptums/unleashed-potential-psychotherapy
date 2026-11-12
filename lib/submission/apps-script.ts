@@ -10,7 +10,8 @@ export interface AppsScriptPayload<T extends FormType = FormType> {
   id: string;
   createdAt: string;
   isTest: boolean;
-  fields: FormValues[T];
+  /** The checked fields, plus what the server adds (for a booking: end, when, clinicianName). */
+  fields: FormValues[T] & Record<string, unknown>;
 }
 
 /**

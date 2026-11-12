@@ -2,13 +2,14 @@
 
 import Link from "next/link";
 import { useEffect, useRef, useState, type ReactNode } from "react";
-import { CmsPicture, type CmsImage } from "@/components/ui";
+import { CmsLinkTo, CmsPicture, type CmsImage } from "@/components/ui";
+import { DetailsStep, type DetailsValues, type SendResult } from "./DetailsStep";
 import type { Booking } from "@/lib/content";
 import { groupByDay, slotLabel, type SlotView } from "@/lib/scheduling/format";
 import { fillTokens } from "@/lib/tokens";
 
-// The /book flow (design-handoff/docs/BOOKING.md §2). Step 1 picks a time and a format.
-// Step 2 (details and the request) comes in the next PR.
+// The /book flow (design-handoff/docs/BOOKING.md §2): 1 pick a time and a format,
+// 2 the visitor's details and the request, 3 "Request sent". Jess approves each request by email (TWS-109).
 
 export interface BookingClinician {
   slug: string;
@@ -30,7 +31,10 @@ const grid = "grid grid-cols-[repeat(auto-fill,minmax(min(170px,100%),1fr))] gap
 
 export function BookingFlow({ page, clinician }: { page: Booking; clinician: BookingClinician }) {
   const [load, setLoad] = useState<Load>({ state: "loading" });
-  const [step, setStep] = useState<1 | 2>(1);
+  const [step, setStep] = useState<1 | 2 | 3>(1);
+  const [saved, setSaved] = useState<DetailsValues | null>(null);
+  const [taken, setTaken] = useState(false);
+  const [reloadKey, setReloadKey] = useState(0);
   const [slot, setSlot] = useState<string | null>(null);
   const [format, setFormat] = useState<Format>("video");
   const [showAll, setShowAll] = useState(false);
@@ -51,14 +55,14 @@ export function BookingFlow({ page, clinician }: { page: Booking; clinician: Boo
     return () => {
       live = false;
     };
-  }, [clinician.slug]);
+  }, [clinician.slug, reloadKey]);
 
   const timezone = load.state === "ready" ? load.timezone : "America/New_York";
   const names = { firstName: clinician.firstName };
   const t = page.stepTime;
   const formatText = format === "video" ? t.videoLabel : t.phoneLabel;
 
-  function goTo(next: 1 | 2) {
+  function goTo(next: 1 | 2 | 3) {
     setStep(next);
     requestAnimationFrame(() => headingRef.current?.focus());
   }
@@ -69,7 +73,22 @@ export function BookingFlow({ page, clinician }: { page: Booking; clinician: Boo
       return;
     }
     setSlotError(false);
+    setTaken(false);
     goTo(2);
+  }
+
+  function onSent(result: SendResult) {
+    if (result.kind === "taken") {
+      // Someone else got that time: fresh times, nothing selected.
+      setSlot(null);
+      setTaken(true);
+      setLoad({ state: "loading" });
+      setReloadKey((k) => k + 1);
+      goTo(1);
+      return;
+    }
+    setSaved(result.values);
+    goTo(3);
   }
 
   return (
@@ -91,6 +110,11 @@ export function BookingFlow({ page, clinician }: { page: Booking; clinician: Boo
               </h1>
               {t.intro && <p>{t.intro}</p>}
             </div>
+            {taken && (
+              <p role="alert" className="border-2 border-error p-4 font-bold text-error">
+                That time was just booked. Please choose another.
+              </p>
+            )}
             <fieldset className="m-0 flex flex-col border-0 p-0" aria-describedby={slotError ? "slot-error" : undefined}>
               <legend className="mb-3.5 p-0 font-bold">{fillTokens(t.slotsLegend, names)}</legend>
               {slotError && (
@@ -116,16 +140,21 @@ export function BookingFlow({ page, clinician }: { page: Booking; clinician: Boo
             </button>
           </section>
         )}
-        {step === 2 && (
-          <section aria-labelledby="step-heading" className="flex max-w-[640px] flex-col gap-7">
-            <h1 id="step-heading" ref={headingRef} tabIndex={-1} className="text-h2 focus:outline-none">
-              {page.stepDetails.heading}
-            </h1>
-            {/* The details form and the request come in the next PR. */}
-            <button type="button" onClick={() => goTo(1)} className="self-start underline underline-offset-4">
-              {page.stepDetails.backLabel}
-            </button>
-          </section>
+        {step === 2 && slot && (
+          <DetailsStep
+            page={page}
+            request={{ clinician: clinician.slug, start: slot, format }}
+            saved={saved}
+            headingRef={headingRef}
+            onBack={(values) => {
+              setSaved(values);
+              goTo(1);
+            }}
+            onDone={onSent}
+          />
+        )}
+        {step === 3 && slot && (
+          <RequestSent page={page} headingRef={headingRef} tokens={{ ...names, time: slotLabel(slot, timezone), format: formatText.toLowerCase(), email: saved?.email ?? "your email" }} />
         )}
       </div>
     </div>
@@ -269,5 +298,38 @@ function Summary({
         </button>
       )}
     </aside>
+  );
+}
+
+function RequestSent({
+  page,
+  headingRef,
+  tokens,
+}: {
+  page: Booking;
+  headingRef: React.RefObject<HTMLHeadingElement | null>;
+  tokens: Record<string, string>;
+}) {
+  const c = page.stepConfirmed;
+  return (
+    <section aria-labelledby="step-heading" aria-live="polite" className="flex max-w-[640px] flex-col gap-7">
+      <div className="flex flex-col gap-3">
+        <h1 id="step-heading" ref={headingRef} tabIndex={-1} className="text-h2 focus:outline-none">
+          {c.heading}
+        </h1>
+        <p className="text-[19px]">{fillTokens(c.summary, tokens)}</p>
+      </div>
+      {c.nextSteps && c.nextSteps.length > 0 && (
+        <div className="flex flex-col gap-3">
+          <h2 className="text-[26px]">{c.nextStepsHeading}</h2>
+          <ol className="m-0 flex list-decimal flex-col gap-2 pl-5">
+            {c.nextSteps.map((step) => (
+              <li key={step}>{fillTokens(step, tokens)}</li>
+            ))}
+          </ol>
+        </div>
+      )}
+      <CmsLinkTo link={c.homeLink} className="btn self-start" />
+    </section>
   );
 }

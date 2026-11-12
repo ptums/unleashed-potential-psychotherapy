@@ -1,6 +1,7 @@
 import { ValidationError } from "yup";
 import { formSchemas, isFormType, type FormValues } from "@/lib/forms/schemas";
 import { sendToAppsScript } from "@/lib/submission/apps-script";
+import { checkSlot } from "@/lib/scheduling/check";
 import { isRateLimited } from "@/lib/submission/rate-limit";
 import { markDelivered, putSubmission } from "@/lib/submission/store";
 import { verifyTurnstile } from "@/lib/submission/turnstile";
@@ -57,6 +58,23 @@ export async function POST(request: Request) {
     throw err;
   }
 
+  // 3b. A booking: the time must still be open on a fresh calendar read.
+  let extra: Record<string, string> = {};
+  if (formType === "booking") {
+    const booking = fields as FormValues["booking"];
+    const slot = await checkSlot(booking.clinician, booking.start);
+    if (slot.status === "unknown") {
+      return Response.json({ ok: false, invalid: ["clinician"] }, { status: 400 });
+    }
+    if (slot.status === "taken") {
+      return Response.json({ ok: false, code: "SLOT_TAKEN" }, { status: 409 });
+    }
+    if (slot.status === "unavailable") {
+      return Response.json({ ok: false, error: "Calendar unavailable" }, { status: 503 });
+    }
+    extra = { end: slot.end, when: slot.when, clinicianName: slot.clinicianName };
+  }
+
   // 4. The ID and the metadata-only record (the debug log).
   const id = crypto.randomUUID();
   const createdAt = new Date().toISOString();
@@ -72,7 +90,7 @@ export async function POST(request: Request) {
   }
 
   // 5. Hand it to the Apps Script: Sheet row and email to Jess.
-  const sent = await sendToAppsScript({ formType, id, createdAt, isTest, fields });
+  const sent = await sendToAppsScript({ formType, id, createdAt, isTest, fields: { ...fields, ...extra } });
 
   // 6. Write the result back to the record (only if the record exists).
   if (stored) {
