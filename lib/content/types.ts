@@ -8,8 +8,9 @@ import type { ClinicianProfile } from "./generated/clinician-profile";
 import type { Specialty } from "./generated/specialty";
 import type { BlogPost } from "./generated/blog-post";
 import type { ClientReviews } from "./generated/reviews";
+import type { ShareYourExperience } from "./generated/share-experience";
 
-export type { Home, OurApproach, WhatToExpect, FeaturedIn, Blog, Booking, ClinicianProfile, Specialty, BlogPost, ClientReviews };
+export type { Home, OurApproach, WhatToExpect, FeaturedIn, Blog, Booking, ClinicianProfile, Specialty, BlogPost, ClientReviews, ShareYourExperience };
 
 /** Singleton pages, keyed by their CMS page id (GET /pages/{id}). */
 export interface PageMap {
@@ -20,6 +21,7 @@ export interface PageMap {
   blog: Blog;
   booking: Booking;
   reviews: ClientReviews;
+  "share-experience": ShareYourExperience;
 }
 
 export type PageId = keyof PageMap;
