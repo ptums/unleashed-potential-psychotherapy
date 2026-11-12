@@ -3,12 +3,12 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { ReactNode } from "react";
 import { CmsHtml } from "@/components/CmsHtml";
+import { CalendarCheckIcon, FloatingAction } from "@/components/FloatingAction";
 import { CmsLinkTo, CmsPicture } from "@/components/ui";
 import { getContent, isZoneVisible, type ClinicianProfile, type SpecialtyTile } from "@/lib/content";
 import type { SessionType } from "@/lib/content/generated/clinician-profile";
 import { getMediaAppearance } from "@/lib/media";
 import { seoMetadata } from "@/lib/seo";
-import { fillTokens } from "@/lib/tokens";
 
 // Only clinicians with content get a page. Any other slug is a real 404.
 export const dynamicParams = false;
@@ -57,6 +57,10 @@ export default async function ClinicianProfilePage({ params }: PageProps<"/clini
         </nav>
       </div>
 
+      {/* TODO(TWS-117 API phase): booking needs the Google Calendar integration, so this button
+          does nothing yet. It is first in the tab order after the breadcrumb. */}
+      <FloatingAction label={`Book with ${header.firstName}`} icon={<CalendarCheckIcon />} />
+
       <section className="pt-[clamp(32px,5vw,64px)] pb-[clamp(48px,6vw,80px)]">
         <div className="wrap flex flex-wrap items-start gap-12">
           <CmsPicture image={header.portrait} className="aspect-[3/4] max-w-[380px] flex-[1_1_280px]" />
@@ -90,7 +94,6 @@ export default async function ClinicianProfilePage({ params }: PageProps<"/clini
               </ul>
             )}
           </div>
-          {isZoneVisible(profile.booking) && <BookingCard zone={profile.booking} firstName={header.firstName} />}
         </div>
       </section>
 
@@ -126,27 +129,6 @@ function Row({ heading, children }: { heading: string; children: ReactNode }) {
       <h2 className="text-[32px]">{heading}</h2>
       {children}
     </section>
-  );
-}
-
-function BookingCard({ zone, firstName }: { zone: ClinicianProfile["booking"]; firstName: string }) {
-  return (
-    <aside
-      id="book"
-      aria-labelledby="book-heading"
-      className="flex max-w-[420px] flex-[1_1_320px] flex-col gap-5 bg-cream-light p-8"
-    >
-      <div className="flex flex-col gap-1">
-        <h2 id="book-heading" className="text-[28px]">
-          {fillTokens(zone.heading, { firstName })}
-        </h2>
-        {zone.acceptingNewClients
-          ? zone.subhead && <p className="text-small">{zone.subhead}</p>
-          : zone.waitlistMessage && <p className="text-small">{zone.waitlistMessage}</p>}
-      </div>
-      {/* TODO(TWS-117 API phase): open times and the booking button come from the Google Calendar
-          integration. Booking is left empty until then (decided 2026-11-10). */}
-    </aside>
   );
 }
 
