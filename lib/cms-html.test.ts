@@ -22,6 +22,11 @@ describe("cleanCmsHtml", () => {
     expect(cleanCmsHtml("Plain text & more")).toBe("<p>Plain text &amp; more</p>");
   });
 
+  it("allows headings and quotes only in article bodies", () => {
+    expect(cleanCmsHtml("<h3>Title</h3><p>Text</p>", true)).toBe("<h3>Title</h3><p>Text</p>");
+    expect(cleanCmsHtml("<h3>Title</h3><p>Text</p>")).toBe("Title<p>Text</p>");
+  });
+
   it("splits plain text into paragraphs at blank lines", () => {
     expect(cleanCmsHtml("One\n\nTwo")).toBe("<p>One</p><p>Two</p>");
   });
