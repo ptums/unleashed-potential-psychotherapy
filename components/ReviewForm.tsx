@@ -6,7 +6,7 @@ import { toast } from "react-toastify";
 import { ValidationError } from "yup";
 import { Turnstile } from "@/components/Turnstile";
 import type { ShareYourExperience } from "@/lib/content";
-import { feedbackSchema } from "@/lib/forms/schemas";
+import { reviewSchema } from "@/lib/forms/schemas";
 import { fillTokens } from "@/lib/tokens";
 
 // The Share your experience form (/reviews/share). It posts to /api/submit, which checks it
@@ -18,7 +18,7 @@ const SITE_KEY = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY ?? "";
 type Status = "idle" | "sending";
 type ErrorKey = "name" | "email";
 
-const SEND_FAILED = "We couldn't send your feedback. Please try again.";
+const SEND_FAILED = "We couldn't send your review. Please try again.";
 
 const field = "flex flex-col gap-1.5";
 const label = "text-[16px] font-bold";
@@ -29,7 +29,7 @@ const option =
   "flex min-h-14 cursor-pointer items-center gap-3 border-[1.5px] border-forest px-4 py-2.5 leading-[1.3] has-checked:border-2 has-checked:border-forest-dark has-checked:bg-cream-light has-focus-visible:outline-3 has-focus-visible:outline-offset-3 has-focus-visible:outline-forest-dark";
 const control = "size-5 flex-none accent-forest-dark focus-visible:outline-none";
 
-export function FeedbackForm({
+export function ReviewForm({
   form,
   thankYou,
 }: {
@@ -64,7 +64,7 @@ export function FeedbackForm({
     };
 
     try {
-      await feedbackSchema.validate(values, { abortEarly: false });
+      await reviewSchema.validate(values, { abortEarly: false });
     } catch (err) {
       if (err instanceof ValidationError) {
         showErrors(err.inner.map((e) => e.path));
@@ -79,7 +79,7 @@ export function FeedbackForm({
       const res = await fetch("/api/submit", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ formType: "feedback", fields: { ...values, website: data.get("website") }, turnstileToken: token }),
+        body: JSON.stringify({ formType: "review", fields: { ...values, website: data.get("website") }, turnstileToken: token }),
       });
       const body = (await res.json().catch(() => null)) as { ok?: boolean; invalid?: string[] } | null;
       if (res.status === 400 && body?.invalid) {
@@ -125,10 +125,10 @@ export function FeedbackForm({
   const count = `${errors.length} ${errors.length === 1 ? "error" : "errors"}`;
 
   return (
-    <section aria-labelledby="feedback-heading" className="flex max-w-[640px] flex-col gap-7 nav:col-start-1 nav:row-start-1">
+    <section aria-labelledby="review-heading" className="flex max-w-[640px] flex-col gap-7 nav:col-start-1 nav:row-start-1">
       <div className="flex flex-col gap-2">
         <p className="eyebrow">{form.eyebrow}</p>
-        <h1 id="feedback-heading" className="text-h2">
+        <h1 id="review-heading" className="text-h2">
           {form.heading}
         </h1>
         {form.intro && <p>{form.intro}</p>}

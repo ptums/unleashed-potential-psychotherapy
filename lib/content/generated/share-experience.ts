@@ -1,15 +1,15 @@
 /* Generated from schemas/share-experience.json by scripts/gen-types.mjs. Do not edit. */
 
 /**
- * Copy for the private feedback form for current and past clients. Submissions go to the practice and are never published automatically. Header, footer and crisis line come from site settings.
+ * Copy for the private review form for current and past clients. Submissions go to the practice and are never published automatically. Header, footer and crisis line come from site settings.
  */
 export interface ShareYourExperience {
-  form: FeedbackForm;
+  form: ReviewForm;
   notePanel: BeforeYouWritePanel;
   thankYou: ThankYouState;
   seo: SEO;
 }
-export interface FeedbackForm {
+export interface ReviewForm {
   eyebrow: string;
   /**
    * The page's only H1.

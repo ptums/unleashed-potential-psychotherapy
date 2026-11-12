@@ -44,7 +44,7 @@ export function CalendarCheckIcon() {
   );
 }
 
-/** The pen icon for the feedback button. */
+/** The pen icon for the Share your experience button. */
 export function PenIcon() {
   return (
     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">

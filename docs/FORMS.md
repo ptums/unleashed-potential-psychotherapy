@@ -17,7 +17,7 @@ Server (app/api/submit/route.ts)
 DynamoDB stream -> Lambda -> SNS -> anonymous alert to tumultywebservices@gmail.com (ID only)
 ```
 
-Forms today: `feedback` (/reviews/share). Next: `booking`.
+Forms today: `review` (/reviews/share). Next: `booking`.
 
 ## Switching it on
 
