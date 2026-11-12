@@ -1,8 +1,8 @@
 import type { CollectionName, ContentRepository, PageId } from "./types";
 
-// Collections the CMS fully owns. The mock entries never show for these, so the blog
-// lists only real, published posts (decided 2026-11-11).
-const cmsOnly = new Set<CollectionName>(["blogPosts"]);
+// Collections the CMS fully owns. The mock entries never show for these, so the site lists
+// only real, published posts and specialty pages (blog 2026-11-11, specialties 2026-11-12).
+const cmsOnly = new Set<CollectionName>(["blogPosts", "specialties"]);
 
 /**
  * Reads from `primary` (the CMS) and uses `fallback` (the mock) for content that is not
@@ -30,7 +30,13 @@ export function withFallback(primary: ContentRepository, fallback: ContentReposi
       return [...new Set([...fromPrimary, ...fromFallback])];
     },
     async getSpecialtyTile(slug) {
-      return (await primary.getSpecialtyTile(slug)) ?? fallback.getSpecialtyTile(slug);
+      const tile = await primary.getSpecialtyTile(slug);
+      if (tile) {
+        return tile;
+      }
+      // The mock still names a specialty (for a clinician profile), but never gives it a page.
+      const mock = await fallback.getSpecialtyTile(slug);
+      return mock ? { ...mock, hasPage: false } : null;
     },
   };
 }
