@@ -29,7 +29,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     const entries = await Promise.all(
       slugs.map(async (slug) => {
         const entry = await content.getEntry(name, slug);
-        return entry && !entry.seo.noindex ? { url: `${siteUrl}${base}/${slug}` } : null;
+        return entry && !entry.seo?.noindex ? { url: `${siteUrl}${base}/${slug}` } : null;
       }),
     );
     return entries.filter((e): e is { url: string } => e !== null);
