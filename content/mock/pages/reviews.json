@@ -1,0 +1,179 @@
+{
+  "hero": {
+    "eyebrow": "Experience",
+    "heading": "Client reviews",
+    "intro": "What working with Jess has meant to the people she sees, in their own words. Names are shortened to protect their privacy."
+  },
+  "featureImage": {
+    "hidden": false,
+    "image": {
+      "assetId": "uploads/204baa8e-a250-482b-a1db-29e02f1a1d11.jpg",
+      "alt": "A sprig of green leaves resting on soft, rumpled cream linen in warm natural light"
+    }
+  },
+  "reviewList": {
+    "hidden": false,
+    "eyebrow": "Reviews",
+    "heading": "What clients say",
+    "summary": "{count} reviews from clients of our founder, Jess Rebelo, LCSW.",
+    "asideLink": {
+      "label": "Meet Jess",
+      "target": {
+        "internal": {
+          "collection": "clinicians",
+          "id": "jessica-rebelo"
+        }
+      }
+    },
+    "collapseAfterChars": 360,
+    "expandLabel": "Read full review",
+    "collapseLabel": "Show less",
+    "items": [
+      {
+        "displayName": "Kevin D",
+        "text": "Working with Jess as my life coach has been an absolutely incredible, transformative experience. From our very first session, Jess's empathetic and non-judgmental approach has made me feel comfortable and understood. She has a unique ability to listen deeply and ask the right questions that really get to the heart of the matter. Jess has guided me through a journey of self-discovery, helping me to uncover limiting beliefs and replace them with empowering thoughts. Her techniques are not just theoretical, but they are practical and tailored to my specific needs, which has made all the difference in my progress. Thanks to Jess, I now have a clearer vision of what I want in life and the tools to go after it. If you're looking for a life coach who is insightful, compassionate, and results-oriented, I wholeheartedly recommend Jess. She has truly saved me and changed my life for the better!",
+        "consentOnFile": true,
+        "receivedDate": null,
+        "hidden": false
+      },
+      {
+        "displayName": "Sky G",
+        "text": "Jessica has been nothing short of amazing since we started working together 2 years ago. I say \"working together\" because therapy with her is just that, we work together. She never makes you feel alone. Jessica empowers and guides you to cope with stresses that everyone encounters in life. Jessica pushes you to be the best version of yourself and is very \"real\" when she speaks with you. She gives you tools and teaches you skills for you to implement in your daily life so you can SEE and FEEL change. Her work is met with compassion and empathy for her clients that comes from a genuine want to help people. You will not be disappointed in trusting her to start your healing and growth in your life.",
+        "consentOnFile": true,
+        "receivedDate": null,
+        "hidden": false
+      },
+      {
+        "displayName": "Kim C",
+        "text": "My life took an amazing turn from just surviving to living life to the fullest. After decades of seeing different therapists, I came across Jess. A true gem!!! Easy to talk to, compassionate and honest. Her experience with trauma and EMDR has enabled me to overcome triggers and set boundaries where needed. I can honestly say she saved me and I’m very blessed to have her as my therapist whenever I need her.",
+        "consentOnFile": true,
+        "receivedDate": null,
+        "hidden": false
+      },
+      {
+        "displayName": "Sarah G",
+        "text": "Jessica has been such a huge support and positive force in my life. She is incredibly flexible with my schedule and makes time for me if I ever have a moment of crisis or need help working through something. My therapy with her has helped me through incredibly difficult moments in my life and has helped to push me to be the best version of myself, through her support and guidance. I would highly recommend her to anyone who is looking for REAL feedback, genuine support, and true positivity. She is amazing at what she does!",
+        "consentOnFile": true,
+        "receivedDate": null,
+        "hidden": false
+      },
+      {
+        "displayName": "Gina B",
+        "text": "Jessica is absolutely amazing. She helped me in more ways than one. I looked forward to each session with her. She pushed me out of my comfort zone, encouraged me, and really helped me grow as an individual and in my relationship. She is someone I still keep in touch with because I am so excited to share with her how far I have come. I can't thank her enough for all her help and support over the years.",
+        "consentOnFile": true,
+        "receivedDate": null,
+        "hidden": false
+      },
+      {
+        "displayName": "Tommy C",
+        "text": "Jessica Rebelo is a force of change, though she is far too humble to take any credit herself. Instead, she will affirm her client’s abilities, reminding them that they were the ones who did the work to change. While that sentiment speaks to Jessica’s good nature, it does a disservice to her work ethic, professionalism, and commitment to her client’s. Change would not have been possible for me had it not been for Jess and her relentless belief in me that I could change. Jessica is compassionate, trustworthy, and committed to her client’s wellbeing with genuine care that is certain to ease any new client’s anxiety. She is not just a therapist or a life coach; Jess is truly a hero.",
+        "consentOnFile": true,
+        "receivedDate": null,
+        "hidden": false
+      },
+      {
+        "displayName": "Alyssa H",
+        "text": "4 years ago I was introduced to Jessica with a primary focus on trauma therapy and EMDR. Jessica’s experience and expertise in the field not only addressed past trauma, but she helped successfully guide me through multiple other aspects of my life. Since the day we met, she has been there for me every step of the way with honesty, kindness, compassion, empathy, endless support, and a genuine heart. Jessica is extremely committed to her clients both in person and virtual. She is truly a wonderful professional and one of the most incredible people I have ever met. Jessica’s approach is so empowering and she without a doubt made a lasting impact on my life. I hope to always have her as a part of my journey! Whether it’s an individual, group, or family session dynamic, I highly recommend Jessica and Unleashed Potential: Life Coaching!",
+        "consentOnFile": true,
+        "receivedDate": null,
+        "hidden": false
+      },
+      {
+        "displayName": "Serena Z",
+        "text": "Unleashed Potential does exactly that, unleashes your true potential!!! I have had the privilege of working with Jessica for almost 2 years now and let me tell you, my life has truly changed. I can honestly say that I have grown more as a human being in these last 2 years than I have in my 23 years of being on this planet. And let’s not forget Ron!! My boyfriend started seeing Ron a few months back and watching him finally open up to someone was something that made my heart so happy! But that’s the thing about Jess and Ron, they’re real people, they make opening up so dang easy!! There’s no judgement, just a supportive ear to listen. I will never not recommend Unleashed Potential: Life Coaching",
+        "consentOnFile": true,
+        "receivedDate": null,
+        "hidden": false
+      },
+      {
+        "displayName": "Isabel F",
+        "text": "She has helped me grow beyond words!! I have been with Unleashed Potential for over a year, maybe even 2 years now! Jess has helped me grow mentally, physically, and emotionally. Now I know your probably thinking, well isn’t that what life coaching is supposed to do? Yes but I have seen many other therapist and life coaches throughout my life and Jess has been BY FAR the best one!! I will forever recommend this business to everyone and anyone I know. I can go on and on about my journey with Jess and how much she’s changed me but I highly recommend her!",
+        "consentOnFile": true,
+        "receivedDate": null,
+        "hidden": false
+      },
+      {
+        "displayName": "Sabrina A",
+        "text": "I have had the privilege of working with Jessica for several years now. She is extremely savvy in building on client’s strengths to help them make genuine change in their lives. Would refer anyone to her for genuine care and empowerment.",
+        "consentOnFile": true,
+        "receivedDate": null,
+        "hidden": false
+      },
+      {
+        "displayName": "Lauren C",
+        "text": "Working with Jess consistently for the past three years has changed the way i approach everything about my life. she is patient and kind when it comes to everything i want to talk about and work through. she is skilled at helping me find tools that resonate with how i approach life. she always follows up on how i am using the tools and what needs to be further worked on. she has taught me how to manage my anxiety and panic while also celebrating my joy. i can't say enough good things about working with her! i look forward to our meetings every week where we work together to sort through whatever is bothering me, in addition to my long term concerns.",
+        "consentOnFile": true,
+        "receivedDate": null,
+        "hidden": false
+      },
+      {
+        "displayName": "Greg S",
+        "text": "Jessica has been a great help in assisting me improve my life. She is very patient, compassionate, understanding and open. She's not afraid to say what is needed to be said. My life definitely has improved since I've started working with her!",
+        "consentOnFile": true,
+        "receivedDate": null,
+        "hidden": false
+      },
+      {
+        "displayName": "Donna S",
+        "text": "The appointment was so personalized with realistic goals. I look forward to my weekly appointments. Jessica keeps me focused and motivated to be my better self. I highly recommend her",
+        "consentOnFile": true,
+        "receivedDate": null,
+        "hidden": false
+      },
+      {
+        "displayName": "Alex B",
+        "text": "After feeling lost for many years, Jessica supported me with reconnecting to my purpose in life. She was in my corner every step of the way and saw the strength within me before I recognized it on my own. She provided a space for me to become a better version of myself and to finally feel confident in my life. With her guidance, I have been able to thrive in my relationships, work, and personal life. Jessica is passionate about her work and it shows in the progress that her clients make. If you’re seeking inner healing and want to become the best version of yourself, do not wait to contact her!",
+        "consentOnFile": true,
+        "receivedDate": null,
+        "hidden": false
+      },
+      {
+        "displayName": "Susan M",
+        "text": "Jessica is passionate about what she does and shows a true commitment to helping people grow. I have become a far better version of myself after undergoing trauma therapy with her and continue to improve through her coaching. I've learned to set goals and to let go of unrealistic expectations and toxic relationships. I've also learned a great deal about self-worth and how to achieve the life I deserve!",
+        "consentOnFile": true,
+        "receivedDate": null,
+        "hidden": false
+      },
+      {
+        "displayName": "Dana R",
+        "text": "I love that Che is always available for laser coaching even when I don't have a meeting scheduled with her for that day. She is available when I need her and is always so caring when speaking to me. She pushes me to be the best version of myself even when sometimes I may not want to go out of my way to do the thing to help me improve. She has my best interest at heart and always holds me accountable.",
+        "consentOnFile": true,
+        "receivedDate": null,
+        "hidden": false
+      },
+      {
+        "displayName": "Lauren R",
+        "text": "I’ve been with Jessica for almost 6 years and she has changed my life. Truly no one better than her and I stand by that. She is responsive and positive, but will say it how it is when necessary, which is especially helpful. With her help, I have become a functioning human being, which is a lot to say if you knew me 5 years ago. Great therapist, company, and a friend.",
+        "consentOnFile": true,
+        "receivedDate": null,
+        "hidden": false
+      },
+      {
+        "displayName": "Isabella H",
+        "text": "I have been seeing Jess for about 5-6 years now, although I have \"graduated\" from weekly meetings. I know that if I need guidance or just a shoulder to lean on, she is one call away.  Jess has helped me get back on my A-game.  When she gives advice or words of wisdom you can tell she truly cares and wants to see the best version of you.  After going too many other therapists for years and not having a connection with them, it was so relieving when I met with Jess because she can relate to my stories, knows exactly how to deal with them, and helped me improve in areas that I felt lost in.  I cannot thank her enough for helping me get to where I am today. A true life changer.",
+        "consentOnFile": true,
+        "receivedDate": null,
+        "hidden": false
+      }
+    ]
+  },
+  "closingCta": {
+    "hidden": false,
+    "heading": "Ready to talk with a clinician?",
+    "body": "Start with a free 15-minute consultation.",
+    "cta": {
+      "label": "Book a Consultation",
+      "target": {
+        "internal": {
+          "collection": "clinicians",
+          "id": "jessica-rebelo"
+        }
+      }
+    }
+  },
+  "seo": {
+    "title": "Client Reviews · Unleashed Potential",
+    "description": "Reviews from clients of Jess Rebelo, LCSW, in their own words.",
+    "noindex": false
+  }
+}

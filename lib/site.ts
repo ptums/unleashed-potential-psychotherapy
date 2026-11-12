@@ -38,7 +38,10 @@ export const site = {
     },
     {
       label: "Experience",
-      links: [{ label: "What to Expect", href: "/what-to-expect" }],
+      links: [
+        { label: "What to Expect", href: "/what-to-expect" },
+        { label: "Reviews", href: "/reviews" },
+      ],
     },
   ] satisfies NavGroup[],
   navLinks: [{ label: "Blog", href: "/blog" }] satisfies NavLink[],
