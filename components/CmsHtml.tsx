@@ -16,16 +16,27 @@ const options: sanitizeHtml.IOptions = {
   },
 };
 
+// Article bodies also allow headings and quotes.
+const articleOptions: sanitizeHtml.IOptions = {
+  ...options,
+  allowedTags: [...(options.allowedTags as string[]), "h2", "h3", "h4", "blockquote"],
+};
+
+/** True when the text holds HTML tags, so it renders as HTML and not as Markdown. */
+export function looksLikeHtml(text: string): boolean {
+  return /<[a-z][\s\S]*>/i.test(text.trim());
+}
+
 /** Cleans CMS HTML. Plain text with no tags becomes paragraphs, split at blank lines. */
-export function cleanCmsHtml(html: string): string {
+export function cleanCmsHtml(html: string, article = false): string {
   const trimmed = html.trim();
-  const source = /<[a-z][\s\S]*>/i.test(trimmed)
+  const source = looksLikeHtml(trimmed)
     ? trimmed
     : trimmed
         .split(/\n\s*\n/)
         .map((para) => `<p>${escapeText(para.trim())}</p>`)
         .join("");
-  return sanitizeHtml(source, options);
+  return sanitizeHtml(source, article ? articleOptions : options);
 }
 
 function escapeText(text: string): string {
@@ -33,6 +44,6 @@ function escapeText(text: string): string {
 }
 
 /** Renders CMS rich text. The HTML is sanitized first (see cleanCmsHtml). */
-export function CmsHtml({ html, className = "" }: { html: string; className?: string }) {
-  return <div className={className} dangerouslySetInnerHTML={{ __html: cleanCmsHtml(html) }} />;
+export function CmsHtml({ html, className = "", article = false }: { html: string; className?: string; article?: boolean }) {
+  return <div className={className} dangerouslySetInnerHTML={{ __html: cleanCmsHtml(html, article) }} />;
 }
