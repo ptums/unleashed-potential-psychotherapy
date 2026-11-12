@@ -1,7 +1,8 @@
 import type { CollectionMap, CollectionName, ContentRepository, PageId, PageMap } from "./types";
 import { toPageId, toSlug } from "./slug";
 
-const referenceCollections = new Set(["pages", "clinicians", "specialties", "mediaAppearances", "blogPosts"]);
+// mediaAppearances is left out: the Featured In strip shows its ids as the editor typed them.
+const referenceCollections = new Set(["pages", "clinicians", "specialties", "blogPosts"]);
 
 /**
  * The CMS reference field is free text, so an id can be a display name ("Jess Rebelo") or a
