@@ -21,6 +21,10 @@ describe("cleanCmsHtml", () => {
   it("wraps plain text in 1 paragraph and escapes it", () => {
     expect(cleanCmsHtml("Plain text & more")).toBe("<p>Plain text &amp; more</p>");
   });
+
+  it("splits plain text into paragraphs at blank lines", () => {
+    expect(cleanCmsHtml("One\n\nTwo")).toBe("<p>One</p><p>Two</p>");
+  });
 });
 
 describe("cmsImageUrl", () => {

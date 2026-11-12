@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { ReactNode } from "react";
+import { CmsHtml } from "@/components/CmsHtml";
 import { CmsLinkTo, CmsPicture } from "@/components/ui";
 import { getContent, isZoneVisible, type ClinicianProfile, type SpecialtyTile } from "@/lib/content";
 import type { SessionType } from "@/lib/content/generated/clinician-profile";
@@ -62,7 +63,7 @@ export default async function ClinicianProfilePage({ params }: PageProps<"/clini
           <div className="flex flex-[2_1_340px] flex-col gap-5">
             <p className="eyebrow">{header.roleLine}</p>
             <h1 className="text-[clamp(40px,4.4vw,60px)]">{header.displayName}</h1>
-            <p className="text-lead">{header.summary}</p>
+            <CmsHtml html={header.summary} className="text-lead [&_p+p]:mt-4" />
             <ul className="m-0 flex list-none flex-col gap-1.5 p-0 text-small">
               {header.ages && <Fact label="Sees">{header.ages}</Fact>}
               {header.sessionsLine && <Fact label="Sessions">{header.sessionsLine}</Fact>}
@@ -96,11 +97,7 @@ export default async function ClinicianProfilePage({ params }: PageProps<"/clini
       <div className="wrap pb-[clamp(64px,8vw,112px)]">
         {isZoneVisible(profile.approach) && (
           <Row heading={profile.approach.heading}>
-            <div className="flex flex-col gap-4">
-              {profile.approach.body.split(/\n{2,}/).map((para) => (
-                <p key={para}>{para}</p>
-              ))}
-            </div>
+            <CmsHtml html={profile.approach.body} className="flex flex-col gap-4" />
           </Row>
         )}
         {isZoneVisible(profile.credentials) && <Credentials zone={profile.credentials} />}
