@@ -9,8 +9,8 @@ test("our approach renders every zone and passes axe", async ({ page }) => {
     await expect(page.getByRole("heading", { level: 2, name })).toBeVisible();
   }
   await expect(page.locator("dt")).toHaveCount(4);
-  await expect(page.getByRole("link", { name: "Read Jess’s profile" })).toHaveAttribute("href", "/clinicians/jess-rebelo");
-  await expect(page.getByRole("link", { name: "Book a Consultation" })).toHaveAttribute("href", "/clinicians/jess-rebelo");
+  await expect(page.getByRole("link", { name: "Read Jess’s profile" })).toHaveAttribute("href", "/clinicians/jessica-rebelo");
+  await expect(page.getByRole("link", { name: "Book a Consultation" })).toHaveAttribute("href", "/clinicians/jessica-rebelo");
 
   const results = await new AxeBuilder({ page }).withTags(["wcag2a", "wcag2aa", "wcag21aa", "wcag22aa"]).analyze();
   expect(results.violations).toEqual([]);

@@ -2,7 +2,7 @@ import AxeBuilder from "@axe-core/playwright";
 import { expect, test } from "@playwright/test";
 
 test("clinician profile renders every zone and passes axe", async ({ page }) => {
-  await page.goto("/clinicians/jess-rebelo");
+  await page.goto("/clinicians/jessica-rebelo");
   await expect(page).toHaveTitle("Jess Rebelo, LCSW · Trauma & EMDR Therapist");
   await expect(page.getByRole("heading", { level: 1 })).toHaveText("Jess Rebelo, LCSW");
   for (const name of ["Book with Jess", "Approach", "Credentials", "Fees & insurance", "Featured in"]) {

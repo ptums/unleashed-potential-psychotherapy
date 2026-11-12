@@ -71,7 +71,7 @@
     "quote": "I founded Unleashed Potential Psychotherapy so people could find specialized trauma care without having to search for it. The practice will grow beyond me; the standard will not change.",
     "founder": {
       "collection": "clinicians",
-      "id": "jess-rebelo"
+      "id": "jessica-rebelo"
     },
     "authorName": "Jess Rebelo, LCSW",
     "authorRole": "Founder",
@@ -80,7 +80,7 @@
       "target": {
         "internal": {
           "collection": "clinicians",
-          "id": "jess-rebelo"
+          "id": "jessica-rebelo"
         }
       }
     }
@@ -93,7 +93,7 @@
       "target": {
         "internal": {
           "collection": "clinicians",
-          "id": "jess-rebelo"
+          "id": "jessica-rebelo"
         }
       }
     }
