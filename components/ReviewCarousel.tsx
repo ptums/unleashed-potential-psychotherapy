@@ -13,8 +13,9 @@ const ROTATE_MS = 4500;
 /**
  * One review at a time. It moves on its own, and stops while the pointer is over it, while
  * it has keyboard focus, or when the visitor asks for reduced motion. The arrows fade in on
- * hover or focus. All slides share 1 grid cell, so the band keeps the height of the longest
- * review and the page does not jump.
+ * hover or focus. All slides share 1 grid cell, so the frame keeps the height of the longest
+ * review. Each quote starts at the top of the frame and each name sits at its bottom, so
+ * nothing moves when one review crossfades into the next.
  */
 export function ReviewCarousel({ reviews }: { reviews: CarouselReview[] }) {
   const [index, setIndex] = useState(0);
@@ -46,8 +47,8 @@ export function ReviewCarousel({ reviews }: { reviews: CarouselReview[] }) {
             <figure
               key={`${review.displayName}-${i}`}
               aria-hidden={!active}
-              className={`col-start-1 row-start-1 m-0 flex flex-col justify-center gap-6 transition-[opacity,transform,visibility] duration-700 ease-out motion-reduce:transition-none ${
-                active ? "visible translate-y-0 opacity-100" : "invisible translate-y-3 opacity-0"
+              className={`col-start-1 row-start-1 m-0 flex flex-col gap-6 transition-[opacity,visibility] duration-700 ease-out motion-reduce:transition-none ${
+                active ? "visible opacity-100" : "invisible opacity-0"
               }`}
             >
               <blockquote className="m-0">
@@ -55,7 +56,7 @@ export function ReviewCarousel({ reviews }: { reviews: CarouselReview[] }) {
                   “{review.text}”
                 </p>
               </blockquote>
-              <figcaption className="self-end text-[18px] font-bold tracking-[0.08em] uppercase">
+              <figcaption className="mt-auto self-end text-[18px] font-bold tracking-[0.08em] uppercase">
                 – {review.displayName}
               </figcaption>
             </figure>
