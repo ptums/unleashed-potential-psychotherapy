@@ -7,8 +7,8 @@ export interface CarouselReview {
   text: string;
 }
 
-/** How long each review shows before the next one fades in (Peter, 2026-11-12: 7 seconds). */
-const ROTATE_MS = 7000;
+/** How long each review shows before the next one fades in (Peter, 2026-11-12: 4.5 seconds). */
+const ROTATE_MS = 4500;
 
 /**
  * One review at a time. It moves on its own, and stops while the pointer is over it, while
