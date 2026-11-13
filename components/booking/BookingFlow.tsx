@@ -5,6 +5,7 @@ import { useEffect, useRef, useState, type ReactNode } from "react";
 import { toast } from "react-toastify";
 import { CmsPicture, type CmsImage } from "@/components/ui";
 import { DetailsStep, type DetailsValues, type SendResult } from "./DetailsStep";
+import { SlotCalendar } from "./SlotCalendar";
 import type { Booking } from "@/lib/content";
 import { groupByDay, slotLabel, type SlotView } from "@/lib/scheduling/format";
 import { fillTokens } from "@/lib/tokens";
@@ -24,7 +25,6 @@ export interface BookingClinician {
 type Format = "video" | "phone";
 type Load = { state: "loading" } | { state: "failed" } | { state: "ready"; timezone: string; slots: SlotView[] };
 
-const FIRST_DAYS = 14;
 
 const option =
   "flex min-h-14 cursor-pointer items-center gap-3 border-[1.5px] border-forest px-4 py-2.5 leading-[1.3] has-checked:border-2 has-checked:border-forest-dark has-checked:bg-cream-light has-focus-visible:outline-3 has-focus-visible:outline-offset-3 has-focus-visible:outline-forest-dark";
@@ -39,7 +39,6 @@ export function BookingFlow({ page, clinician }: { page: Booking; clinician: Boo
   const [reloadKey, setReloadKey] = useState(0);
   const [slot, setSlot] = useState<string | null>(null);
   const [format, setFormat] = useState<Format>("video");
-  const [showAll, setShowAll] = useState(false);
   const [slotError, setSlotError] = useState(false);
   const headingRef = useRef<HTMLHeadingElement>(null);
   // Focus moves to the step's heading after each step change, once React has drawn it
@@ -146,7 +145,7 @@ export function BookingFlow({ page, clinician }: { page: Booking; clinician: Boo
                   Error: choose a time.
                 </p>
               )}
-              <Slots load={load} showAll={showAll} selected={slot} onPick={setSlot} onShowAll={() => setShowAll(true)} />
+              <Slots load={load} selected={slot} onPick={setSlot} />
             </fieldset>
             <fieldset className="m-0 flex flex-col border-0 p-0">
               <legend className="mb-3.5 p-0 font-bold">{t.formatLegend}</legend>
@@ -184,16 +183,12 @@ export function BookingFlow({ page, clinician }: { page: Booking; clinician: Boo
 
 function Slots({
   load,
-  showAll,
   selected,
   onPick,
-  onShowAll,
 }: {
   load: Load;
-  showAll: boolean;
   selected: string | null;
   onPick: (start: string) => void;
-  onShowAll: () => void;
 }) {
   if (load.state === "loading") {
     return <p aria-live="polite">Loading open times…</p>;
@@ -205,36 +200,7 @@ function Slots({
   if (days.length === 0) {
     return <p>No open times in the next few weeks. Please check back soon.</p>;
   }
-  const shown = showAll ? days : days.slice(0, FIRST_DAYS);
-  return (
-    <div className="flex flex-col gap-6">
-      {shown.map((day) => (
-        <div key={day.key} className="flex flex-col gap-2.5">
-          <p className="text-[16px] font-bold">{day.label}</p>
-          <div className={grid}>
-            {day.slots.map((s) => (
-              <label key={s.start} className={option}>
-                <input
-                  type="radio"
-                  name="slot"
-                  value={s.start}
-                  checked={selected === s.start}
-                  onChange={() => onPick(s.start)}
-                  className={control}
-                />
-                <span>{s.time}</span>
-              </label>
-            ))}
-          </div>
-        </div>
-      ))}
-      {!showAll && days.length > FIRST_DAYS && (
-        <button type="button" onClick={onShowAll} className="self-start underline underline-offset-4">
-          Show more times
-        </button>
-      )}
-    </div>
-  );
+  return <SlotCalendar days={days} selected={selected} onPick={onPick} />;
 }
 
 function Progress({ page, step }: { page: Booking; step: 1 | 2 }) {

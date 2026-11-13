@@ -21,7 +21,13 @@ test("book step 1: pick a time and a format, then continue", async ({ page }) =>
   await page.getByRole("button", { name: "Continue to your details" }).click();
   await expect(page.getByText("Error: choose a time.")).toBeVisible();
 
-  await expect(page.getByText("Tue, Jan 8")).toBeVisible();
+  // A month calendar: the first open day is chosen, and its times show beside it.
+  await expect(page.getByText("January 2030")).toBeVisible();
+  await expect(page.getByRole("button", { name: /Tuesday, January 8, 2 open times/ })).toHaveAttribute("aria-pressed", "true");
+  await page.getByRole("button", { name: /Wednesday, January 9/ }).click();
+  await expect(page.getByRole("radio", { name: "12:00 PM" })).toBeVisible();
+  await expect(page.getByRole("radio", { name: "9:15 AM" })).toHaveCount(0);
+  await page.getByRole("button", { name: /Tuesday, January 8/ }).click();
   await page.getByRole("radio", { name: "9:15 AM" }).check();
   await page.getByRole("radio", { name: "Phone call" }).check();
   const summary = page.getByRole("complementary");
@@ -98,6 +104,26 @@ test("book without a known clinician goes to the clinician list", async ({ page 
   await expect(page).toHaveURL(/\/#clinicians$/);
 });
 
+test("book: the send button shows a spinner while it works", async ({ page }) => {
+  let release: () => void = () => {};
+  await page.route("**/api/submit", async (route) => {
+    await new Promise<void>((resolve) => (release = resolve));
+    await route.fulfill({ json: { ok: true, id: "test-id" } });
+  });
+  await toDetails(page);
+  await page.getByLabel("Full name").fill("Kim C");
+  await page.getByLabel("Email").fill("kim@example.com");
+  await page.getByLabel("Phone").fill("555 010 0000");
+  await page.getByRole("checkbox").check();
+  await page.getByRole("button", { name: "Send request" }).click();
+  const busy = page.getByRole("button", { name: "Sending…" });
+  await expect(busy).toHaveAttribute("aria-busy", "true");
+  await expect(busy).toBeDisabled();
+  await expect(busy.locator("svg")).toBeVisible();
+  release();
+  await expect(page.getByRole("alert").filter({ hasText: "Request sent." })).toBeVisible();
+});
+
 test("book: a failed send shows an error toast and keeps the details", async ({ page }) => {
   await page.route("**/api/submit", (route) => route.fulfill({ status: 502, json: { ok: false } }));
   await toDetails(page);
@@ -108,4 +134,12 @@ test("book: a failed send shows an error toast and keeps the details", async ({ 
   await page.getByRole("button", { name: "Send request" }).click();
   await expect(page.getByRole("alert").filter({ hasText: "We couldn’t send your request." })).toBeVisible();
   await expect(page.getByLabel("Full name")).toHaveValue("Kim C");
+});
+
+test("the header calendar icon opens booking with Jess", async ({ page }) => {
+  await page.goto("/");
+  await expect(page.getByRole("link", { name: "Book an appointment" }).first()).toHaveAttribute(
+    "href",
+    "/book?clinician=jessica-rebelo",
+  );
 });
