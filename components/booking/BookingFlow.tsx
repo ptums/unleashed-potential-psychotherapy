@@ -123,45 +123,17 @@ export function BookingFlow({ page, clinician }: { page: Booking; clinician: Boo
         format={formatText}
         onChange={step === 2 ? () => goTo(1) : undefined}
       />
+      {/* Desktop grid: the heading sits beside the booking card, and the time picker spans the full
+          width under both, so the times get more columns. On phones it is 1 column in DOM order. */}
       <div className="flex flex-col gap-10 nav:col-start-1 nav:row-start-1">
         <Progress page={page} step={step} />
         {step === 1 && (
-          <section aria-labelledby="step-heading" className="flex flex-col gap-9">
-            <div className="flex flex-col gap-2">
-              <h1 id="step-heading" ref={headingRef} tabIndex={-1} className="text-h2 focus:outline-none">
-                {t.heading}
-              </h1>
-              {t.intro && <p>{t.intro}</p>}
-            </div>
-            {taken && (
-              <p role="alert" className="border-2 border-error p-4 font-bold text-error">
-                That time was just booked. Please choose another.
-              </p>
-            )}
-            <fieldset className="m-0 flex flex-col border-0 p-0" aria-describedby={slotError ? "slot-error" : undefined}>
-              <legend className="mb-3.5 p-0 font-bold">{fillTokens(t.slotsLegend, names)}</legend>
-              {slotError && (
-                <p id="slot-error" role="alert" className="mb-3 font-bold text-error">
-                  Error: choose a time.
-                </p>
-              )}
-              <Slots load={load} selected={slot} onPick={setSlot} />
-            </fieldset>
-            <fieldset className="m-0 flex flex-col border-0 p-0">
-              <legend className="mb-3.5 p-0 font-bold">{t.formatLegend}</legend>
-              <div className={grid}>
-                {(["video", "phone"] as const).map((f) => (
-                  <label key={f} className={option}>
-                    <input type="radio" name="format" value={f} checked={format === f} onChange={() => setFormat(f)} className={control} />
-                    <span>{f === "video" ? t.videoLabel : t.phoneLabel}</span>
-                  </label>
-                ))}
-              </div>
-            </fieldset>
-            <button type="button" onClick={onContinue} className="btn self-start">
-              {t.continueLabel}
-            </button>
-          </section>
+          <div className="flex flex-col gap-2">
+            <h1 id="step-heading" ref={headingRef} tabIndex={-1} className="text-h2 focus:outline-none">
+              {t.heading}
+            </h1>
+            {t.intro && <p>{t.intro}</p>}
+          </div>
         )}
         {step === 2 && slot && (
           <DetailsStep
@@ -177,6 +149,42 @@ export function BookingFlow({ page, clinician }: { page: Booking; clinician: Boo
           />
         )}
       </div>
+      {step === 1 && (
+        <>
+          <div className="flex flex-col gap-6 nav:col-span-2 nav:row-start-2">
+            {taken && (
+              <p role="alert" className="border-2 border-error p-4 font-bold text-error">
+                That time was just booked. Please choose another.
+              </p>
+            )}
+            <fieldset className="m-0 flex flex-col border-0 p-0" aria-describedby={slotError ? "slot-error" : undefined}>
+              <legend className="mb-3.5 p-0 font-bold">{fillTokens(t.slotsLegend, names)}</legend>
+              {slotError && (
+                <p id="slot-error" role="alert" className="mb-3 font-bold text-error">
+                  Error: choose a time.
+                </p>
+              )}
+              <Slots load={load} selected={slot} onPick={setSlot} />
+            </fieldset>
+          </div>
+          <div className="flex flex-col gap-9 nav:col-start-1 nav:row-start-3">
+            <fieldset className="m-0 flex flex-col border-0 p-0">
+              <legend className="mb-3.5 p-0 font-bold">{t.formatLegend}</legend>
+              <div className={grid}>
+                {(["video", "phone"] as const).map((f) => (
+                  <label key={f} className={option}>
+                    <input type="radio" name="format" value={f} checked={format === f} onChange={() => setFormat(f)} className={control} />
+                    <span>{f === "video" ? t.videoLabel : t.phoneLabel}</span>
+                  </label>
+                ))}
+              </div>
+            </fieldset>
+            <button type="button" onClick={onContinue} className="btn self-start">
+              {t.continueLabel}
+            </button>
+          </div>
+        </>
+      )}
     </div>
   );
 }
@@ -260,7 +268,7 @@ function Summary({
     </div>
   );
   return (
-    <aside aria-labelledby="summary-heading" className="flex flex-col gap-3 bg-cream-light p-5 text-[15px] nav:sticky nav:top-6 nav:col-start-2 nav:row-start-1">
+    <aside aria-labelledby="summary-heading" className="flex flex-col gap-3 bg-cream-light p-5 text-[15px] nav:col-start-2 nav:row-start-1">
       <h2 id="summary-heading" className="eyebrow font-body font-bold text-forest-dark">
         {s.heading}
       </h2>

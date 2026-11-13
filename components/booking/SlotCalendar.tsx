@@ -54,7 +54,7 @@ export function SlotCalendar({
   const day = byKey.get(dayKey);
 
   return (
-    <div className="grid items-start gap-8 nav:grid-cols-[minmax(0,340px)_minmax(0,1fr)]">
+    <div className="grid items-start gap-8 nav:grid-cols-[minmax(0,340px)_minmax(0,1fr)] nav:gap-12">
       <div className="flex flex-col gap-4">
         <div className="flex items-center justify-between">
           <button
