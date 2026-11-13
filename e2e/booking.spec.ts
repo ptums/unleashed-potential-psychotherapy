@@ -24,8 +24,10 @@ test("book step 1: pick a time and a format, then continue", async ({ page }) =>
   // A month calendar: the first open day is chosen, and its times show beside it.
   await expect(page.getByText("January 2030")).toBeVisible();
   await expect(page.getByRole("button", { name: /Tuesday, January 8, 2 open times/ })).toHaveAttribute("aria-pressed", "true");
+  await expect(page.getByRole("group", { name: "Morning" }).getByRole("radio", { name: "9:15 AM" })).toBeVisible();
+  await expect(page.getByRole("group", { name: "Afternoon" })).toHaveCount(0); // Jan 8 has morning times only
   await page.getByRole("button", { name: /Wednesday, January 9/ }).click();
-  await expect(page.getByRole("radio", { name: "12:00 PM" })).toBeVisible();
+  await expect(page.getByRole("group", { name: "Afternoon" }).getByRole("radio", { name: "12:00 PM" })).toBeVisible();
   await expect(page.getByRole("radio", { name: "9:15 AM" })).toHaveCount(0);
   await page.getByRole("button", { name: /Tuesday, January 8/ }).click();
   await page.getByRole("radio", { name: "9:15 AM" }).check();

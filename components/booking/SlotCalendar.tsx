@@ -120,23 +120,38 @@ export function SlotCalendar({
 
       <div className="flex flex-col gap-3">
         {day && (
-          <div key={day.key} className="flex flex-col gap-3 motion-safe:animate-[motion-fade_220ms_ease-out,motion-rise_260ms_ease-out]">
+          <div key={day.key} className="flex flex-col gap-4 motion-safe:animate-[motion-fade_220ms_ease-out,motion-rise_260ms_ease-out]">
             <p className="text-[18px] font-bold">{fullDate(day.key)}</p>
-            <div className="grid grid-cols-[repeat(auto-fill,minmax(min(108px,100%),1fr))] gap-2">
-              {day.slots.map((s) => (
-                <label key={s.start} className={option}>
-                  <input
-                    type="radio"
-                    name="slot"
-                    value={s.start}
-                    checked={selected === s.start}
-                    onChange={() => onPick(s.start)}
-                    className="absolute inset-0 m-0 cursor-pointer opacity-0"
-                  />
-                  <span>{s.time}</span>
-                </label>
+            {/* Morning (AM) and afternoon (PM) in the clinician's time zone, so a full day is easy to scan. */}
+            {(
+              [
+                ["Morning", day.slots.filter((t) => t.time.endsWith("AM"))],
+                ["Afternoon", day.slots.filter((t) => t.time.endsWith("PM"))],
+              ] as const
+            )
+              .filter(([, times]) => times.length > 0)
+              .map(([part, times]) => (
+                <div key={part} role="group" aria-label={part} className="flex flex-col gap-2">
+                  <p aria-hidden="true" className="eyebrow">
+                    {part}
+                  </p>
+                  <div className="grid grid-cols-[repeat(auto-fill,minmax(min(108px,100%),1fr))] gap-2">
+                    {times.map((s) => (
+                      <label key={s.start} className={option}>
+                        <input
+                          type="radio"
+                          name="slot"
+                          value={s.start}
+                          checked={selected === s.start}
+                          onChange={() => onPick(s.start)}
+                          className="absolute inset-0 m-0 cursor-pointer opacity-0"
+                        />
+                        <span>{s.time}</span>
+                      </label>
+                    ))}
+                  </div>
+                </div>
               ))}
-            </div>
           </div>
         )}
       </div>
