@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { toast } from "react-toastify";
-import { CmsPicture, type CmsImage } from "@/components/ui";
+import type { CmsImage } from "@/components/ui";
 import { DetailsStep, type DetailsValues, type SendResult } from "./DetailsStep";
 import { SlotCalendar } from "./SlotCalendar";
 import type { Booking } from "@/lib/content";
@@ -115,7 +115,7 @@ export function BookingFlow({ page, clinician }: { page: Booking; clinician: Boo
   }
 
   return (
-    <div className="grid items-start gap-8 nav:grid-cols-[minmax(0,1fr)_380px] nav:gap-16">
+    <div className="grid items-start gap-8 nav:grid-cols-[minmax(0,1fr)_300px] nav:gap-12">
       <Summary
         page={page}
         clinician={clinician}
@@ -260,27 +260,24 @@ function Summary({
     </div>
   );
   return (
-    <aside aria-labelledby="summary-heading" className="flex flex-col gap-4.5 bg-cream-light p-7 nav:col-start-2 nav:row-start-1">
+    <aside aria-labelledby="summary-heading" className="flex flex-col gap-3 bg-cream-light p-5 text-[15px] nav:sticky nav:top-6 nav:col-start-2 nav:row-start-1">
       <h2 id="summary-heading" className="eyebrow font-body font-bold text-forest-dark">
         {s.heading}
       </h2>
-      <div className="flex items-center gap-4">
-        <CmsPicture image={clinician.portrait} className="h-22 w-18 flex-none overflow-hidden" />
-        <div className="flex flex-col gap-0.5">
-          <Link href={`/clinicians/${clinician.slug}`} className="font-display text-[22px]">
-            {clinician.displayName}
-          </Link>
-          <p className="text-[16px]">{clinician.roleLine}</p>
-        </div>
+      <div className="flex flex-col gap-0.5">
+        <Link href={`/clinicians/${clinician.slug}`} className="font-display text-[18px]">
+          {clinician.displayName}
+        </Link>
+        <p className="text-[14px]">{clinician.roleLine}</p>
       </div>
-      <dl className="m-0 flex flex-col gap-3 border-t border-forest pt-4 text-[16px]">
+      <dl className="m-0 flex flex-col gap-2 border-t border-forest pt-3">
         {row(s.rowLabels.session, "Consultation · 15 min")}
         {row(s.rowLabels.time, time)}
         {row(s.rowLabels.format, format)}
         {row(s.rowLabels.cost, "Free", true)}
       </dl>
       {onChange && (
-        <button type="button" onClick={onChange} className="min-h-11 self-start underline underline-offset-4">
+        <button type="button" onClick={onChange} className="min-h-11 self-start text-[14px] underline underline-offset-4">
           {s.changeLabel}
         </button>
       )}
