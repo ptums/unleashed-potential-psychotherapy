@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useRef, useState, type FormEvent, type ReactNode, type RefObject } from "react";
+import { toast } from "react-toastify";
 import { ValidationError } from "yup";
 import { Turnstile } from "@/components/Turnstile";
 import type { Booking } from "@/lib/content";
@@ -46,7 +47,6 @@ export function DetailsStep({
   const d = page.stepDetails;
   const [errors, setErrors] = useState<ErrorKey[]>([]);
   const [sending, setSending] = useState(false);
-  const [failed, setFailed] = useState(false);
   const [token, setToken] = useState("");
   const [resetKey, setResetKey] = useState(0);
   const formRef = useRef<HTMLFormElement>(null);
@@ -86,7 +86,6 @@ export function DetailsStep({
     }
 
     setErrors([]);
-    setFailed(false);
     setSending(true);
     try {
       const res = await fetch("/api/submit", {
@@ -108,7 +107,8 @@ export function DetailsStep({
       }
       onDone({ kind: "sent", values });
     } catch {
-      setFailed(true);
+      // As on the review form: an error toast, and the visitor's input stays.
+      toast.error("We couldn’t send your request. Please try again in a few minutes.");
     } finally {
       setSending(false);
       setToken("");
@@ -187,11 +187,6 @@ export function DetailsStep({
           </label>
         </div>
         {SITE_KEY && <Turnstile siteKey={SITE_KEY} onToken={onToken} resetKey={resetKey} />}
-        {failed && (
-          <p role="alert" className="font-bold text-error">
-            We couldn&rsquo;t send your request. Please try again in a few minutes.
-          </p>
-        )}
         <div className="flex flex-wrap items-center gap-6">
           <button type="submit" disabled={sending} aria-busy={sending}
             className="btn min-h-13 px-8 disabled:cursor-wait disabled:opacity-60">

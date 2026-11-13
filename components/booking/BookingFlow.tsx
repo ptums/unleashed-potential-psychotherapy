@@ -2,14 +2,16 @@
 
 import Link from "next/link";
 import { useEffect, useRef, useState, type ReactNode } from "react";
-import { CmsLinkTo, CmsPicture, type CmsImage } from "@/components/ui";
+import { toast } from "react-toastify";
+import { CmsPicture, type CmsImage } from "@/components/ui";
 import { DetailsStep, type DetailsValues, type SendResult } from "./DetailsStep";
 import type { Booking } from "@/lib/content";
 import { groupByDay, slotLabel, type SlotView } from "@/lib/scheduling/format";
 import { fillTokens } from "@/lib/tokens";
 
-// The /book flow (design-handoff/docs/BOOKING.md §2): 1 pick a time and a format,
-// 2 the visitor's details and the request, 3 "Request sent". Jess approves each request by email (TWS-109).
+// The /book flow (design-handoff/docs/BOOKING.md §2): 1 pick a time and a format, 2 the visitor's
+// details and the request. A sent request shows a toast, as the review form does, and the flow starts
+// over with fresh times. Jess approves each request by email (TWS-109).
 
 export interface BookingClinician {
   slug: string;
@@ -31,7 +33,7 @@ const grid = "grid grid-cols-[repeat(auto-fill,minmax(min(170px,100%),1fr))] gap
 
 export function BookingFlow({ page, clinician }: { page: Booking; clinician: BookingClinician }) {
   const [load, setLoad] = useState<Load>({ state: "loading" });
-  const [step, setStep] = useState<1 | 2 | 3>(1);
+  const [step, setStep] = useState<1 | 2>(1);
   const [saved, setSaved] = useState<DetailsValues | null>(null);
   const [taken, setTaken] = useState(false);
   const [reloadKey, setReloadKey] = useState(0);
@@ -71,7 +73,7 @@ export function BookingFlow({ page, clinician }: { page: Booking; clinician: Boo
   const t = page.stepTime;
   const formatText = format === "video" ? t.videoLabel : t.phoneLabel;
 
-  function goTo(next: 1 | 2 | 3) {
+  function goTo(next: 1 | 2) {
     focusOnRender.current = true;
     setStep(next);
   }
@@ -96,8 +98,21 @@ export function BookingFlow({ page, clinician }: { page: Booking; clinician: Boo
       goTo(1);
       return;
     }
-    setSaved(result.values);
-    goTo(3);
+    const c = page.stepConfirmed;
+    const tokens = { ...names, time: slotLabel(slot ?? "", timezone), format: formatText.toLowerCase(), email: result.values.email };
+    toast.success(
+      <div>
+        <p className="font-bold">{c.heading}</p>
+        <p>{fillTokens(c.summary, tokens)}</p>
+      </div>,
+      { autoClose: 8000 },
+    );
+    // Start over for the next visitor: no time chosen, fresh times, empty details.
+    setSlot(null);
+    setSaved(null);
+    setLoad({ state: "loading" });
+    setReloadKey((k) => k + 1);
+    goTo(1);
   }
 
   return (
@@ -162,9 +177,6 @@ export function BookingFlow({ page, clinician }: { page: Booking; clinician: Boo
             onDone={onSent}
           />
         )}
-        {step === 3 && slot && (
-          <RequestSent page={page} headingRef={headingRef} tokens={{ ...names, time: slotLabel(slot, timezone), format: formatText.toLowerCase(), email: saved?.email ?? "your email" }} />
-        )}
       </div>
     </div>
   );
@@ -225,14 +237,14 @@ function Slots({
   );
 }
 
-function Progress({ page, step }: { page: Booking; step: 1 | 2 | 3 }) {
-  const labels = [page.stepTime.progressLabel, page.stepDetails.progressLabel, page.stepConfirmed.progressLabel];
+function Progress({ page, step }: { page: Booking; step: 1 | 2 }) {
+  const labels = [page.stepTime.progressLabel, page.stepDetails.progressLabel];
   return (
     <div className="flex flex-col gap-5">
       <p className="eyebrow" aria-live="polite">
-        Step {step} of 3
+        Step {step} of {labels.length}
       </p>
-      <ol aria-label="Booking progress" className="m-0 grid list-none grid-cols-3 gap-2 p-0">
+      <ol aria-label="Booking progress" className="m-0 grid list-none grid-cols-2 gap-2 p-0">
         {labels.map((label, i) => {
           const n = i + 1;
           const reached = n <= step;
@@ -310,35 +322,3 @@ function Summary({
   );
 }
 
-function RequestSent({
-  page,
-  headingRef,
-  tokens,
-}: {
-  page: Booking;
-  headingRef: React.RefObject<HTMLHeadingElement | null>;
-  tokens: Record<string, string>;
-}) {
-  const c = page.stepConfirmed;
-  return (
-    <section aria-labelledby="step-heading" aria-live="polite" className="flex max-w-[640px] flex-col gap-7">
-      <div className="flex flex-col gap-3">
-        <h1 id="step-heading" ref={headingRef} tabIndex={-1} className="text-h2 focus:outline-none">
-          {c.heading}
-        </h1>
-        <p className="text-[19px]">{fillTokens(c.summary, tokens)}</p>
-      </div>
-      {c.nextSteps && c.nextSteps.length > 0 && (
-        <div className="flex flex-col gap-3">
-          <h2 className="text-[26px]">{c.nextStepsHeading}</h2>
-          <ol className="m-0 flex list-decimal flex-col gap-2 pl-5">
-            {c.nextSteps.map((step) => (
-              <li key={step}>{fillTokens(step, tokens)}</li>
-            ))}
-          </ol>
-        </div>
-      )}
-      <CmsLinkTo link={c.homeLink} className="btn self-start" />
-    </section>
-  );
-}

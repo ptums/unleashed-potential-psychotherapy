@@ -14,7 +14,7 @@ test("book step 1: pick a time and a format, then continue", async ({ page }) =>
   );
   await page.goto("/book?clinician=jessica-rebelo");
   await expect(page.getByRole("heading", { level: 1 })).toHaveText("Choose a time");
-  await expect(page.getByText("Step 1 of 3")).toBeVisible();
+  await expect(page.getByText("Step 1 of 2")).toBeVisible();
   await expect(page.getByRole("navigation", { name: "Breadcrumb" })).toContainText("Book a consultation");
 
   // No time chosen: a text error, and the step does not change.
@@ -33,7 +33,7 @@ test("book step 1: pick a time and a format, then continue", async ({ page }) =>
 
   await page.getByRole("button", { name: "Continue to your details" }).click();
   await expect(page.getByRole("heading", { level: 1, name: "Your details" })).toBeFocused();
-  await expect(page.getByText("Step 2 of 3")).toBeVisible();
+  await expect(page.getByText("Step 2 of 2")).toBeVisible();
 });
 
 async function toDetails(page: import("@playwright/test").Page) {
@@ -45,7 +45,7 @@ async function toDetails(page: import("@playwright/test").Page) {
   await page.getByRole("button", { name: "Continue to your details" }).click();
 }
 
-test("book step 2: errors, then the request is sent", async ({ page }) => {
+test("book step 2: errors, then a toast and a fresh start", async ({ page }) => {
   let sent: { formType?: string; fields?: Record<string, unknown> } = {};
   await page.route("**/api/submit", async (route) => {
     sent = route.request().postDataJSON();
@@ -66,9 +66,10 @@ test("book step 2: errors, then the request is sent", async ({ page }) => {
   expect(results.violations).toEqual([]);
   await page.getByRole("button", { name: "Send request" }).click();
 
-  await expect(page.getByRole("heading", { level: 1, name: "Request sent." })).toBeFocused();
-  await expect(page.getByText("Step 3 of 3")).toBeVisible();
-  await expect(page.getByText("replies to kim@example.com")).toBeVisible();
+  // As on the review form: a toast, then the flow starts over with nothing chosen.
+  await expect(page.getByRole("alert").filter({ hasText: "Request sent." })).toContainText("Tue, Jan 8 at 9:15 AM ET, by video call");
+  await expect(page.getByRole("heading", { level: 1, name: "Choose a time" })).toBeFocused();
+  await expect(page.getByRole("radio", { name: "9:15 AM" })).not.toBeChecked();
   expect(sent.formType).toBe("booking");
   expect(sent.fields).toMatchObject({ clinician: "jessica-rebelo", start: slots[1].start, format: "video", consent: true });
 });
@@ -95,4 +96,16 @@ test("book shows a message when the calendar can't be read", async ({ page }) =>
 test("book without a known clinician goes to the clinician list", async ({ page }) => {
   await page.goto("/book");
   await expect(page).toHaveURL(/\/#clinicians$/);
+});
+
+test("book: a failed send shows an error toast and keeps the details", async ({ page }) => {
+  await page.route("**/api/submit", (route) => route.fulfill({ status: 502, json: { ok: false } }));
+  await toDetails(page);
+  await page.getByLabel("Full name").fill("Kim C");
+  await page.getByLabel("Email").fill("kim@example.com");
+  await page.getByLabel("Phone").fill("555 010 0000");
+  await page.getByRole("checkbox").check();
+  await page.getByRole("button", { name: "Send request" }).click();
+  await expect(page.getByRole("alert").filter({ hasText: "We couldn’t send your request." })).toBeVisible();
+  await expect(page.getByLabel("Full name")).toHaveValue("Kim C");
 });
