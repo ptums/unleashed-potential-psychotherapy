@@ -17,12 +17,11 @@ test("clinician profile renders every zone and passes axe", async ({ page }) => 
   await expect(featured.getByText(/^WomELLE:/)).toBeVisible();
   await expect(featured.getByRole("link")).toHaveText(["All podcasts & press"]);
 
-  // The booking card is gone. The floating Book button does nothing until the Google Calendar phase.
+  // The floating Book button opens the booking flow for this clinician.
   await expect(page.locator("#book")).toHaveCount(0);
-  const book = page.getByRole("button", { name: "Book with Jess" });
+  const book = page.getByRole("link", { name: "Book with Jess" });
   await expect(book).toHaveCSS("position", "fixed");
-  await book.click();
-  await expect(page).toHaveURL(/\/clinicians\/jessica-rebelo$/);
+  await expect(book).toHaveAttribute("href", "/book?clinician=jessica-rebelo");
 
   const results = await new AxeBuilder({ page }).withTags(["wcag2a", "wcag2aa", "wcag21aa", "wcag22aa"]).analyze();
   expect(results.violations).toEqual([]);

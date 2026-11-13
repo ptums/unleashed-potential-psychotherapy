@@ -44,9 +44,15 @@ export default async function ClinicianProfilePage({ params }: PageProps<"/clini
     <>
       <Breadcrumbs items={[{ label: "Our Clinicians", href: "/#clinicians" }, { label: header.displayName }]} />
 
-      {/* TODO(TWS-117 API phase): booking needs the Google Calendar integration, so this button
-          does nothing yet. It is first in the tab order after the breadcrumb. */}
-      <FloatingAction label={`Book with ${header.firstName}`} icon={<CalendarCheckIcon />} />
+      {/* Opens the booking flow. Hidden when the clinician is not taking new clients.
+          It is first in the tab order after the breadcrumb. */}
+      {!profile.booking.hidden && profile.booking.acceptingNewClients && (
+        <FloatingAction
+          href={`/book?clinician=${encodeURIComponent(slug)}`}
+          label={`Book with ${header.firstName}`}
+          icon={<CalendarCheckIcon />}
+        />
+      )}
 
       <section className="pt-[clamp(32px,5vw,64px)] pb-[clamp(48px,6vw,80px)]">
         <div className="wrap flex flex-wrap items-start gap-12">
