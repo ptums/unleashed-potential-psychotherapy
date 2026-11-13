@@ -122,7 +122,9 @@ export function SlotCalendar({
         {day && (
           <div key={day.key} className="flex flex-col gap-4 motion-safe:animate-[motion-fade_220ms_ease-out,motion-rise_260ms_ease-out]">
             <p className="text-[18px] font-bold">{fullDate(day.key)}</p>
-            {/* Morning (AM) and afternoon (PM) in the clinician's time zone, so a full day is easy to scan. */}
+            {/* Morning (AM) and afternoon (PM) side by side, in the clinician's time zone. A day with
+                only 1 part uses the full width for it. */}
+            <div className="grid grid-cols-2 gap-4">
             {(
               [
                 ["Morning", day.slots.filter((t) => t.time.endsWith("AM"))],
@@ -130,12 +132,12 @@ export function SlotCalendar({
               ] as const
             )
               .filter(([, times]) => times.length > 0)
-              .map(([part, times]) => (
-                <div key={part} role="group" aria-label={part} className="flex flex-col gap-2">
+              .map(([part, times], _i, parts) => (
+                <div key={part} role="group" aria-label={part} className={`flex flex-col gap-2 ${parts.length === 1 ? "col-span-2" : ""}`}>
                   <p aria-hidden="true" className="eyebrow">
                     {part}
                   </p>
-                  <div className="grid grid-cols-[repeat(auto-fill,minmax(min(108px,100%),1fr))] gap-2">
+                  <div className={`grid gap-2 ${parts.length === 1 ? "grid-cols-2" : "grid-cols-1"}`}>
                     {times.map((s) => (
                       <label key={s.start} className={option}>
                         <input
@@ -152,6 +154,7 @@ export function SlotCalendar({
                   </div>
                 </div>
               ))}
+            </div>
           </div>
         )}
       </div>
