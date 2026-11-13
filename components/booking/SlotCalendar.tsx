@@ -27,7 +27,7 @@ const fullDate = (key: string) => {
 };
 
 const option =
-  "relative flex min-h-12 cursor-pointer items-center justify-center border-[1.5px] border-forest px-3 py-2 text-center leading-[1.3] transition-colors duration-150 hover:bg-cream-light has-checked:border-2 has-checked:border-forest-dark has-checked:bg-forest-dark has-checked:text-linen has-focus-visible:outline-3 has-focus-visible:outline-offset-3 has-focus-visible:outline-forest-dark";
+  "relative flex min-h-11 cursor-pointer items-center justify-center border-[1.5px] border-forest px-1 py-2 text-center text-[14px] nav:text-[15px] leading-[1.3] whitespace-nowrap transition-colors duration-150 hover:bg-cream-light has-checked:border-2 has-checked:border-forest-dark has-checked:bg-forest-dark has-checked:text-linen has-focus-visible:outline-3 has-focus-visible:outline-offset-3 has-focus-visible:outline-forest-dark";
 
 export function SlotCalendar({
   days,
@@ -54,7 +54,7 @@ export function SlotCalendar({
   const day = byKey.get(dayKey);
 
   return (
-    <div className="grid items-start gap-8 nav:grid-cols-[minmax(0,340px)_minmax(0,1fr)]">
+    <div className="grid items-start gap-8 nav:grid-cols-[minmax(0,340px)_minmax(0,1fr)] nav:gap-12">
       <div className="flex flex-col gap-4">
         <div className="flex items-center justify-between">
           <button
@@ -122,8 +122,8 @@ export function SlotCalendar({
         {day && (
           <div key={day.key} className="flex flex-col gap-4 motion-safe:animate-[motion-fade_220ms_ease-out,motion-rise_260ms_ease-out]">
             <p className="text-[18px] font-bold">{fullDate(day.key)}</p>
-            {/* Morning (AM) and afternoon (PM) side by side, in the clinician's time zone. A day with
-                only 1 part uses the full width for it. */}
+            {/* Morning (AM) and afternoon (PM) side by side, in the clinician's time zone. Each part fills
+                as many columns as fit. A day with only 1 part uses the full width for it. */}
             <div className="grid grid-cols-2 gap-4">
             {(
               [
@@ -137,7 +137,7 @@ export function SlotCalendar({
                   <p aria-hidden="true" className="eyebrow">
                     {part}
                   </p>
-                  <div className={`grid gap-2 ${parts.length === 1 ? "grid-cols-2" : "grid-cols-1"}`}>
+                  <div className="grid grid-cols-[repeat(auto-fill,minmax(76px,1fr))] nav:grid-cols-[repeat(auto-fill,minmax(84px,1fr))] gap-1.5">
                     {times.map((s) => (
                       <label key={s.start} className={option}>
                         <input
