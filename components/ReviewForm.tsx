@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useCallback, useRef, useState, type FormEvent, type ReactNode } from "react";
 import { toast } from "react-toastify";
 import { ValidationError } from "yup";
+import { Spinner } from "@/components/Spinner";
 import { Turnstile } from "@/components/Turnstile";
 import type { ShareYourExperience } from "@/lib/content";
 import { reviewSchema } from "@/lib/forms/schemas";
@@ -210,8 +211,9 @@ export function ReviewForm({
         </label>
         {SITE_KEY && <Turnstile siteKey={SITE_KEY} onToken={onToken} resetKey={resetKey} />}
         <div className="flex flex-wrap items-center gap-6">
-          <button type="submit" disabled={status === "sending"} className="btn min-h-13 px-8 disabled:cursor-wait disabled:opacity-60">
-            {form.submitLabel}
+          <button type="submit" disabled={status === "sending"} aria-busy={status === "sending"} className="btn min-h-13 px-8 transition-[background-color,color,opacity] duration-200 aria-busy:cursor-wait aria-busy:bg-forest-dark aria-busy:text-linen">
+            {status === "sending" && <Spinner />}
+            {status === "sending" ? "Sending…" : form.submitLabel}
           </button>
           <Link href="/reviews" className="text-[16px]">
             {form.cancelLabel}

@@ -20,7 +20,8 @@ export const site = {
   name: "Unleashed Potential Psychotherapy",
   // TODO(handoff open question 4): tagline wording is not final.
   tagline: "turning pain into power",
-  bookHref: "/clinicians/jessica-rebelo",
+  // The header's calendar icon opens booking with Jess (Peter, 2026-11-12).
+  bookHref: "/book?clinician=jessica-rebelo",
   nav: [
     {
       label: "Our Mission",

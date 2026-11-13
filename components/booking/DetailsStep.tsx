@@ -3,6 +3,7 @@
 import { useCallback, useRef, useState, type FormEvent, type ReactNode, type RefObject } from "react";
 import { toast } from "react-toastify";
 import { ValidationError } from "yup";
+import { Spinner } from "@/components/Spinner";
 import { Turnstile } from "@/components/Turnstile";
 import type { Booking } from "@/lib/content";
 import { bookingSchema } from "@/lib/forms/schemas";
@@ -188,9 +189,9 @@ export function DetailsStep({
         </div>
         {SITE_KEY && <Turnstile siteKey={SITE_KEY} onToken={onToken} resetKey={resetKey} />}
         <div className="flex flex-wrap items-center gap-6">
-          <button type="submit" disabled={sending} aria-busy={sending}
-            className="btn min-h-13 px-8 disabled:cursor-wait disabled:opacity-60">
-            {d.submitLabel}
+          <button type="submit" disabled={sending} aria-busy={sending} className="btn min-h-13 px-8 transition-[background-color,color,opacity] duration-200 aria-busy:cursor-wait aria-busy:bg-forest-dark aria-busy:text-linen">
+            {sending && <Spinner />}
+            {sending ? "Sending…" : d.submitLabel}
           </button>
           <button type="button" onClick={() => formRef.current && onBack(read(formRef.current).values)}
             className="min-h-11 underline underline-offset-4">
