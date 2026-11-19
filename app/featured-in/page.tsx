@@ -61,13 +61,15 @@ function Hero({ zone, outlets }: { zone: FeaturedIn["hero"]; outlets: string[] }
   );
 }
 
+// Every link out opens in a new tab, so the visitor keeps this page (Jess, 2026-11-19).
 function ListenLinks({ appearance }: { appearance: MediaAppearance }) {
   return (
     <ul className="m-0 flex list-none flex-wrap gap-2.5 p-0">
       {appearance.links.map((link) => (
         <li key={link.url}>
-          <a href={link.url} className="btn min-h-11 px-5 py-2.5 text-label">
+          <a href={link.url} target="_blank" rel="noopener noreferrer" className="btn min-h-11 px-5 py-2.5 text-label">
             {link.label}
+            <span className="sr-only"> (opens in a new tab)</span>
           </a>
         </li>
       ))}
@@ -126,7 +128,14 @@ function Appearances({ zone, appearances }: { zone: FeaturedIn["appearances"]; a
               {a.parts && (
                 <ul className="m-0 flex flex-col gap-1.5 pl-5">
                   {a.parts.map((part) => (
-                    <li key={part.label}>{part.url ? <a href={part.url}>{part.label}</a> : part.label}</li>
+                    <li key={part.label}>{part.url ? (
+                        <a href={part.url} target="_blank" rel="noopener noreferrer">
+                          {part.label}
+                          <span className="sr-only"> (opens in a new tab)</span>
+                        </a>
+                      ) : (
+                        part.label
+                      )}</li>
                   ))}
                 </ul>
               )}

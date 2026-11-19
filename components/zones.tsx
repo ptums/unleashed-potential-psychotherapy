@@ -4,12 +4,15 @@ import type { CmsLink } from "@/lib/links";
 
 export const sectionPad = "py-[clamp(72px,9vw,128px)]";
 
-/** Questions and answers as native disclosures (keyboard and screen reader support built in). */
+/**
+ * Questions and answers as native disclosures (keyboard and screen reader support built in).
+ * The first answer starts open, so the visitor sees how the list works (Jess, 2026-11-19).
+ */
 export function FaqList({ items }: { items: { question: string; answer: string }[] }) {
   return (
     <div className="border-b border-forest">
-      {items.map((item) => (
-        <details key={item.question} className="group border-t border-forest">
+      {items.map((item, i) => (
+        <details key={item.question} open={i === 0} className="group border-t border-forest">
           <summary className="flex min-h-16 cursor-pointer items-center justify-between gap-4 py-3 font-display text-[22px]">
             {item.question}
             <svg
