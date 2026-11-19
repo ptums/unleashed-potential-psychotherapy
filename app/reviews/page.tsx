@@ -24,35 +24,29 @@ export default async function ReviewsPage() {
 
   return (
     <>
-      <Hero zone={page.hero} />
+      <Hero zone={page.hero} image={isZoneVisible(page.featureImage) ? page.featureImage.image : undefined} />
       {/* Static, not CMS content. It is first in the tab order after the hero. */}
       <FloatingAction href="/reviews/share" label="Share your experience" icon={<PenIcon />} />
-      {isZoneVisible(page.featureImage) && <FeatureImage zone={page.featureImage} />}
       {isZoneVisible(page.reviewList) && <ReviewList zone={page.reviewList} />}
       {isZoneVisible(page.closingCta) && <ClosingCta zone={page.closingCta} />}
     </>
   );
 }
 
-function Hero({ zone }: { zone: ClientReviews["hero"] }) {
+// Laid out like the Home and Our approach heroes: the title and intro on the left, the feature
+// image on the right (Peter, 2026-11-19). On a phone the text comes first and the image follows.
+function Hero({ zone, image }: { zone: ClientReviews["hero"]; image?: ClientReviews["featureImage"]["image"] }) {
   return (
-    <section className="pt-[clamp(64px,9vw,128px)] pb-[clamp(48px,6vw,80px)]">
-      <div className="wrap mx-auto flex max-w-[920px] flex-col items-center gap-6 text-center">
-        <p className="eyebrow">{zone.eyebrow}</p>
-        <h1 className="text-h1">{zone.heading}</h1>
-        <CmsHtml html={zone.intro} className="flex max-w-[34em] flex-col gap-4 text-[20px]" />
+    <section className="py-[clamp(56px,8vw,112px)]">
+      <div className="wrap grid grid-cols-[repeat(auto-fit,minmax(min(440px,100%),1fr))] items-center gap-[clamp(40px,6vw,96px)]">
+        <div className="flex flex-col gap-7">
+          <p className="eyebrow">{zone.eyebrow}</p>
+          <h1 className="text-h1">{zone.heading}</h1>
+          <CmsHtml html={zone.intro} className="max-w-[30em] text-lead [&_p+p]:mt-4" />
+        </div>
+        {image && <CmsPicture image={image} className="aspect-[4/5] w-full" eager />}
       </div>
     </section>
-  );
-}
-
-function FeatureImage({ zone }: { zone: ClientReviews["featureImage"] }) {
-  return (
-    <div className="pb-[clamp(64px,8vw,112px)]">
-      <div className="wrap">
-        <CmsPicture image={zone.image} className="aspect-[21/9] w-full" />
-      </div>
-    </div>
   );
 }
 
