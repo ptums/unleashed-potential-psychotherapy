@@ -38,7 +38,7 @@ export default async function OurApproachPage() {
 function Hero({ zone, image }: { zone: OurApproach["hero"]; image?: OurApproach["featureImage"]["image"] }) {
   return (
     <section className="py-[clamp(56px,8vw,112px)]">
-      <div className="wrap grid items-center gap-[clamp(40px,6vw,96px)] nav:grid-cols-2">
+      <div className="wrap grid grid-cols-[repeat(auto-fit,minmax(min(440px,100%),1fr))] items-center gap-[clamp(40px,6vw,96px)]">
         <div className="flex flex-col gap-7">
           <p className="eyebrow">{zone.eyebrow}</p>
           <h1 className="text-h1">{zone.heading}</h1>
