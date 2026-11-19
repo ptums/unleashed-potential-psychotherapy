@@ -2,7 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { CmsLinkTo, CmsPicture, SectionIntro } from "@/components/ui";
 import { getContent, isZoneVisible, type ClinicianProfile, type Home, type Reference, type SpecialtyTile } from "@/lib/content";
-import { hrefForReference } from "@/lib/links";
+import { hrefForLink, hrefForReference } from "@/lib/links";
 import { resolveClinicians, specialtyNames } from "@/lib/content/clinicians";
 import { seoMetadata } from "@/lib/seo";
 import { sectionPad } from "@/components/zones";
@@ -33,7 +33,7 @@ export default async function HomePage() {
       {isZoneVisible(home.clinicians) && <Clinicians zone={home.clinicians} />}
       {isZoneVisible(home.howItWorks) && <HowItWorks zone={home.howItWorks} />}
       {/* The review carousel replaces the Our approach band (Peter, 2026-11-12). */}
-      <ReviewsBand />
+      {isZoneVisible(home.reviewsBand ?? reviewsBandDefaults) && <ReviewsBand zone={home.reviewsBand} />}
     </>
   );
 }
@@ -228,23 +228,93 @@ function HowItWorks({ zone }: { zone: NonNullable<Home["howItWorks"]> }) {
   );
 }
 
-/** Client reviews from the Reviews page, 1 at a time, each cut to 400 characters. */
-async function ReviewsBand() {
+// Defaults for a page saved before the Client reviews zone existed.
+const reviewsBandDefaults: NonNullable<Home["reviewsBand"]> = {
+  hidden: false,
+  eyebrow: "Client reviews",
+  heading: "In their own words",
+  allReviewsLink: { label: "Read all reviews", target: { internal: { collection: "pages", id: "reviews" } } },
+};
+
+/**
+ * The reviews band, laid out after American Roofing Pros NJ (Jess, 2026-11-19): a heading row,
+ * a carousel of review snippets from the Reviews page, then short Google blurbs with a link to
+ * all of Jess's Google reviews. The Google row shows only when the CMS has its link and blurbs.
+ */
+async function ReviewsBand({ zone = reviewsBandDefaults }: { zone?: Home["reviewsBand"] }) {
   const reviews = await getContent().getPage("reviews");
   const items = (reviews?.reviewList.items ?? [])
     .filter((item) => !item.hidden)
-    .map((item) => ({ displayName: item.displayName, text: truncateChars(item.text, 400) }));
+    .map((item) => ({ displayName: item.displayName, text: truncateChars(item.text, 220) }));
   if (items.length === 0) {
     return null;
   }
+  const google = zone.google;
+  const blurbs = google?.profileUrl ? google.items : [];
+  const allHref = hrefForLink(zone.allReviewsLink) ?? undefined;
+
   return (
-    <section aria-labelledby="reviews-band-heading" className={`dark ${sectionPad}`}>
-      <div className="wrap flex flex-col items-center gap-10">
-        <h2 id="reviews-band-heading" className="eyebrow font-body font-bold">
-          Client reviews
-        </h2>
-        <ReviewCarousel reviews={items} />
+    <section aria-labelledby="reviews-band-heading" className={`bg-cream-light ${sectionPad}`}>
+      <div className="wrap flex flex-col gap-10">
+        <div className="flex flex-wrap items-end justify-between gap-6">
+          <div className="flex flex-col gap-4">
+            <p className="eyebrow">{zone.eyebrow}</p>
+            <h2 id="reviews-band-heading" className="text-h2">
+              {zone.heading}
+            </h2>
+          </div>
+          <CmsLinkTo link={zone.allReviewsLink} className="font-bold" />
+        </div>
+
+        <ReviewCarousel reviews={items} moreHref={allHref} />
+
+        {google && blurbs.length > 0 && google.profileUrl && (
+          <div className="flex flex-col gap-6 border-t border-forest pt-10">
+            <div className="flex flex-wrap items-center justify-between gap-4">
+              <p className="flex items-center gap-3 font-bold">
+                <span>Google reviews</span>
+                {google.rating && (
+                  <span className="flex items-center gap-2 font-normal">
+                    <Stars count={Math.round(google.rating)} />
+                    <span>
+                      {google.rating.toFixed(1)}
+                      {google.reviewCount ? ` · ${google.reviewCount} reviews` : ""}
+                    </span>
+                  </span>
+                )}
+              </p>
+              <a href={google.profileUrl} target="_blank" rel="noopener noreferrer" className="font-bold">
+                {google.linkLabel ?? "Read all reviews on Google"}
+                <span className="sr-only"> (opens Google)</span>
+              </a>
+            </div>
+            <ul className="m-0 grid list-none grid-cols-[repeat(auto-fit,minmax(min(240px,100%),1fr))] gap-4 p-0">
+              {blurbs.map((blurb, i) => (
+                <li key={`${blurb.authorName}-${i}`} className="flex flex-col gap-3 border border-forest bg-linen p-5">
+                  <Stars count={blurb.stars} />
+                  <p className="flex-1 text-[16px] leading-[1.55]">“{truncateChars(blurb.text, 140)}”</p>
+                  <p className="text-small">
+                    <strong>{blurb.authorName}</strong> · Google review
+                  </p>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
       </div>
     </section>
+  );
+}
+
+function Stars({ count }: { count: number }) {
+  const n = Math.max(0, Math.min(5, count));
+  return (
+    <span role="img" aria-label={`${n} out of 5 stars`} className="flex gap-0.5 text-forest-dark">
+      {Array.from({ length: 5 }, (_, i) => (
+        <svg key={i} width="16" height="16" viewBox="0 0 20 20" aria-hidden="true" fill={i < n ? "currentColor" : "none"} stroke="currentColor" strokeWidth="1.2">
+          <path d="M10 1.8l2.5 5.2 5.7.8-4.1 4 1 5.7L10 14.8l-5.1 2.7 1-5.7-4.1-4 5.7-.8z" />
+        </svg>
+      ))}
+    </span>
   );
 }

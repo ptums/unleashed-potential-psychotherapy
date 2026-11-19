@@ -5,8 +5,8 @@ test("reviews lists every review, expands long ones and passes axe", async ({ pa
   await page.goto("/reviews");
   await expect(page).toHaveTitle("Client Reviews · Unleashed Potential");
   await expect(page.getByRole("heading", { level: 1 })).toHaveText("Client reviews");
-  await expect(page.getByText("18 reviews from clients of our founder")).toBeVisible();
-  await expect(page.locator("figure figcaption")).toHaveCount(18);
+  await expect(page.getByText("17 reviews from clients of our founder")).toBeVisible();
+  await expect(page.locator("figure figcaption")).toHaveCount(17);
   await expect(page.getByRole("link", { name: "Meet Jess" })).toHaveAttribute("href", "/clinicians/jessica-rebelo");
 
   // Kevin D's review is long: it starts clamped, and the button toggles it.

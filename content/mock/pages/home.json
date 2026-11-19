@@ -145,6 +145,24 @@
       }
     }
   },
+  "reviewsBand": {
+    "hidden": false,
+    "eyebrow": "Client reviews",
+    "heading": "In their own words",
+    "allReviewsLink": {
+      "label": "Read all reviews",
+      "target": {
+        "internal": {
+          "collection": "pages",
+          "id": "reviews"
+        }
+      }
+    },
+    "google": {
+      "linkLabel": "Read all reviews on Google",
+      "items": []
+    }
+  },
   "approachBand": {
     "hidden": false,
     "eyebrow": "Our approach",
