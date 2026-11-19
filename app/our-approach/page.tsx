@@ -33,8 +33,8 @@ export default async function OurApproachPage() {
   );
 }
 
-// Laid out like the Home hero, but mirrored: the feature image on the left, the title and intro
-// on the right (Jess, 2026-11-19). On a phone the text comes first and the image follows.
+// Laid out like the Home hero: the title and intro on the left, the feature image on the right
+// (Jess and Peter, 2026-11-19). On a phone the text comes first and the image follows.
 function Hero({ zone, image }: { zone: OurApproach["hero"]; image?: OurApproach["featureImage"]["image"] }) {
   return (
     <section className="py-[clamp(56px,8vw,112px)]">
@@ -44,7 +44,7 @@ function Hero({ zone, image }: { zone: OurApproach["hero"]; image?: OurApproach[
           <h1 className="text-h1">{zone.heading}</h1>
           {zone.intro && <CmsHtml html={zone.intro} className="max-w-[30em] text-lead [&_p+p]:mt-4" />}
         </div>
-        {image && <CmsPicture image={image} className="aspect-[4/5] w-full nav:order-first" eager />}
+        {image && <CmsPicture image={image} className="aspect-[4/5] w-full" eager />}
       </div>
     </section>
   );
