@@ -9,8 +9,10 @@ import type { Specialty } from "./generated/specialty";
 import type { BlogPost } from "./generated/blog-post";
 import type { ClientReviews } from "./generated/reviews";
 import type { ShareYourExperience } from "./generated/share-experience";
+import type { Disclaimer } from "./generated/disclaimer";
+import type { PrivacyPolicy } from "./generated/privacy-policy";
 
-export type { Home, OurApproach, WhatToExpect, FeaturedIn, Blog, Booking, ClinicianProfile, Specialty, BlogPost, ClientReviews, ShareYourExperience };
+export type { Home, OurApproach, WhatToExpect, FeaturedIn, Blog, Booking, ClinicianProfile, Specialty, BlogPost, ClientReviews, ShareYourExperience, Disclaimer, PrivacyPolicy };
 
 /** Singleton pages, keyed by their CMS page id (GET /pages/{id}). */
 export interface PageMap {
@@ -22,6 +24,8 @@ export interface PageMap {
   booking: Booking;
   reviews: ClientReviews;
   "share-experience": ShareYourExperience;
+  disclaimer: Disclaimer;
+  "privacy-policy": PrivacyPolicy;
 }
 
 export type PageId = keyof PageMap;

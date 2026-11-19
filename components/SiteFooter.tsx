@@ -31,11 +31,18 @@ export function SiteFooter() {
             </p>
           </div>
           <nav aria-label="Footer" className="flex flex-col gap-1">
-            {site.footerLinks.map((link) => (
-              <Link key={link.href} href={link.href} className="flex min-h-11 items-center">
-                {link.label}
-              </Link>
-            ))}
+            {site.footerLinks.map((link) =>
+              // A file such as /sitemap.xml is not a page, so it gets a plain link, not client navigation.
+              /\.\w+$/.test(link.href) ? (
+                <a key={link.href} href={link.href} className="flex min-h-11 items-center">
+                  {link.label}
+                </a>
+              ) : (
+                <Link key={link.href} href={link.href} className="flex min-h-11 items-center">
+                  {link.label}
+                </Link>
+              ),
+            )}
           </nav>
         </div>
         <p className="border-t border-linen pt-6 text-[15px]">
