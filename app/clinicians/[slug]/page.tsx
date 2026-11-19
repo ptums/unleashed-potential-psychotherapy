@@ -133,8 +133,10 @@ function Credentials({ zone }: { zone: ClinicianProfile["credentials"] }) {
   for (const l of zone.licenses ?? []) {
     items.push({ label: "License", value: `${l.type}, ${l.state} #${l.number}` });
   }
-  for (const t of zone.trainings ?? []) {
-    items.push({ label: "Training", value: t.provider ? `${t.name}, ${t.provider}` : t.name });
+  // All trainings on 1 row, for example "EMDR · TF-CBT" (Jess, 2026-11-19).
+  const trainings = (zone.trainings ?? []).map((t) => (t.provider ? `${t.name}, ${t.provider}` : t.name));
+  if (trainings.length > 0) {
+    items.push({ label: "Training", value: trainings.join(" · ") });
   }
   if (zone.practicingSince) {
     items.push({ label: "In practice since", value: String(zone.practicingSince) });
@@ -221,19 +223,22 @@ function FeaturedIn({ zone }: { zone: ClinicianProfile["featuredIn"] }) {
     .map((ref) => getMediaAppearance(ref.id))
     .filter((a): a is NonNullable<typeof a> => a !== null);
 
-  // Plain text: the only link is "All podcasts & press" (Peter, 2026-11-12).
+  // Plain text: the only link is "All podcasts & press" (Peter, 2026-11-12). Each appearance
+  // gets its own row with the outlet above the title, so the list has room (Jess, 2026-11-19).
   return (
     <Row heading={zone.heading}>
-      <ul className="m-0 flex flex-col gap-5 pl-5">
-        {appearances.map((a) => (
-          <li key={a.id}>
-            {a.outlet}: {a.title}
-          </li>
-        ))}
-        <li className="list-none">
-          <CmsLinkTo link={zone.allLink} className="font-bold" />
-        </li>
-      </ul>
+      <div className="flex flex-col gap-8">
+        <ul className="m-0 flex list-none flex-col border-b border-forest p-0">
+          {appearances.map((a) => (
+            <li key={a.id} className="flex flex-col gap-1.5 border-t border-forest py-5">
+              <span className="eyebrow">{a.outlet}</span>
+              <span className="font-display text-[22px] leading-[1.35]">{a.title}</span>
+              {a.kind && <span className="text-small text-forest">{a.kind}</span>}
+            </li>
+          ))}
+        </ul>
+        <CmsLinkTo link={zone.allLink} className="self-start font-bold" />
+      </div>
     </Row>
   );
 }

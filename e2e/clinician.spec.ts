@@ -11,10 +11,10 @@ test("clinician profile renders every zone and passes axe", async ({ page }) => 
   await expect(page.getByRole("navigation", { name: "Breadcrumb" })).toBeVisible();
   await expect(page.getByRole("link", { name: "EMDR therapy" })).toHaveAttribute("href", "/specialties/emdr-therapy");
   await expect(page.getByRole("row", { name: /Consultation · 15 min/ })).toContainText("Free");
-  // Every Featured In reference resolves to an appearance (plus the "All podcasts & press" link).
+  // Every Featured In reference resolves to an appearance (each on its own row; the "All podcasts & press" link sits under the list).
   const featured = page.locator("section").filter({ has: page.getByRole("heading", { level: 2, name: "Featured in", exact: true }) });
-  await expect(featured.locator("li")).toHaveCount(7);
-  await expect(featured.getByText(/^WomELLE:/)).toBeVisible();
+  await expect(featured.locator("li")).toHaveCount(6);
+  await expect(featured.getByText("WomELLE", { exact: true })).toBeVisible();
   await expect(featured.getByRole("link")).toHaveText(["All podcasts & press"]);
 
   // The floating Book button opens the booking flow for this clinician.
