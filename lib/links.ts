@@ -1,4 +1,5 @@
 import type { Reference } from "./content/types";
+import { site } from "./site";
 
 export interface CmsLink {
   label: string;
@@ -14,6 +15,9 @@ const pageRoutes: Record<string, string> = {
   blog: "/blog",
   reviews: "/reviews",
   "share-experience": "/reviews/share",
+  // "Book a time" buttons point at the booking page id. Booking is per clinician, so the
+  // link opens booking with Jess, the same as the header icon (Peter, 2026-11-19).
+  booking: site.bookHref,
   // There is no clinicians list page; the list lives on Home.
   clinicians: "/#clinicians",
 };
