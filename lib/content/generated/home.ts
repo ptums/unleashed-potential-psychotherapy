@@ -9,6 +9,7 @@ export interface Home {
   specialties: SpecialtiesGrid;
   clinicians: Clinicians;
   howItWorks: HowItWorks;
+  reviewsBand?: ClientReviews;
   approachBand: ApproachStatementBand;
   seo: SEO;
 }
@@ -753,6 +754,356 @@ export interface Link4 {
         url: string;
       };
 }
+/**
+ * The reviews band near the bottom of Home. The carousel shows snippets from the Reviews page; the Google row shows the blurbs entered below.
+ */
+export interface ClientReviews {
+  hidden: boolean;
+  eyebrow: string;
+  heading: string;
+  allReviewsLink?: Link5;
+  google?: GoogleReviews;
+}
+export interface Link5 {
+  label: string;
+  target:
+    | {
+        internal: Reference;
+        anchor?: string;
+      }
+    | {
+        url: string;
+      };
+}
+/**
+ * Short blurbs from Jess's Google reviews, shown under the carousel. The row stays hidden until the profile link and at least 1 blurb are filled in.
+ */
+export interface GoogleReviews {
+  /**
+   * The star rating on Google, for example 5 or 4.9.
+   */
+  rating?: number;
+  /**
+   * The number of reviews on Google.
+   */
+  reviewCount?: number;
+  /**
+   * The link to all of Jess's reviews on Google.
+   */
+  profileUrl?: string;
+  linkLabel?: string;
+  /**
+   * Copy each blurb exactly as written on Google. Keep it short; long text is cut.
+   *
+   * @maxItems 8
+   */
+  items:
+    | []
+    | [
+        {
+          /**
+           * As shown on Google, for example "Kim C."
+           */
+          authorName: string;
+          text: string;
+          stars: number;
+        }
+      ]
+    | [
+        {
+          /**
+           * As shown on Google, for example "Kim C."
+           */
+          authorName: string;
+          text: string;
+          stars: number;
+        },
+        {
+          /**
+           * As shown on Google, for example "Kim C."
+           */
+          authorName: string;
+          text: string;
+          stars: number;
+        }
+      ]
+    | [
+        {
+          /**
+           * As shown on Google, for example "Kim C."
+           */
+          authorName: string;
+          text: string;
+          stars: number;
+        },
+        {
+          /**
+           * As shown on Google, for example "Kim C."
+           */
+          authorName: string;
+          text: string;
+          stars: number;
+        },
+        {
+          /**
+           * As shown on Google, for example "Kim C."
+           */
+          authorName: string;
+          text: string;
+          stars: number;
+        }
+      ]
+    | [
+        {
+          /**
+           * As shown on Google, for example "Kim C."
+           */
+          authorName: string;
+          text: string;
+          stars: number;
+        },
+        {
+          /**
+           * As shown on Google, for example "Kim C."
+           */
+          authorName: string;
+          text: string;
+          stars: number;
+        },
+        {
+          /**
+           * As shown on Google, for example "Kim C."
+           */
+          authorName: string;
+          text: string;
+          stars: number;
+        },
+        {
+          /**
+           * As shown on Google, for example "Kim C."
+           */
+          authorName: string;
+          text: string;
+          stars: number;
+        }
+      ]
+    | [
+        {
+          /**
+           * As shown on Google, for example "Kim C."
+           */
+          authorName: string;
+          text: string;
+          stars: number;
+        },
+        {
+          /**
+           * As shown on Google, for example "Kim C."
+           */
+          authorName: string;
+          text: string;
+          stars: number;
+        },
+        {
+          /**
+           * As shown on Google, for example "Kim C."
+           */
+          authorName: string;
+          text: string;
+          stars: number;
+        },
+        {
+          /**
+           * As shown on Google, for example "Kim C."
+           */
+          authorName: string;
+          text: string;
+          stars: number;
+        },
+        {
+          /**
+           * As shown on Google, for example "Kim C."
+           */
+          authorName: string;
+          text: string;
+          stars: number;
+        }
+      ]
+    | [
+        {
+          /**
+           * As shown on Google, for example "Kim C."
+           */
+          authorName: string;
+          text: string;
+          stars: number;
+        },
+        {
+          /**
+           * As shown on Google, for example "Kim C."
+           */
+          authorName: string;
+          text: string;
+          stars: number;
+        },
+        {
+          /**
+           * As shown on Google, for example "Kim C."
+           */
+          authorName: string;
+          text: string;
+          stars: number;
+        },
+        {
+          /**
+           * As shown on Google, for example "Kim C."
+           */
+          authorName: string;
+          text: string;
+          stars: number;
+        },
+        {
+          /**
+           * As shown on Google, for example "Kim C."
+           */
+          authorName: string;
+          text: string;
+          stars: number;
+        },
+        {
+          /**
+           * As shown on Google, for example "Kim C."
+           */
+          authorName: string;
+          text: string;
+          stars: number;
+        }
+      ]
+    | [
+        {
+          /**
+           * As shown on Google, for example "Kim C."
+           */
+          authorName: string;
+          text: string;
+          stars: number;
+        },
+        {
+          /**
+           * As shown on Google, for example "Kim C."
+           */
+          authorName: string;
+          text: string;
+          stars: number;
+        },
+        {
+          /**
+           * As shown on Google, for example "Kim C."
+           */
+          authorName: string;
+          text: string;
+          stars: number;
+        },
+        {
+          /**
+           * As shown on Google, for example "Kim C."
+           */
+          authorName: string;
+          text: string;
+          stars: number;
+        },
+        {
+          /**
+           * As shown on Google, for example "Kim C."
+           */
+          authorName: string;
+          text: string;
+          stars: number;
+        },
+        {
+          /**
+           * As shown on Google, for example "Kim C."
+           */
+          authorName: string;
+          text: string;
+          stars: number;
+        },
+        {
+          /**
+           * As shown on Google, for example "Kim C."
+           */
+          authorName: string;
+          text: string;
+          stars: number;
+        }
+      ]
+    | [
+        {
+          /**
+           * As shown on Google, for example "Kim C."
+           */
+          authorName: string;
+          text: string;
+          stars: number;
+        },
+        {
+          /**
+           * As shown on Google, for example "Kim C."
+           */
+          authorName: string;
+          text: string;
+          stars: number;
+        },
+        {
+          /**
+           * As shown on Google, for example "Kim C."
+           */
+          authorName: string;
+          text: string;
+          stars: number;
+        },
+        {
+          /**
+           * As shown on Google, for example "Kim C."
+           */
+          authorName: string;
+          text: string;
+          stars: number;
+        },
+        {
+          /**
+           * As shown on Google, for example "Kim C."
+           */
+          authorName: string;
+          text: string;
+          stars: number;
+        },
+        {
+          /**
+           * As shown on Google, for example "Kim C."
+           */
+          authorName: string;
+          text: string;
+          stars: number;
+        },
+        {
+          /**
+           * As shown on Google, for example "Kim C."
+           */
+          authorName: string;
+          text: string;
+          stars: number;
+        },
+        {
+          /**
+           * As shown on Google, for example "Kim C."
+           */
+          authorName: string;
+          text: string;
+          stars: number;
+        }
+      ];
+}
 export interface ApproachStatementBand {
   hidden: boolean;
   eyebrow: string;
@@ -760,9 +1111,9 @@ export interface ApproachStatementBand {
    * Large italic statement on the dark band. Not a client testimonial.
    */
   statement: string;
-  cta: Link5;
+  cta: Link6;
 }
-export interface Link5 {
+export interface Link6 {
   label: string;
   target:
     | {
