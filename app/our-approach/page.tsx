@@ -22,8 +22,9 @@ export default async function OurApproachPage() {
 
   return (
     <>
-      {isZoneVisible(page.hero) && <Hero zone={page.hero} />}
-      {isZoneVisible(page.featureImage) && <FeatureImage zone={page.featureImage} />}
+      {isZoneVisible(page.hero) && (
+        <Hero zone={page.hero} image={isZoneVisible(page.featureImage) ? page.featureImage.image : undefined} />
+      )}
       {isZoneVisible(page.values) && <Values zone={page.values} />}
       {isZoneVisible(page.standardOfCare) && <StandardOfCare zone={page.standardOfCare} />}
       {isZoneVisible(page.founderNote) && <FounderNote zone={page.founderNote} />}
@@ -32,27 +33,20 @@ export default async function OurApproachPage() {
   );
 }
 
-function Hero({ zone }: { zone: OurApproach["hero"] }) {
+// Laid out like the Home hero, but mirrored: the feature image on the left, the title and intro
+// on the right (Jess, 2026-11-19). On a phone the text comes first and the image follows.
+function Hero({ zone, image }: { zone: OurApproach["hero"]; image?: OurApproach["featureImage"]["image"] }) {
   return (
-    <section className="pt-[clamp(64px,9vw,128px)] pb-[clamp(48px,6vw,80px)]">
-      <div className="wrap mx-auto flex max-w-[920px] flex-col items-center gap-6 text-center">
-        <p className="eyebrow">{zone.eyebrow}</p>
-        <h1 className="text-h1">{zone.heading}</h1>
-        {zone.intro && (
-          <CmsHtml html={zone.intro} className="flex max-w-[34em] flex-col gap-4 text-[20px]" />
-        )}
+    <section className="py-[clamp(56px,8vw,112px)]">
+      <div className="wrap grid items-center gap-[clamp(40px,6vw,96px)] nav:grid-cols-2">
+        <div className="flex flex-col gap-7">
+          <p className="eyebrow">{zone.eyebrow}</p>
+          <h1 className="text-h1">{zone.heading}</h1>
+          {zone.intro && <CmsHtml html={zone.intro} className="max-w-[30em] text-lead [&_p+p]:mt-4" />}
+        </div>
+        {image && <CmsPicture image={image} className="aspect-[4/5] w-full nav:order-first" eager />}
       </div>
     </section>
-  );
-}
-
-function FeatureImage({ zone }: { zone: OurApproach["featureImage"] }) {
-  return (
-    <div className="pb-[clamp(64px,8vw,112px)]">
-      <div className="wrap">
-        <CmsPicture image={zone.image} className="aspect-[21/9] w-full" />
-      </div>
-    </div>
   );
 }
 
