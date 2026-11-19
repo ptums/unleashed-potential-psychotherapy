@@ -9,6 +9,8 @@ export interface CmsLink {
 // CMS page ids that map to a route. A page id not listed here has no page yet.
 const pageRoutes: Record<string, string> = {
   home: "/",
+  disclaimer: "/disclaimer",
+  "privacy-policy": "/privacy-policy",
   "our-approach": "/our-approach",
   "what-to-expect": "/what-to-expect",
   "featured-in": "/featured-in",

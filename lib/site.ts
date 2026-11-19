@@ -1,7 +1,7 @@
 // Header, footer and crisis line content.
 // TODO(TWS-117 open question 1): hardcoded for launch. Move to a CMS site-settings schema later.
 // Nav items for pages that are not designed yet (Careers, Who We Work With, In Person & Online,
-// Fees & Insurance, FAQs, Contact, Privacy Notice) are left out until those pages exist.
+// Fees & Insurance, FAQs, Contact) are left out until those pages exist.
 
 /** Public site origin, used for the sitemap, robots and absolute metadata URLs. */
 export const siteUrl = (process.env.SITE_URL ?? "https://uptherapygroup.com").replace(/\/+$/, "");
@@ -46,7 +46,12 @@ export const site = {
     },
   ] satisfies NavGroup[],
   navLinks: [{ label: "Blog", href: "/blog" }] satisfies NavLink[],
-  footerLinks: [{ label: "Our Clinicians", href: "/clinicians/jessica-rebelo" }] satisfies NavLink[],
+  footerLinks: [
+    { label: "Our Clinicians", href: "/clinicians/jessica-rebelo" },
+    { label: "Disclaimer", href: "/disclaimer" },
+    { label: "Privacy Policy", href: "/privacy-policy" },
+    { label: "Sitemap", href: "/sitemap.xml" },
+  ] satisfies NavLink[],
   // TODO(handoff open question 7): social links.
   address: ["169 Commack Road #1015", "Commack, NY 11725"],
   social: [] as NavLink[],

@@ -12,6 +12,8 @@ const schemaFor: Record<string, string> = {
   "pages/featured-in.json": "featured-in",
   "pages/blog.json": "blog",
   "pages/booking.json": "booking",
+  "pages/disclaimer.json": "disclaimer",
+  "pages/privacy-policy.json": "privacy-policy",
   clinicians: "clinician-profile",
   specialties: "specialty",
   blogPosts: "blog-post",

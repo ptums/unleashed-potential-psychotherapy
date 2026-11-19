@@ -8,6 +8,8 @@ import blog from "@/content/mock/pages/blog.json";
 import booking from "@/content/mock/pages/booking.json";
 import reviews from "@/content/mock/pages/reviews.json";
 import shareExperience from "@/content/mock/pages/share-experience.json";
+import disclaimer from "@/content/mock/pages/disclaimer.json";
+import privacyPolicy from "@/content/mock/pages/privacy-policy.json";
 import jessRebelo from "@/content/mock/clinicians/jessica-rebelo.json";
 import emdr from "@/content/mock/specialties/emdr-therapy.json";
 import groundingSkills from "@/content/mock/blogPosts/grounding-skills-between-sessions.json";
@@ -27,6 +29,8 @@ const pages = {
   booking,
   reviews,
   "share-experience": shareExperience,
+  disclaimer,
+  "privacy-policy": privacyPolicy,
 } as unknown as PageMap;
 
 const collections = {

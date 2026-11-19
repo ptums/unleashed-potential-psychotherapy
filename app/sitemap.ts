@@ -11,6 +11,8 @@ const pages: { id: PageId; path: string }[] = [
   { id: "featured-in", path: "/featured-in" },
   { id: "blog", path: "/blog" },
   { id: "reviews", path: "/reviews" },
+  { id: "disclaimer", path: "/disclaimer" },
+  { id: "privacy-policy", path: "/privacy-policy" },
 ];
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
