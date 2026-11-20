@@ -1,10 +1,13 @@
 import { expect, test } from "@playwright/test";
 
-test("robots.txt allows crawling and points at the sitemap", async ({ request }) => {
+test("robots.txt allows crawling, blocks the API and points at the sitemap", async ({ request }) => {
   const res = await request.get("/robots.txt");
   expect(res.status()).toBe(200);
   const body = await res.text();
   expect(body).toContain("Allow: /");
+  expect(body).toContain("Disallow: /api/");
+  // The noindex form pages must stay crawlable, so crawlers can see their noindex tag.
+  expect(body).not.toMatch(/Disallow: \/(book|reviews)/);
   expect(body).toContain("Sitemap: https://uptherapygroup.com/sitemap.xml");
 });
 
