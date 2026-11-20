@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { GoogleAnalytics } from "@next/third-parties/google";
 import { Lato, Playfair_Display } from "next/font/google";
 import { SiteFooter } from "@/components/SiteFooter";
 import { SiteHeader } from "@/components/SiteHeader";
@@ -25,6 +26,8 @@ export const metadata: Metadata = {
   title: { default: site.name, template: `%s · ${site.name}` },
 };
 
+const gaId = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID;
+
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="en" className={`${playfair.variable} ${lato.variable}`}>
@@ -42,6 +45,9 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <SiteFooter />
         <Toasts />
       </body>
+      {/* Google Analytics 4 (UPTG-28). The ID is a public build variable, set only on the production
+          deploy, so local, CI and preview builds send nothing. It loads after hydration. */}
+      {gaId && <GoogleAnalytics gaId={gaId} />}
     </html>
   );
 }
