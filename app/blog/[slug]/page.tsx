@@ -75,7 +75,8 @@ export default async function BlogPostPage({ params }: PageProps<"/blog/[slug]">
         </header>
 
         <div className="wrap pb-[clamp(64px,8vw,112px)]">
-          <div className="mx-auto flex max-w-[680px] flex-col gap-6 text-[18px] leading-[1.75] nav:text-[19px] [&_h2]:mt-6 [&_h2]:text-[28px] nav:[&_h2]:text-[32px] [&_h3]:mt-4 [&_h3]:text-2xl [&_ol]:m-0 [&_ol]:flex [&_ol]:flex-col [&_ol]:gap-2.5 [&_ol]:pl-6 [&_ul]:m-0 [&_ul]:flex [&_ul]:list-disc [&_ul]:flex-col [&_ul]:gap-2.5 [&_ul]:pl-6 [&_ol]:list-decimal">
+          {/* A blockquote in the body is a pull quote: centered display italic between 2 rules (Jess, 2026-11-20). */}
+          <div className="mx-auto flex max-w-[680px] flex-col gap-6 text-[18px] leading-[1.75] nav:text-[19px] [&_h2]:mt-6 [&_h2]:text-[28px] nav:[&_h2]:text-[32px] [&_h3]:mt-4 [&_h3]:text-2xl [&_ol]:m-0 [&_ol]:flex [&_ol]:flex-col [&_ol]:gap-2.5 [&_ol]:pl-6 [&_ul]:m-0 [&_ul]:flex [&_ul]:list-disc [&_ul]:flex-col [&_ul]:gap-2.5 [&_ul]:pl-6 [&_ol]:list-decimal [&_blockquote]:my-4 [&_blockquote]:border-y [&_blockquote]:border-forest [&_blockquote]:py-6 [&_blockquote]:text-center [&_blockquote]:font-display [&_blockquote]:text-[24px] [&_blockquote]:leading-[1.4] [&_blockquote]:italic nav:[&_blockquote]:text-[28px]">
             {/* The body can be HTML or Markdown. HTML is cleaned first (see CmsHtml). "contents" keeps
                 each paragraph a direct child, so the gap between blocks stays the same. */}
             {isZoneVisible(post.body) &&
