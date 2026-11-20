@@ -71,7 +71,7 @@ export default async function BlogPostPage({ params }: PageProps<"/blog/[slug]">
               <time dateTime={h.publishDate}>{formatDate(h.publishDate, "long")}</time>
             </p>
           </div>
-          <CmsPicture image={h.image} className="mx-auto aspect-[21/9] w-full max-w-[1040px]" />
+          <CmsPicture image={h.image} className="mx-auto aspect-[21/9] w-full max-w-[1040px]" eager />
         </header>
 
         <div className="wrap pb-[clamp(64px,8vw,112px)]">

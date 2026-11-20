@@ -59,7 +59,7 @@ function Hero({ zone }: { zone: Specialty["hero"] }) {
             {zone.ctaLabel}
           </a>
         </div>
-        <CmsPicture image={zone.image} className="aspect-[5/4] w-full" />
+        <CmsPicture image={zone.image} className="aspect-[5/4] w-full" eager />
       </div>
     </section>
   );

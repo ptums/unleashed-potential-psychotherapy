@@ -33,8 +33,9 @@ export function CmsPicture({
   const src = cmsImageUrl(image.assetId);
   if (src) {
     // A plain img: the Worker has no image optimizer, and CloudFront caches the file.
+    // An above-the-fold image is usually the page's largest paint, so it loads first.
     // eslint-disable-next-line @next/next/no-img-element
-    return <img src={src} alt={image.alt} loading={eager ? "eager" : "lazy"}
+    return <img src={src} alt={image.alt} loading={eager ? "eager" : "lazy"} fetchPriority={eager ? "high" : undefined}
         decoding="async" className={`bg-cream object-cover ${className}`} />;
   }
   return (

@@ -56,7 +56,7 @@ export default async function ClinicianProfilePage({ params }: PageProps<"/clini
 
       <section className="pt-[clamp(32px,5vw,64px)] pb-[clamp(48px,6vw,80px)]">
         <div className="wrap flex flex-wrap items-start gap-12">
-          <CmsPicture image={header.portrait} className="aspect-[3/4] max-w-[380px] flex-[1_1_280px]" />
+          <CmsPicture image={header.portrait} className="aspect-[3/4] max-w-[380px] flex-[1_1_280px]" eager />
           <div className="flex flex-[2_1_340px] flex-col gap-5">
             <p className="eyebrow">{header.roleLine}</p>
             <h1 className="text-[clamp(40px,4.4vw,60px)]">{header.displayName}</h1>
