@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
-import { GoogleAnalytics } from "@next/third-parties/google";
 import { Lato, Playfair_Display } from "next/font/google";
+import { Analytics } from "@/components/Analytics";
 import { SiteFooter } from "@/components/SiteFooter";
 import { SiteHeader } from "@/components/SiteHeader";
 import { Toasts } from "@/components/Toasts";
@@ -44,10 +44,10 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         </main>
         <SiteFooter />
         <Toasts />
+        {/* Google Analytics 4 (UPTG-28), off on the form pages (UPTG-38). The ID is a public build
+            variable set only on the production deploy, so local, CI and preview builds send nothing. */}
+        {gaId && <Analytics gaId={gaId} />}
       </body>
-      {/* Google Analytics 4 (UPTG-28). The ID is a public build variable, set only on the production
-          deploy, so local, CI and preview builds send nothing. It loads after hydration. */}
-      {gaId && <GoogleAnalytics gaId={gaId} />}
     </html>
   );
 }
