@@ -1,3 +1,4 @@
+import AxeBuilder from "@axe-core/playwright";
 import { expect, test } from "@playwright/test";
 
 test("home renders every zone from content", async ({ page }) => {
@@ -37,4 +38,10 @@ test("home review carousel shows snippets and scrolls by card", async ({ page })
   await expect(band.getByText("Google reviews")).toHaveCount(0);
   // The row scrolls inside itself; the page never scrolls sideways.
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= document.documentElement.clientWidth)).toBe(true);
+});
+
+test("home has no WCAG 2.2 AA violations", async ({ page }) => {
+  await page.goto("/");
+  const results = await new AxeBuilder({ page }).withTags(["wcag2a", "wcag2aa", "wcag21aa", "wcag22aa"]).analyze();
+  expect(results.violations).toEqual([]);
 });
