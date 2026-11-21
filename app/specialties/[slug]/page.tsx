@@ -23,7 +23,8 @@ async function loadSpecialty(slug: string) {
 
 export async function generateMetadata({ params }: PageProps<"/specialties/[slug]">): Promise<Metadata> {
   const { slug } = await params;
-  return seoMetadata((await loadSpecialty(slug))?.seo);
+  const specialty = await loadSpecialty(slug);
+  return seoMetadata(specialty?.seo, { path: `/specialties/${slug}`, image: specialty?.hero.image });
 }
 
 export default async function SpecialtyPage({ params }: PageProps<"/specialties/[slug]">) {

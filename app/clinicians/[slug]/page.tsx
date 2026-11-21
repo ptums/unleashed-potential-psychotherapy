@@ -25,7 +25,8 @@ async function loadClinician(slug: string) {
 
 export async function generateMetadata({ params }: PageProps<"/clinicians/[slug]">): Promise<Metadata> {
   const { slug } = await params;
-  return seoMetadata((await loadClinician(slug))?.seo);
+  const profile = await loadClinician(slug);
+  return seoMetadata(profile?.seo, { path: `/clinicians/${slug}`, image: profile?.profileHeader.portrait, type: "profile" });
 }
 
 export default async function ClinicianProfilePage({ params }: PageProps<"/clinicians/[slug]">) {

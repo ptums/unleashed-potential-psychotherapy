@@ -13,7 +13,7 @@ async function loadPage() {
 }
 
 export async function generateMetadata(): Promise<Metadata> {
-  return seoMetadata((await loadPage())?.seo);
+  return seoMetadata((await loadPage())?.seo, { path: "/reviews/share" });
 }
 
 export default async function ShareExperiencePage() {

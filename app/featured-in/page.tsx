@@ -11,7 +11,8 @@ async function loadPage() {
 }
 
 export async function generateMetadata(): Promise<Metadata> {
-  return seoMetadata((await loadPage())?.seo);
+  const page = await loadPage();
+  return seoMetadata(page?.seo, { path: "/featured-in", image: page?.featuredEpisode.image });
 }
 
 // 2 names can point to the same appearance, so each one is listed once.
