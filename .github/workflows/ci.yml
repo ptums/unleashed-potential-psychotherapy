@@ -17,8 +17,10 @@ jobs:
     env:
       CONTENT_SOURCE: mock
       # Cloudflare's public Turnstile test key (always passes), so e2e can run the forms.
-      # /api/submit is mocked in the tests. Production uses the TURNSTILE_SITE_KEY repo variable.
+      # Production uses the TURNSTILE_SITE_KEY repo variable.
       NEXT_PUBLIC_TURNSTILE_SITE_KEY: 1x00000000000000000000AA
+      # A fake Apps Script address: e2e mocks it together with /api/ticket (e2e/forms.ts).
+      NEXT_PUBLIC_APPS_SCRIPT_URL: https://script.example.test/exec
     steps:
       - uses: actions/checkout@v4
       - uses: pnpm/action-setup@v4

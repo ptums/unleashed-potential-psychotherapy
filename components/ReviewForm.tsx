@@ -8,10 +8,12 @@ import { Spinner } from "@/components/Spinner";
 import { Turnstile } from "@/components/Turnstile";
 import type { ShareYourExperience } from "@/lib/content";
 import { reviewSchema } from "@/lib/forms/schemas";
+import { submitForm } from "@/lib/forms/submit";
 import { fillTokens } from "@/lib/tokens";
 
-// The Share your experience form (/reviews/share). It posts to /api/submit, which checks it
-// and hands it to the Apps Script (Sheet row + email to Jess). The result shows as a toast, as on
+// The Share your experience form (/reviews/share). It submits through lib/forms/submit.ts: a ticket
+// from /api/ticket (spam and rate checks, no client details), then the details straight to the Apps
+// Script, which adds the Sheet row and emails Jess (UPTG-38). The result shows as a toast, as on
 // jessrebelo.com: on success the form clears and stays; on failure the input is kept. Until the Turnstile site key is
 // set at build time (NEXT_PUBLIC_TURNSTILE_SITE_KEY), the form stays as before: the button does nothing.
 const SITE_KEY = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY ?? "";
@@ -77,19 +79,11 @@ export function ReviewForm({
     setErrors([]);
     setStatus("sending");
     try {
-      const res = await fetch("/api/submit", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ formType: "review", fields: { ...values, website: data.get("website") }, turnstileToken: token }),
-      });
-      const body = (await res.json().catch(() => null)) as { ok?: boolean; invalid?: string[] } | null;
-      if (res.status === 400 && body?.invalid) {
+      const result = await submitForm({ formType: "review", fields: values, website: data.get("website"), turnstileToken: token });
+      if (result.kind === "invalid") {
         setStatus("idle");
-        showErrors(body.invalid);
+        showErrors(result.invalid);
         return;
-      }
-      if (!res.ok || !body?.ok) {
-        throw new Error(`submit ${res.status}`);
       }
       formEl.reset();
       toast.success(

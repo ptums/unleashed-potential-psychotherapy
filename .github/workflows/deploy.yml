@@ -28,6 +28,8 @@ jobs:
       CMS_API_URL: ${{ vars.CMS_API_URL }}
       # Public site key for the forms. Empty until set, and the forms stay inert until then.
       NEXT_PUBLIC_TURNSTILE_SITE_KEY: ${{ vars.TURNSTILE_SITE_KEY }}
+      # The Apps Script web app URL. The browser posts form details straight to it (UPTG-38).
+      NEXT_PUBLIC_APPS_SCRIPT_URL: ${{ vars.APPS_SCRIPT_URL }}
       # Google Analytics 4 measurement ID (G-...). Public. Empty until set, and GA stays off until then.
       NEXT_PUBLIC_GA_MEASUREMENT_ID: ${{ vars.GA_MEASUREMENT_ID }}
       CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}

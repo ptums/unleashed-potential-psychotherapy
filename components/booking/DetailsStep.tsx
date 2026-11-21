@@ -7,9 +7,11 @@ import { Spinner } from "@/components/Spinner";
 import { Turnstile } from "@/components/Turnstile";
 import type { Booking } from "@/lib/content";
 import { bookingSchema } from "@/lib/forms/schemas";
+import { submitForm } from "@/lib/forms/submit";
 import { fillTokens } from "@/lib/tokens";
 
-// Step 2 of /book: the visitor's details, then the request through /api/submit (formType "booking").
+// Step 2 of /book: the visitor's details, then the request through lib/forms/submit.ts: a ticket from
+// /api/ticket (the slot check, no client details), then the details straight to the Apps Script (UPTG-38).
 // The server checks the time again. A taken time sends the visitor back to step 1.
 
 const SITE_KEY = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY ?? "";
@@ -89,22 +91,20 @@ export function DetailsStep({
     setErrors([]);
     setSending(true);
     try {
-      const res = await fetch("/api/submit", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ formType: "booking", fields: { ...fields, website }, turnstileToken: token }),
+      const result = await submitForm({
+        formType: "booking",
+        fields,
+        website,
+        turnstileToken: token,
+        slot: { clinician: fields.clinician, start: fields.start },
       });
-      const body = (await res.json().catch(() => null)) as { ok?: boolean; code?: string; invalid?: string[] } | null;
-      if (res.status === 409 && body?.code === "SLOT_TAKEN") {
+      if (result.kind === "taken") {
         onDone({ kind: "taken" });
         return;
       }
-      if (res.status === 400 && body?.invalid) {
-        showErrors(body.invalid);
+      if (result.kind === "invalid") {
+        showErrors(result.invalid);
         return;
-      }
-      if (!res.ok || !body?.ok) {
-        throw new Error(`submit ${res.status}`);
       }
       onDone({ kind: "sent", values });
     } catch {
