@@ -9,7 +9,7 @@ import { seoMetadata } from "@/lib/seo";
 // Not linked yet: the profile's Book button stays inert until the request step works.
 
 export async function generateMetadata(): Promise<Metadata> {
-  return seoMetadata((await getContent().getPage("booking"))?.seo);
+  return seoMetadata((await getContent().getPage("booking"))?.seo, { path: "/book" });
 }
 
 export default async function BookPage({ searchParams }: PageProps<"/book">) {

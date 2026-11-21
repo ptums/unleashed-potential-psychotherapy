@@ -15,7 +15,7 @@ async function loadPage() {
 }
 
 export async function generateMetadata(): Promise<Metadata> {
-  return seoMetadata((await loadPage())?.seo);
+  return seoMetadata((await loadPage())?.seo, { path: "/blog" });
 }
 
 export default async function BlogIndexPage() {

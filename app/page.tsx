@@ -16,7 +16,8 @@ async function loadHome() {
 }
 
 export async function generateMetadata(): Promise<Metadata> {
-  return seoMetadata((await loadHome())?.seo);
+  const home = await loadHome();
+  return seoMetadata(home?.seo, { path: "/", image: home?.hero.image });
 }
 
 export default async function HomePage() {

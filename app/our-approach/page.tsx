@@ -11,7 +11,8 @@ async function loadPage() {
 }
 
 export async function generateMetadata(): Promise<Metadata> {
-  return seoMetadata((await loadPage())?.seo);
+  const page = await loadPage();
+  return seoMetadata(page?.seo, { path: "/our-approach", image: page?.featureImage.image });
 }
 
 export default async function OurApproachPage() {

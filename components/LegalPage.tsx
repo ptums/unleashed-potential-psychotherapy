@@ -10,7 +10,7 @@ import { seoMetadata } from "@/lib/seo";
 export type LegalPageId = "disclaimer" | "privacy-policy";
 
 export async function legalMetadata(id: LegalPageId): Promise<Metadata> {
-  return seoMetadata((await getContent().getPage(id))?.seo);
+  return seoMetadata((await getContent().getPage(id))?.seo, { path: `/${id}` });
 }
 
 export async function LegalPage({ id }: { id: LegalPageId }) {

@@ -25,7 +25,16 @@ async function loadPost(slug: string) {
 
 export async function generateMetadata({ params }: PageProps<"/blog/[slug]">): Promise<Metadata> {
   const { slug } = await params;
-  return seoMetadata((await loadPost(slug))?.seo);
+  const post = await loadPost(slug);
+  const h = post?.articleHeader;
+  const author = h ? await getContent().getEntry("clinicians", h.author.id) : null;
+  return seoMetadata(post?.seo, {
+    path: `/blog/${slug}`,
+    image: h?.image,
+    type: "article",
+    publishedTime: h?.publishDate,
+    author: author?.profileHeader.displayName,
+  });
 }
 
 export default async function BlogPostPage({ params }: PageProps<"/blog/[slug]">) {
