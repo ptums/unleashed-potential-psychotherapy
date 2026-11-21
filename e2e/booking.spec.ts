@@ -1,5 +1,6 @@
 import AxeBuilder from "@axe-core/playwright";
 import { expect, test } from "@playwright/test";
+import { mockSubmit } from "./forms";
 
 // /api/availability is mocked: the Apps Script is never called from tests.
 const slots = [
@@ -54,11 +55,7 @@ async function toDetails(page: import("@playwright/test").Page) {
 }
 
 test("book step 2: errors, then a toast and a fresh start", async ({ page }) => {
-  let sent: { formType?: string; fields?: Record<string, unknown> } = {};
-  await page.route("**/api/submit", async (route) => {
-    sent = route.request().postDataJSON();
-    await route.fulfill({ json: { ok: true, id: "test-id" } });
-  });
+  const sent = await mockSubmit(page);
   await toDetails(page);
 
   await page.getByRole("button", { name: "Send request" }).click();
@@ -78,12 +75,14 @@ test("book step 2: errors, then a toast and a fresh start", async ({ page }) => 
   await expect(page.getByRole("alert").filter({ hasText: "Request sent." })).toContainText("Tue, Jan 8 at 9:15 AM ET, by video call");
   await expect(page.getByRole("heading", { level: 1, name: "Choose a time" })).toBeFocused();
   await expect(page.getByRole("radio", { name: "9:15 AM" })).not.toBeChecked();
-  expect(sent.formType).toBe("booking");
-  expect(sent.fields).toMatchObject({ clinician: "jessica-rebelo", start: slots[1].start, format: "video", consent: true });
+  // The ticket request carries only the slot, never the visitor's details.
+  expect(sent.ticket).toMatchObject({ formType: "booking", slot: { clinician: "jessica-rebelo", start: slots[1].start } });
+  expect(JSON.stringify(sent.ticket)).not.toMatch(/Kim|kim@example|555/);
+  expect(sent.script?.fields).toMatchObject({ name: "Kim C", email: "kim@example.com", clinician: "jessica-rebelo", start: slots[1].start, format: "video", consent: true });
 });
 
 test("book: a time taken meanwhile goes back to step 1 with fresh times", async ({ page }) => {
-  await page.route("**/api/submit", (route) => route.fulfill({ status: 409, json: { ok: false, code: "SLOT_TAKEN" } }));
+  await mockSubmit(page, { ticket: { status: 409, json: { ok: false, code: "SLOT_TAKEN" } } });
   await toDetails(page);
   await page.getByLabel("Full name").fill("Kim C");
   await page.getByLabel("Email").fill("kim@example.com");
@@ -108,10 +107,7 @@ test("book without a known clinician goes to the clinician list", async ({ page 
 
 test("book: the send button shows a spinner while it works", async ({ page }) => {
   let release: () => void = () => {};
-  await page.route("**/api/submit", async (route) => {
-    await new Promise<void>((resolve) => (release = resolve));
-    await route.fulfill({ json: { ok: true, id: "test-id" } });
-  });
+  await mockSubmit(page, { holdScript: new Promise<void>((resolve) => (release = resolve)) });
   await toDetails(page);
   await page.getByLabel("Full name").fill("Kim C");
   await page.getByLabel("Email").fill("kim@example.com");
@@ -127,7 +123,7 @@ test("book: the send button shows a spinner while it works", async ({ page }) =>
 });
 
 test("book: a failed send shows an error toast and keeps the details", async ({ page }) => {
-  await page.route("**/api/submit", (route) => route.fulfill({ status: 502, json: { ok: false } }));
+  await mockSubmit(page, { script: { status: 200, json: { ok: false, error: "ticket expired" } } });
   await toDetails(page);
   await page.getByLabel("Full name").fill("Kim C");
   await page.getByLabel("Email").fill("kim@example.com");

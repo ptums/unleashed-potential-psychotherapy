@@ -1,6 +1,6 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { reviewSchema, isFormType } from "../forms/schemas";
-import { sendToAppsScript } from "./apps-script";
+import { signTicket, verifyTicket } from "./ticket";
 import { markDelivered, putSubmission, toItem } from "./store";
 
 const record = {
@@ -23,8 +23,6 @@ beforeEach(() => {
   vi.stubEnv("AWS_ACCESS_KEY_ID", "test-key");
   vi.stubEnv("AWS_SECRET_ACCESS_KEY", "test-secret");
   vi.stubEnv("SUBMISSIONS_TABLE", "form-submissions");
-  vi.stubEnv("APPS_SCRIPT_URL", "https://script.google.com/macros/s/test/exec");
-  vi.stubEnv("APPS_SCRIPT_TOKEN", "secret-token");
 });
 
 afterEach(() => {
@@ -80,33 +78,40 @@ describe("debug log not set up yet", () => {
   });
 });
 
-describe("Apps Script handoff", () => {
-  const payload = { formType: "review" as const, id: "abc", createdAt: record.createdAt, isTest: false, fields: {} as never };
+describe("submission tickets", () => {
+  const payload = {
+    v: 1 as const,
+    id: "abc",
+    formType: "booking" as const,
+    createdAt: record.createdAt,
+    exp: Date.parse("2026-11-12T12:10:00.000Z"),
+    isTest: false,
+    slot: { clinician: "jessica-rebelo", start: "2026-11-17T15:00:00.000Z", end: "2026-11-17T15:15:00.000Z", when: "Tue, Nov 17 at 10:00 AM ET", clinicianName: "Jessica Rebelo, LCSW" },
+  };
+  const now = Date.parse("2026-11-12T12:00:00.000Z");
 
-  it("sends the shared token with the submission", async () => {
-    const fetchMock = fakeFetch(200, { ok: true });
-    expect(await sendToAppsScript(payload)).toEqual({ ok: true });
-    const init = fetchMock.mock.calls[0][1] as RequestInit;
-    expect(JSON.parse(init.body as string)).toMatchObject({ token: "secret-token", id: "abc", formType: "review" });
+  it("signs a ticket the same check accepts, and carries no client details", async () => {
+    const ticket = await signTicket(payload, "secret");
+    expect(ticket).toMatch(/^[A-Za-z0-9_=-]+\.[A-Za-z0-9_=-]+$/);
+    expect(await verifyTicket(ticket, "secret", now)).toEqual(payload);
+    expect(Object.keys(payload).sort()).toEqual(["createdAt", "exp", "formType", "id", "isTest", "slot", "v"]);
   });
 
-  it("follows the web app redirect with a GET, not a second POST", async () => {
-    const echo = "https://script.googleusercontent.com/macros/echo?user_content_key=x";
-    const fetchMock = vi.fn<typeof fetch>(async (_input, init) =>
-      init?.method === "POST"
-        ? new Response(null, { status: 302, headers: { location: echo } })
-        : Response.json({ ok: true }),
-    );
-    vi.stubGlobal("fetch", fetchMock);
-    expect(await sendToAppsScript(payload)).toEqual({ ok: true });
-    expect(fetchMock.mock.calls[1]).toEqual([echo, { method: "GET" }]);
+  it("matches the Apps Script format: web-safe base64 with padding, HMAC-SHA256 over the payload text", async () => {
+    const ticket = await signTicket(payload, "secret");
+    const [body, signature] = ticket.split(".");
+    const { createHmac } = await import("node:crypto");
+    const expected = createHmac("sha256", "secret").update(body).digest("base64").replace(/\+/g, "-").replace(/\//g, "_");
+    expect(signature).toBe(expected);
+    expect(JSON.parse(Buffer.from(body, "base64url").toString("utf8"))).toEqual(payload);
   });
 
-  it("fails when the script says no, or when it is not set up", async () => {
-    fakeFetch(200, { ok: false, error: "bad token" });
-    expect(await sendToAppsScript(payload)).toEqual({ ok: false });
-
-    vi.stubEnv("APPS_SCRIPT_URL", "");
-    expect(await sendToAppsScript(payload)).toEqual({ ok: false });
+  it("refuses a wrong secret, a changed payload, or an expired ticket", async () => {
+    const ticket = await signTicket(payload, "secret");
+    expect(await verifyTicket(ticket, "other-secret", now)).toBeNull();
+    const [body, signature] = ticket.split(".");
+    const forged = Buffer.from(JSON.stringify({ ...payload, isTest: true })).toString("base64url");
+    expect(await verifyTicket(`${forged}.${signature}`, "secret", now)).toBeNull();
+    expect(await verifyTicket(`${body}.${signature}`, "secret", payload.exp + 1)).toBeNull();
   });
 });

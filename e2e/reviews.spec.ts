@@ -1,5 +1,6 @@
 import AxeBuilder from "@axe-core/playwright";
 import { expect, test } from "@playwright/test";
+import { mockSubmit } from "./forms";
 
 test("reviews lists every review, expands long ones and passes axe", async ({ page }) => {
   await page.goto("/reviews");
@@ -52,12 +53,8 @@ test("share page renders the form and passes axe", async ({ page }) => {
 });
 
 test("share form shows errors, then a thank-you toast", async ({ page }) => {
-  // /api/submit is mocked: the Apps Script and AWS are not called from tests.
-  let sent: { formType?: string; fields?: Record<string, unknown> } = {};
-  await page.route("**/api/submit", async (route) => {
-    sent = route.request().postDataJSON();
-    await route.fulfill({ json: { ok: true, id: "test-id" } });
-  });
+  // The ticket route, the Apps Script and AWS are mocked (e2e/forms.ts).
+  const sent = await mockSubmit(page);
   await page.goto("/reviews/share");
 
   await page.getByRole("button", { name: "Send review" }).click();
@@ -75,15 +72,18 @@ test("share form shows errors, then a thank-you toast", async ({ page }) => {
   await expect(page.getByRole("alert").filter({ hasText: "Thank you for sharing." })).toBeVisible();
   await expect(page.getByLabel("Full name")).toHaveValue("");
   await expect(page.getByRole("heading", { level: 1, name: "Share your experience" })).toBeVisible();
-  expect(sent.formType).toBe("review");
-  expect(sent.fields).toMatchObject({ name: "Kim C", email: "kim@example.com", rating: "excellent", website: "" });
+  // The ticket request holds no client details; the details go only to the Apps Script.
+  expect(sent.ticket).toMatchObject({ formType: "review", website: "" });
+  expect(JSON.stringify(sent.ticket)).not.toMatch(/Kim|kim@example/);
+  expect(sent.script?.ticket).toBe("payload.signature");
+  expect(sent.script?.fields).toMatchObject({ name: "Kim C", email: "kim@example.com", rating: "excellent" });
 
   const results = await new AxeBuilder({ page }).withTags(["wcag2a", "wcag2aa", "wcag21aa", "wcag22aa"]).analyze();
   expect(results.violations).toEqual([]);
 });
 
 test("share form shows an error toast and keeps the input when sending fails", async ({ page }) => {
-  await page.route("**/api/submit", (route) => route.fulfill({ status: 502, json: { ok: false } }));
+  await mockSubmit(page, { script: { json: { ok: false, error: "ticket expired" } } });
   await page.goto("/reviews/share");
   await page.getByLabel("Full name").fill("Kim C");
   await page.getByLabel("Email").fill("kim@example.com");
