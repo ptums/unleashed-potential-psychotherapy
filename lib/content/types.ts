@@ -11,8 +11,9 @@ import type { ClientReviews } from "./generated/reviews";
 import type { ShareYourExperience } from "./generated/share-experience";
 import type { Disclaimer } from "./generated/disclaimer";
 import type { PrivacyPolicy } from "./generated/privacy-policy";
+import type { NoticeOfPrivacyPractices } from "./generated/notice-of-privacy-practices";
 
-export type { Home, OurApproach, WhatToExpect, FeaturedIn, Blog, Booking, ClinicianProfile, Specialty, BlogPost, ClientReviews, ShareYourExperience, Disclaimer, PrivacyPolicy };
+export type { Home, OurApproach, WhatToExpect, FeaturedIn, Blog, Booking, ClinicianProfile, Specialty, BlogPost, ClientReviews, ShareYourExperience, Disclaimer, PrivacyPolicy, NoticeOfPrivacyPractices };
 
 /** Singleton pages, keyed by their CMS page id (GET /pages/{id}). */
 export interface PageMap {
@@ -26,6 +27,7 @@ export interface PageMap {
   "share-experience": ShareYourExperience;
   disclaimer: Disclaimer;
   "privacy-policy": PrivacyPolicy;
+  "notice-of-privacy-practices": NoticeOfPrivacyPractices;
 }
 
 export type PageId = keyof PageMap;

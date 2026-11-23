@@ -11,6 +11,7 @@ const pageRoutes: Record<string, string> = {
   home: "/",
   disclaimer: "/disclaimer",
   "privacy-policy": "/privacy-policy",
+  "notice-of-privacy-practices": "/notice-of-privacy-practices",
   "our-approach": "/our-approach",
   "what-to-expect": "/what-to-expect",
   "featured-in": "/featured-in",
