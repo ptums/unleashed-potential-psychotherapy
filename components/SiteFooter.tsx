@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { getContent, type PageId } from "@/lib/content";
 import { site } from "@/lib/site";
 
 export function CrisisLine() {
@@ -13,7 +14,16 @@ export function CrisisLine() {
   );
 }
 
-export function SiteFooter() {
+export async function SiteFooter() {
+  // A link tied to a CMS page shows only once that page is published, so the footer never
+  // links to a 404 (the Notice of Privacy Practices waits for review; UPTG-38).
+  const content = getContent();
+  const links = (
+    await Promise.all(
+      site.footerLinks.map(async (link) => (link.pageId && !(await content.getPage(link.pageId as PageId)) ? null : link)),
+    )
+  ).filter((link) => link !== null);
+
   return (
     <footer className="dark border-t border-forest">
       <div className="wrap flex flex-col gap-12 pt-14 pb-10">
@@ -31,7 +41,7 @@ export function SiteFooter() {
             </p>
           </div>
           <nav aria-label="Footer" className="flex flex-col gap-1">
-            {site.footerLinks.map((link) =>
+            {links.map((link) =>
               // A file such as /sitemap.xml is not a page, so it gets a plain link, not client navigation.
               /\.\w+$/.test(link.href) ? (
                 <a key={link.href} href={link.href} className="flex min-h-11 items-center">

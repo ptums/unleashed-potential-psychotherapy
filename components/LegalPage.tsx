@@ -7,7 +7,9 @@ import { seoMetadata } from "@/lib/seo";
 
 // The Disclaimer and Privacy Policy pages share 1 CMS shape and 1 template: a plain text page
 // in the site's fonts and styling (Jess, 2026-11-19).
-export type LegalPageId = "disclaimer" | "privacy-policy";
+// The Notice of Privacy Practices (UPTG-38) uses the same template. It has no mock copy on purpose: the
+// page stays a 404 until the CMS publishes the text Jess and the attorney approved.
+export type LegalPageId = "disclaimer" | "privacy-policy" | "notice-of-privacy-practices";
 
 export async function legalMetadata(id: LegalPageId): Promise<Metadata> {
   return seoMetadata((await getContent().getPage(id))?.seo, { path: `/${id}` });

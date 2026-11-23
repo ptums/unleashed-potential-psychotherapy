@@ -9,6 +9,8 @@ export const siteUrl = (process.env.SITE_URL ?? "https://uptherapygroup.com").re
 export interface NavLink {
   label: string;
   href: string;
+  /** A CMS page id. The link shows only once that page is published (see SiteFooter). */
+  pageId?: string;
 }
 
 export interface NavGroup {
@@ -50,8 +52,9 @@ export const site = {
     { label: "Our Clinicians", href: "/clinicians/jessica-rebelo" },
     { label: "Disclaimer", href: "/disclaimer" },
     { label: "Privacy Policy", href: "/privacy-policy" },
+    { label: "Notice of Privacy Practices", href: "/notice-of-privacy-practices", pageId: "notice-of-privacy-practices" },
     { label: "Sitemap", href: "/sitemap.xml" },
-  ] satisfies NavLink[],
+  ] as NavLink[],
   // TODO(handoff open question 7): social links.
   address: ["169 Commack Road #1015", "Commack, NY 11725"],
   social: [] as NavLink[],
