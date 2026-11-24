@@ -11,11 +11,21 @@ export interface NavLink {
   href: string;
   /** A CMS page id. The link shows only once that page is published (see SiteFooter). */
   pageId?: string;
+  /** A link to another site. It opens in a new tab. */
+  external?: boolean;
+}
+
+/** A titled list inside a nav menu, for example "Therapists" in the Clinicians menu. */
+export interface NavSection {
+  label: string;
+  links: NavLink[];
 }
 
 export interface NavGroup {
   label: string;
   links: NavLink[];
+  /** Titled lists. A menu with sections shows them in place of its plain links. */
+  sections?: NavSection[];
 }
 
 export const site = {
@@ -29,9 +39,14 @@ export const site = {
       label: "Our Mission",
       links: [
         { label: "Our Approach", href: "/our-approach" },
-        { label: "Our Clinicians", href: "/clinicians/jessica-rebelo" },
         { label: "Featured In", href: "/featured-in" },
       ],
+    },
+    // Filled from the CMS (lib/nav.ts): Therapists are the published clinicians, and Trusted
+    // Referrals come from the CMS "Trusted Referrals" section (Peter, 2026-11-23).
+    {
+      label: "Clinicians",
+      links: [],
     },
     {
       label: "Specialties",
@@ -46,7 +61,7 @@ export const site = {
         { label: "Reviews", href: "/reviews" },
       ],
     },
-  ] satisfies NavGroup[],
+  ] as NavGroup[],
   navLinks: [{ label: "Blog", href: "/blog" }] satisfies NavLink[],
   footerLinks: [
     { label: "Our Clinicians", href: "/clinicians/jessica-rebelo" },

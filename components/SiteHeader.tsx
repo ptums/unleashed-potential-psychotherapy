@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { getNav } from "@/lib/nav";
-import { site } from "@/lib/site";
+import { site, type NavGroup, type NavLink } from "@/lib/site";
 import { CalendarIcon, ChevronIcon, MenuIcon } from "./icons";
 import { NavCloser } from "./NavCloser";
 
@@ -19,6 +19,43 @@ function BookIcon() {
     </Link>
   );
 }
+
+/** A menu link. A link to another site opens in a new tab and says so to screen readers. */
+function MenuLink({ link, className }: { link: NavLink; className: string }) {
+  if (link.external) {
+    return (
+      <a href={link.href} target="_blank" rel="noopener noreferrer" className={className}>
+        {link.label}
+        <span className="sr-only"> (opens in a new tab)</span>
+      </a>
+    );
+  }
+  return (
+    <Link href={link.href} className={className}>
+      {link.label}
+    </Link>
+  );
+}
+
+/**
+ * A menu's links. A menu with sections (Clinicians) shows each section under a small, dark,
+ * bold title, with space between the sections (Peter, 2026-11-23).
+ */
+function MenuLinks({ group, linkClass, titleClass }: { group: NavGroup; linkClass: string; titleClass: string }) {
+  if (!group.sections) {
+    return group.links.map((link) => <MenuLink key={link.href} link={link} className={linkClass} />);
+  }
+  return group.sections.map((section) => (
+    <div key={section.label} role="group" aria-label={section.label} className="flex flex-col [&+&]:mt-4">
+      <p className={titleClass}>{section.label}</p>
+      {section.links.map((link) => (
+        <MenuLink key={link.href} link={link} className={linkClass} />
+      ))}
+    </div>
+  ));
+}
+
+const sectionTitle = "text-[13px] font-bold tracking-[0.14em] text-forest-dark uppercase";
 
 export async function SiteHeader() {
   const nav = await getNav();
@@ -43,11 +80,11 @@ export async function SiteHeader() {
                   group.label === "Specialties" ? "min-w-80 text-[15px]" : "min-w-60"
                 }`}
               >
-                {group.links.map((link) => (
-                  <Link key={link.href} href={link.href} className="flex min-h-11 items-center px-5 no-underline hover:underline">
-                    {link.label}
-                  </Link>
-                ))}
+                <MenuLinks
+                  group={group}
+                  linkClass="flex min-h-11 items-center px-5 no-underline hover:underline"
+                  titleClass={`${sectionTitle} px-5 pt-2 pb-1`}
+                />
               </div>
             </details>
           ))}
@@ -77,11 +114,7 @@ export async function SiteHeader() {
               {nav.map((group) => (
                 <div key={group.label}>
                   <p className="eyebrow mt-3">{group.label}</p>
-                  {group.links.map((link) => (
-                    <Link key={link.href} href={link.href} className="flex min-h-11 items-center no-underline">
-                      {link.label}
-                    </Link>
-                  ))}
+                  <MenuLinks group={group} linkClass="flex min-h-11 items-center no-underline" titleClass={`${sectionTitle} pt-2`} />
                 </div>
               ))}
               <div>

@@ -4,7 +4,8 @@ import { listPosts } from "@/lib/content/blog";
 import { siteUrl } from "@/lib/site";
 
 // Singleton pages and their routes. The booking page is left out until it exists.
-const pages: { id: PageId; path: string }[] = [
+// Trusted Referrals is not a page (it fills the Clinicians menu), so it has no route.
+const pages: { id: Exclude<PageId, "trusted-referrals">; path: string }[] = [
   { id: "home", path: "/" },
   { id: "our-approach", path: "/our-approach" },
   { id: "what-to-expect", path: "/what-to-expect" },
