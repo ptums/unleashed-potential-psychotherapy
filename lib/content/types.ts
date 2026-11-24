@@ -12,8 +12,9 @@ import type { ShareYourExperience } from "./generated/share-experience";
 import type { Disclaimer } from "./generated/disclaimer";
 import type { PrivacyPolicy } from "./generated/privacy-policy";
 import type { NoticeOfPrivacyPractices } from "./generated/notice-of-privacy-practices";
+import type { TrustedReferrals } from "./generated/trusted-referrals";
 
-export type { Home, OurApproach, WhatToExpect, FeaturedIn, Blog, Booking, ClinicianProfile, Specialty, BlogPost, ClientReviews, ShareYourExperience, Disclaimer, PrivacyPolicy, NoticeOfPrivacyPractices };
+export type { Home, OurApproach, WhatToExpect, FeaturedIn, Blog, Booking, ClinicianProfile, Specialty, BlogPost, ClientReviews, ShareYourExperience, Disclaimer, PrivacyPolicy, NoticeOfPrivacyPractices, TrustedReferrals };
 
 /** Singleton pages, keyed by their CMS page id (GET /pages/{id}). */
 export interface PageMap {
@@ -28,6 +29,8 @@ export interface PageMap {
   disclaimer: Disclaimer;
   "privacy-policy": PrivacyPolicy;
   "notice-of-privacy-practices": NoticeOfPrivacyPractices;
+  /** Not a page: the people listed under "Trusted Referrals" in the Clinicians menu. */
+  "trusted-referrals": TrustedReferrals;
 }
 
 export type PageId = keyof PageMap;

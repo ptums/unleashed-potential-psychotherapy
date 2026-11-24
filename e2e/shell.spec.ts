@@ -32,3 +32,23 @@ test("mobile menu opens and closes with Escape", async ({ page, viewport }) => {
   await page.keyboard.press("Escape");
   await expect(page.getByRole("navigation", { name: "Main mobile" })).toBeHidden();
 });
+
+test("the Clinicians menu lists therapists and trusted referrals", async ({ page, viewport }) => {
+  test.skip((viewport?.width ?? 0) < 900, "desktop only");
+  await page.goto("/");
+  const nav = page.getByRole("navigation", { name: "Main" });
+  await nav.getByText("Clinicians", { exact: true }).click();
+
+  const therapists = nav.getByRole("group", { name: "Therapists" });
+  // The label is the CMS display name without credentials, so match on the link target.
+  await expect(therapists.locator('a[href="/clinicians/jessica-rebelo"]')).toBeVisible();
+
+  const referrals = nav.getByRole("group", { name: "Trusted Referrals" });
+  const kristin = referrals.getByRole("link", { name: "Kristin Brien (opens in a new tab)" });
+  await expect(kristin).toHaveAttribute("href", "https://www.themendwellness.com/");
+  await expect(kristin).toHaveAttribute("target", "_blank");
+
+  // Clinicians moved out of Our Mission.
+  await nav.getByText("Our Mission", { exact: true }).click();
+  await expect(nav.getByRole("link", { name: "Our Clinicians" })).toHaveCount(0);
+});
